@@ -33,7 +33,10 @@
 
 package nl.HorizonCraft.PretparkCore;
 
+import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeAuto;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -54,6 +57,8 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         //TODO: Register listeners
+        PluginManager pm = Bukkit.getServer().getPluginManager();
+        pm.registerEvents(new WeatherChangeAuto(), this);
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
         //TODO: Register commands
@@ -80,9 +85,7 @@ public class Main extends JavaPlugin {
     }
 
     //Returns the plugin instance.
-    public static Plugin getPlugin(){
+    public static Plugin getPlugin() {
         return plugin;
     }
-
-
 }

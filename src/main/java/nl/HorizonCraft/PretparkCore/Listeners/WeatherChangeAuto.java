@@ -33,8 +33,26 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.weather.WeatherChangeEvent;
+
 /**
- * Created by Tim on 9/10/2015.
+ * This class has been created on 09/9/10/2015/2015 at 8:30 PM by 78wesley.
  */
-public class Temp {
+
+public class WeatherChangeAuto implements Listener{
+
+    private boolean StopRain = false;
+
+    /**
+     * When the weahter changes, cancel the event.
+     */
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent e) {
+        if (e.toWeatherState()) {
+            e.setCancelled(true);
+        }
+        StopRain = true;
+    }
 }
