@@ -40,4 +40,6 @@ public class Variables {
 
     public static String SERVER_NAME = "&3&lHorizon&6&lCraft";
 
+
+    //78wesley is dik
 }
