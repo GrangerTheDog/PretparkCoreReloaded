@@ -1,4 +1,4 @@
-package me.Cooltimmetje.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Commands;
 
 /**
  * Created by Tim on 9/10/2015.

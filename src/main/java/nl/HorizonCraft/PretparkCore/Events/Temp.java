@@ -1,4 +1,4 @@
-package me.Cooltimmetje.PretparkCore.Bundles;
+package nl.HorizonCraft.PretparkCore.Events;
 
 /**
  * Created by Tim on 9/10/2015.

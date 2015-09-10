@@ -1,10 +1,10 @@
-package me.Cooltimmetje.PretparkCore;
+package nl.HorizonCraft.PretparkCore;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * This class has been created on 9/7/2015 at 21:27 by cooltimmetje.
+ * This class has been created on 9/7/2015 at 21:27 by Cooltimmetje.
  */
 public class Main extends JavaPlugin {
 
