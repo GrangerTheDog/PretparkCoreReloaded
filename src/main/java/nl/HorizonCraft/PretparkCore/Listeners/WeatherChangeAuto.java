@@ -43,7 +43,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class WeatherChangeAuto implements Listener{
 
-    private boolean StopRain = false;
+    private boolean StopRain = false; //stops the rain
 
     /**
      * Wen The Weather will Changing than set it to sun.
