@@ -46,7 +46,7 @@ public class WeatherChangeAuto implements Listener{
     private boolean StopRain = false;
 
     /**
-     * When The Weather will Changing than set it to sun.
+     * When the weahter changes, cancel the event.
      */
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent e) {
