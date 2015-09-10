@@ -4,7 +4,8 @@
 .settings/
 
 # Intellij
-.idea/
+.idea/*
+!/.idea/copyright
 *.iml
 *.iws
 
