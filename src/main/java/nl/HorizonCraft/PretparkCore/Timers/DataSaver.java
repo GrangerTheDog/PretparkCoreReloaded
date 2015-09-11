@@ -32,8 +32,25 @@
 
 package nl.HorizonCraft.PretparkCore.Timers;
 
+import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
+import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 /**
- * This class has been created on 09/9/11/2015/2015 at 5:31 PM by Cooltimmetje.
+ * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
  */
-public class Temp {
+public class DataSaver {
+
+    public static void start(){
+        ScheduleUtils.repeatTask(12000, 12000, new Runnable() {
+            @Override
+            public void run() {
+                for(Player p : Bukkit.getOnlinePlayers()){
+                    MysqlManager.saveData(p, false);
+                }
+            }
+        });
+    }
+
 }

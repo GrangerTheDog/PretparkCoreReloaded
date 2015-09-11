@@ -30,10 +30,25 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Database;
+package nl.HorizonCraft.PretparkCore.Utilities;
+
+import nl.HorizonCraft.PretparkCore.Main;
+import org.bukkit.Bukkit;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 5:31 PM by Cooltimmetje.
+ * This class has been created on 28-7-2015 at 21:16 by cooltimmetje.
+ *
+ * Note: This class has been copied from the last version of PretparkCore: https://github.com/Cooltimmetje/PretparkCore/blob/master/src/me/Cooltimmetje/PretparkCore/Utilities/ScheduleUtils.java
+ * Class is owned by HorizonCraft.
  */
-public class Temp {
+public class ScheduleUtils {
+
+    public static void scheduleTask(long delayTicks, Runnable runnable){
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), runnable, delayTicks);
+    }
+
+    public static void repeatTask(long startDelay, long repeatDelay, Runnable runnable){
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), runnable, startDelay, repeatDelay);
+    }
+
 }

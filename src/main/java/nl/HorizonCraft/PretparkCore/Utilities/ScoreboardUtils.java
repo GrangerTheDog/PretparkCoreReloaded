@@ -46,16 +46,17 @@ public class ScoreboardUtils {
     public static HashMap<String, Scoreboard> scoreboards = new HashMap<>();
     static ScoreboardManager manager = Bukkit.getScoreboardManager();
 
-    //Gathers the required information and displays it on scoreboard. Used on a player when he/she joins, and when the plugin enables.
-    public static void constructScoreboard(Player p){
-        Scoreboard sc = manager.getNewScoreboard();
-        Objective objective = sc.registerNewObjective("mainboard", "dummy");
+    private static String scoreboardName = MiscUtils.color("&e&lMy&3&lHorizon");
+
+    public static void constructScoreboard(Player p) {
+        Scoreboard board = manager.getNewScoreboard();
+        Objective objective = board.registerNewObjective("mainboard", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(Variables.SERVER_NAME);
 
         Score e1 = objective.getScore(" ");
         e1.setScore(5);
-        Score coins = objective.getScore(MiscUtils.color("&bCoins: &cN/A"));
+        Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + PlayerUtils.getCoins(p)));
         coins.setScore(4);
         Score e2 = objective.getScore("  ");
         e2.setScore(3);
@@ -64,48 +65,41 @@ public class ScoreboardUtils {
         Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &cN/A"));
         unique.setScore(1);
 
-        p.setScoreboard(sc);
-        scoreboards.put(p.getName(), sc);
+        p.setScoreboard(board);
+        scoreboards.put(p.getName(), board);
     }
 
-    //Destroys the scoreboard of a player, used when he/she leaves, and when the plugin disables.
-    public static void destroyScoreboard(Player p){
-        Scoreboard sc = scoreboards.get(p.getName());
-        Objective objective = sc.getObjective(DisplaySlot.SIDEBAR);
+    public static void destroyScoreboard(Player p) {
+        Scoreboard board = scoreboards.get(p.getName());
+        Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
         objective.unregister();
         scoreboards.remove(p.getName());
     }
 
-    //Updates the current scoreboard of a player used whenever needed to.
-    public static void updateScoreboard(Player p, boolean leave){
-        Scoreboard sc = scoreboards.get(p.getName());
-        if(sc != null){
+    public static void updateScoreboard(Player p, boolean leave) {
+        Scoreboard board = scoreboards.get(p.getName());
+        if (board != null) {
             scoreboards.remove(p.getName());
-            Objective objective = sc.getObjective(DisplaySlot.SIDEBAR);
+            Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
             objective.unregister();
-            objective = sc.registerNewObjective("mainboard", "dummy");
+            objective = board.registerNewObjective("mainboard", "dummy");
+            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+            objective.setDisplayName(Variables.SERVER_NAME);
 
             Score e1 = objective.getScore(" ");
             e1.setScore(5);
-            Score coins = objective.getScore(MiscUtils.color("&bCoins: &cN/A"));
+            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + PlayerUtils.getCoins(p)));
             coins.setScore(4);
             Score e2 = objective.getScore("  ");
             e2.setScore(3);
-            int onlineAmount;
-            if(leave) {
-                onlineAmount = Bukkit.getOnlinePlayers().size() - 1;
-            } else {
-                onlineAmount = Bukkit.getOnlinePlayers().size();
-            }
-            Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + onlineAmount));
+            Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + Bukkit.getOnlinePlayers().size()));
             online.setScore(2);
             Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &cN/A"));
             unique.setScore(1);
 
-            scoreboards.put(p.getName(), sc);
+            scoreboards.put(p.getName(), board);
         } else {
             constructScoreboard(p);
         }
     }
-
 }

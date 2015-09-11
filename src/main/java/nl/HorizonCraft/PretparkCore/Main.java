@@ -32,8 +32,11 @@
 
 package nl.HorizonCraft.PretparkCore;
 
+import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
+import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
+import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
 import org.bukkit.Bukkit;
@@ -42,6 +45,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import javax.xml.crypto.Data;
 
 /**
  * This class has been created on 9/7/2015 at 21:27 by Cooltimmetje.
@@ -57,9 +62,10 @@ public class Main extends JavaPlugin {
         sendDebug("&9Debug> &aStarting plugin load... &oPlease wait.");
 
         plugin = this; //Registering the plugin variable to allow other classes to access it.
+        this.saveDefaultConfig(); //Saves the config to be used.
 
         getLogger().info("Starting pre-setup...."); //For everything that will cause issues if it gets done after registering stuff
-        //TODO: Make pre-setup
+        MysqlManager.setupHikari();
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
@@ -75,10 +81,13 @@ public class Main extends JavaPlugin {
         //format: hookApi("Plugin name");
 
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
-        //TODO: Make setup
+        for(Player p : Bukkit.getOnlinePlayers()){
+            MysqlManager.loadProfile(p);
+        }
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
-        //TODO: Setup timers
+        DataSaver.start();
+        CoinsGiver.start();
 
         getLogger().info("Starting post-setup"); //For frontend stuff, like scoreboards.
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -95,7 +104,9 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Disabling plugin... Please wait.");
 
-        //TODO: Make disable protocol
+        for(Player p : Bukkit.getOnlinePlayers()){
+            ScoreboardUtils.destroyScoreboard(p);
+        }
 
         plugin = null; //To prevent memory leaks
     }
