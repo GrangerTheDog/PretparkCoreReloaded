@@ -30,50 +30,38 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Listeners;
+package nl.HorizonCraft.PretparkCore.Timers;
 
-import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 7:18 PM by Cooltimmetje.
+ * This class has been created on 09/9/11/2015/2015 at 10:28 PM by Cooltimmetje.
  */
-public class JoinQuitListener implements Listener {
+public class CoinsGiver {
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
-        Player p = event.getPlayer();
-        event.setJoinMessage(MiscUtils.color("&9Join> &e" + p.getName()));
-
-        MysqlManager.loadProfile(p);
-
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(pl != p){
-                ScoreboardUtils.updateScoreboard(pl, false);
+    public static void start(){
+        ScheduleUtils.repeatTask(20, 1200, new Runnable() {
+            @Override
+            public void run() {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (PlayerUtils.getCoinTime(p) == 0) {
+                        int chance = MiscUtils.randomInt(1, 100);
+                        if (chance <= Variables.DOUBLE_CHANCE) {
+                            PlayerUtils.addCoins(p, Variables.COIN_GAIN * 2, "1 uur online, dubbel coins");
+                            ChatUtils.bcMsgTag("Coins", "&c" + p.getName() + " &aheeft zojuist 2x coins ontvangen! Geluksvogel!");
+                            PlayerUtils.setCoinTime(p, Variables.COIN_TIME);
+                        } else {
+                            PlayerUtils.addCoins(p, Variables.COIN_GAIN, "1 uur online");
+                            PlayerUtils.setCoinTime(p, Variables.COIN_TIME);
+                        }
+                    } else {
+                        PlayerUtils.setCoinTime(p, PlayerUtils.getCoinTime(p) - 1);
+                    }
+                }
             }
-        }
-        ScoreboardUtils.constructScoreboard(p);
+        });
     }
 
-    @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent event){
-        Player p = event.getPlayer();
-        event.setQuitMessage(MiscUtils.color("&9RageQuit> &e" + p.getName()));
-
-        MysqlManager.saveData(p, true);
-
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(pl != p){
-                ScoreboardUtils.updateScoreboard(pl, true);
-            }
-        }
-        ScoreboardUtils.destroyScoreboard(p);
-    }
 }

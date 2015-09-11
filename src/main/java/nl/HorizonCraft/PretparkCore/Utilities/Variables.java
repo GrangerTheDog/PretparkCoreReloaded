@@ -32,11 +32,23 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import org.bukkit.inventory.Inventory;
+
+import java.util.HashMap;
+
 /**
  * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
  */
 public class Variables {
 
     public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
+
+    public static int COIN_TIME = 60;
+    public static int COIN_GAIN = 30;
+    public static int DOUBLE_CHANCE = 10;
+
+    public static HashMap<String,Integer> coins = new HashMap<>();
+    public static HashMap<String,Integer> coinTime = new HashMap<>();
+    public static HashMap<String, Integer> playerId = new HashMap<>();
 
 }

@@ -30,50 +30,50 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Listeners;
+package nl.HorizonCraft.PretparkCore.Utilities;
 
-import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
-import org.bukkit.Bukkit;
+import com.evilmidget38.UUIDFetcher;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.Arrays;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 7:18 PM by Cooltimmetje.
+ * This class has been created on 09/9/11/2015/2015 at 9:11 PM by Cooltimmetje.
  */
-public class JoinQuitListener implements Listener {
+public class PlayerUtils {
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
-        Player p = event.getPlayer();
-        event.setJoinMessage(MiscUtils.color("&9Join> &e" + p.getName()));
+    public static String getUUID(Player p) {
+        String name, uuid = null;
+        name = p.getName();
 
-        MysqlManager.loadProfile(p);
-
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(pl != p){
-                ScoreboardUtils.updateScoreboard(pl, false);
-            }
+        try {
+            uuid = new UUIDFetcher(Arrays.asList(name)).call().get(name).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        ScoreboardUtils.constructScoreboard(p);
+        return uuid;
     }
 
-    @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent event){
-        Player p = event.getPlayer();
-        event.setQuitMessage(MiscUtils.color("&9RageQuit> &e" + p.getName()));
+    public static int getCoins(Player p){
+        return Variables.coins.get(p.getName());
+    }
 
-        MysqlManager.saveData(p, true);
+    public static int getCoinTime(Player p) {
+        return Variables.coinTime.get(p.getName());
+    }
 
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(pl != p){
-                ScoreboardUtils.updateScoreboard(pl, true);
-            }
-        }
-        ScoreboardUtils.destroyScoreboard(p);
+    public static void addCoins(Player p, int add, String reason) {
+        int curCoins = getCoins(p);
+        Variables.coins.remove(p.getName());
+        Variables.coins.put(p.getName(), add + curCoins);
+        ChatUtils.sendMsg(p, "&6+" + add + " coins! (" + reason + ")");
+        p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public static void setCoinTime(Player p, int time){
+        Variables.coinTime.remove(p.getName());
+        Variables.coinTime.put(p.getName(), time);
     }
 }

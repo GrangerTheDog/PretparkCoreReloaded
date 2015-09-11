@@ -32,6 +32,8 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import java.util.Random;
+
 /**
  * This class has been created on 9/11/2015 at 4:30 PM by Cooltimmetje.
  *
@@ -43,4 +45,8 @@ public class MiscUtils {
         return s.replace('&', '\u00A7');
     }
 
+    public static int randomInt(int min, int max) {
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
+    }
 }
