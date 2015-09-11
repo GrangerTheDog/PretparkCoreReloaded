@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * In additoin to the above:
+ * In addition to the above:
  * All content in the repo/plugin is created by and owned by HorizonCraft, unless
  * stated otherwise. All content that is not created by us will be placed in their
  * original package, where they were found or that was set by the owner by default.
- * This will also be stated before the "public class".
  *
  * You are free to use the code anywhere you like, but we will not provide ANY support
  * unless you are on our server using this plugin.

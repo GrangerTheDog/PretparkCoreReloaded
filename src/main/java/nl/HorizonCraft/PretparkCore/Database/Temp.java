@@ -30,14 +30,10 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Database;
 
 /**
- * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
+ * This class has been created on 09/9/11/2015/2015 at 5:31 PM by Cooltimmetje.
  */
-public class Variables {
-
-    public static String SERVER_NAME = "&3&lHorizon&6&lCraft";
-
-    //cooltimmetje is dik
+public class Temp {
 }
