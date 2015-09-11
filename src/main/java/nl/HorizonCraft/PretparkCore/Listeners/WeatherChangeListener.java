@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * In additoin to the above:
+ * In addition to the above:
  * All content in the repo/plugin is created by and owned by HorizonCraft, unless
  * stated otherwise. All content that is not created by us will be placed in their
  * original package, where they were found or that was set by the owner by default.
- * This will also be stated before the "public class".
  *
  * You are free to use the code anywhere you like, but we will not provide ANY support
  * unless you are on our server using this plugin.
@@ -38,21 +37,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 /**
- * This class has been created on 09/9/10/2015/2015 at 8:30 PM by 78wesley.
+ * This class has been created on 9/10/2015 at 8:30 PM by 78wesley.
  */
 
-public class WeatherChangeAuto implements Listener{
-
-    private boolean StopRain = false;
+public class WeatherChangeListener implements Listener {
 
     /**
-     * When the weahter changes, cancel the event.
+     * When the wheater changes, cancel the event.
      */
     @EventHandler
-    public void onWeatherChange(WeatherChangeEvent e) {
-        if (e.toWeatherState()) {
-            e.setCancelled(true);
+    public void onWeatherChange(WeatherChangeEvent event) {
+        if (event.toWeatherState()) {
+            event.setCancelled(true);
         }
-        StopRain = true;
     }
+
 }

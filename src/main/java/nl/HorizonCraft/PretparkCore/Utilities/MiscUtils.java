@@ -33,11 +33,14 @@
 package nl.HorizonCraft.PretparkCore.Utilities;
 
 /**
- * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
+ * This class has been created on 9/11/2015 at 4:30 PM by Cooltimmetje.
+ *
+ * This class contains all sorts of stuff just to make life easier!
  */
-public class Variables {
+public class MiscUtils {
 
-    public static String SERVER_NAME = "&3&lHorizon&6&lCraft";
+    public static String color(String s){
+        return s.replace('&', '\u00A7');
+    }
 
-    //cooltimmetje is dik
 }
