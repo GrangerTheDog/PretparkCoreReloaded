@@ -32,8 +32,10 @@
 
 package nl.HorizonCraft.PretparkCore;
 
+import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -61,7 +63,8 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
-        , new WeatherChangeListener());
+                        , new WeatherChangeListener(), new JoinQuitListener()
+                        );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
         //TODO: Register commands
@@ -71,11 +74,16 @@ public class Main extends JavaPlugin {
         //TODO: Hook api's
         //format: hookApi("Plugin name");
 
-        getLogger().info("Starting post-setup"); //For stuff like, loading arraylists and databases.
-        //TODO: Make post-setup
+        getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
+        //TODO: Make setup
 
-        getLogger().info("Starting Timers...");
+        getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         //TODO: Setup timers
+
+        getLogger().info("Starting post-setup"); //For frontend stuff, like scoreboards.
+        for(Player p : Bukkit.getOnlinePlayers()){
+            ScoreboardUtils.constructScoreboard(p);
+        }
 
         getLogger().info("Finishing up..."); //For stuff that needs to be done after everything.
         //TODO: Make Finishing
