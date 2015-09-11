@@ -30,13 +30,42 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Listeners;
+
+import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
- * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
+ * This class has been created on 09/9/11/2015/2015 at 7:18 PM by Cooltimmetje.
  */
-public class Variables {
+public class JoinQuitListener implements Listener {
 
-    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event){
+        Player p = event.getPlayer();
 
+        for(Player pl : Bukkit.getOnlinePlayers()){
+            if(pl != p){
+                ScoreboardUtils.updateScoreboard(pl, false);
+            }
+        }
+        ScoreboardUtils.constructScoreboard(p);
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event){
+        Player p = event.getPlayer();
+
+        for(Player pl : Bukkit.getOnlinePlayers()){
+            if(pl != p){
+                ScoreboardUtils.updateScoreboard(pl, true);
+            }
+        }
+        ScoreboardUtils.destroyScoreboard(p);
+    }
 }
