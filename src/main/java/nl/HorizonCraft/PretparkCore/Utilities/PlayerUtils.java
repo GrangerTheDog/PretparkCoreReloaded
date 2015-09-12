@@ -35,6 +35,7 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 import com.evilmidget38.UUIDFetcher;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -91,7 +92,7 @@ public class PlayerUtils {
         if(!p.hasPermission("pc.bypassgm") || forceInv){
             p.getInventory().clear();
 
-            ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, 3, "&e&lMy&3&lHorizon " + Variables.RIGHT_CLICK, "&7Open je profiel hier, hier kun ",
+            ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon " + Variables.RIGHT_CLICK, "&7Open je profiel hier, hier kun ",
                     "&7je alles vinden over jouw account.");
             SkullMeta sm = (SkullMeta) is.getItemMeta();
             sm.setOwner(p.getName());
