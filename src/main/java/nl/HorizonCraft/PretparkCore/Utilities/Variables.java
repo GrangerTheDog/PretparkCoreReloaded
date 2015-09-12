@@ -32,8 +32,6 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
-import org.bukkit.inventory.Inventory;
-
 import java.util.HashMap;
 
 /**
@@ -42,6 +40,7 @@ import java.util.HashMap;
 public class Variables {
 
     public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
+    public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");
 
     public static int COIN_TIME = 60;
     public static int COIN_GAIN = 30;

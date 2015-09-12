@@ -30,42 +30,35 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Commands;
 
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:33 PM by Cooltimmetje.
+ * This class has been created on 09/12/2015 at 10:29 AM by Cooltimmetje.
  */
-public class ChatUtils {
+public class FixGamemodeCommand implements CommandExecutor {
 
-    public static void sendMsg(Player p, String msg){
-        p.sendMessage(MiscUtils.color(msg));
-    }
-
-    public static void sendMsgTag(Player p, String tag, String msg){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void bcMsgTag(String tag, String msg){
-        Bukkit.broadcastMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void sendNoPremTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Je mag dit niet doen!"));
-    }
-
-    public static void sendSoonTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "SoonTM!"));
-    }
-
-    public static void clearChat(Player p){
-        for(int i = 0; i < 100; i++){
-            p.sendMessage("");
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if(cmd.getLabel().equalsIgnoreCase("fixgm")){
+            if(!(sender instanceof Player) || sender.hasPermission("pc.fixgm")){
+                sender.sendMessage(MiscUtils.color("&9FixGamemodes> &aAlle gamemodes zijn goedgezet!"));
+                for(Player p : Bukkit.getOnlinePlayers()){
+                    PlayerUtils.configPlayer(p, false);
+                }
+            } else {
+                ChatUtils.sendNoPremTag((Player) sender, "FixGamemodes");
+            }
         }
+        return false;
     }
-
-    public static String error = "&c&lERROR! &a";
 
 }

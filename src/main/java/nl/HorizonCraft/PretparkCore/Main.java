@@ -32,12 +32,16 @@
 
 package nl.HorizonCraft.PretparkCore;
 
+import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
+import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
+import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
 import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -45,8 +49,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import javax.xml.crypto.Data;
 
 /**
  * This class has been created on 9/7/2015 at 21:27 by Cooltimmetje.
@@ -69,11 +71,13 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
-                        , new WeatherChangeListener(), new JoinQuitListener()
-                        );
+                , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager()
+        );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
         //TODO: Register commands
+        registerCommand("fixgm", new FixGamemodeCommand());
+        registerCommand("resetinv", new ResetInventoryCommand());
         //format: registerCommand("cmd", new ExecutorClass);
 
         getLogger().info("Hooking into API's"); //For opening up API hooks
@@ -83,6 +87,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
         for(Player p : Bukkit.getOnlinePlayers()){
             MysqlManager.loadProfile(p);
+            PlayerUtils.configPlayer(p, false);
         }
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
