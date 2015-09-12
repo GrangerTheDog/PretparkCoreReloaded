@@ -32,8 +32,32 @@
 
 package nl.HorizonCraft.PretparkCore.Commands;
 
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 /**
- * Created by Tim on 9/10/2015.
+ * This class has been created on 09/12/2015 at 10:36 AM by Cooltimmetje.
  */
-public class Temp {
+public class ResetInventoryCommand implements CommandExecutor {
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if(cmd.getLabel().equalsIgnoreCase("resetinv")){
+            if(sender instanceof Player){
+                Player p = (Player) sender;
+                if(p.hasPermission("pc.bypassgm")) {
+                    ChatUtils.sendMsgTag(p, "ResetInv", "Je inventory is gereset.");
+                    PlayerUtils.configPlayer(p, true);
+                } else {
+                    ChatUtils.sendNoPremTag(p, "ResetInv");
+                }
+            } else {
+                sender.sendMessage("Je mag dit niet doen.");
+            }
+        }
+        return false;
+    }
 }

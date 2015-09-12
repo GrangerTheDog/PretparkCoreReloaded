@@ -2,3 +2,8 @@ name: PretparkCore
 version: 1.0
 main: nl.HorizonCraft.PretparkCore.Main
 authors: [Cooltimmetje, 78wesley]
+commands:
+    fixgm:
+        description: fixgm
+    resetinv:
+        description: resetinv

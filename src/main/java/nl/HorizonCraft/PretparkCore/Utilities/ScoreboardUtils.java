@@ -54,15 +54,18 @@ public class ScoreboardUtils {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(Variables.SERVER_NAME);
 
-        Score e1 = objective.getScore(" ");
-        e1.setScore(5);
+
         Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + PlayerUtils.getCoins(p)));
-        coins.setScore(4);
-        Score e2 = objective.getScore("  ");
-        e2.setScore(3);
+        coins.setScore(6);
+        Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
+        boxes.setScore(5);
+        Score keys = objective.getScore(MiscUtils.color("&b&oMystery Keys: &cN/A"));
+        keys.setScore(4);
+        Score e1 = objective.getScore(" ");
+        e1.setScore(3);
         Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + Bukkit.getOnlinePlayers().size()));
         online.setScore(2);
-        Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &cN/A"));
+        Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
         unique.setScore(1);
 
         p.setScoreboard(board);
@@ -86,15 +89,17 @@ public class ScoreboardUtils {
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName(Variables.SERVER_NAME);
 
-            Score e1 = objective.getScore(" ");
-            e1.setScore(5);
             Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + PlayerUtils.getCoins(p)));
-            coins.setScore(4);
-            Score e2 = objective.getScore("  ");
-            e2.setScore(3);
+            coins.setScore(6);
+            Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
+            boxes.setScore(5);
+            Score keys = objective.getScore(MiscUtils.color("&b&oMystery Keys: &cN/A"));
+            keys.setScore(4);
+            Score e1 = objective.getScore(" ");
+            e1.setScore(3);
             Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + Bukkit.getOnlinePlayers().size()));
             online.setScore(2);
-            Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &cN/A"));
+            Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
             unique.setScore(1);
 
             scoreboards.put(p.getName(), board);

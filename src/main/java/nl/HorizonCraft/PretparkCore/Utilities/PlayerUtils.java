@@ -33,8 +33,12 @@
 package nl.HorizonCraft.PretparkCore.Utilities;
 
 import com.evilmidget38.UUIDFetcher;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 
@@ -75,5 +79,31 @@ public class PlayerUtils {
     public static void setCoinTime(Player p, int time){
         Variables.coinTime.remove(p.getName());
         Variables.coinTime.put(p.getName(), time);
+    }
+
+    public static void configPlayer(Player p, boolean forceInv) {
+        if(p.hasPermission("pc.bypassgm")){
+            p.setGameMode(GameMode.CREATIVE);
+        } else {
+            p.setGameMode(GameMode.SURVIVAL);
+        }
+
+        if(!p.hasPermission("pc.bypassgm") || forceInv){
+            p.getInventory().clear();
+
+            ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, 3, "&e&lMy&3&lHorizon " + Variables.RIGHT_CLICK, "&7Open je profiel hier, hier kun ",
+                    "&7je alles vinden over jouw account.");
+            SkullMeta sm = (SkullMeta) is.getItemMeta();
+            sm.setOwner(p.getName());
+            is.setItemMeta(sm);
+            ItemUtils.createDisplay(p, is, 1);
+
+            ItemUtils.createDisplay(p, 2, Material.MINECART, 1, 0, "&aAttracties " + Variables.RIGHT_CLICK, "&7Bekijk alle attracties en hun status.");
+            ItemUtils.createDisplay(p, 9, Material.CHEST, 1, 0, "&aSwag Menu " + Variables.RIGHT_CLICK, "&7Wil je wat swag? Kijk hier!");
+
+            if(p.isOp()) {
+                ItemUtils.createDisplay(p, 7, Material.FLINT, 1, 0, "&aAdmin Menu " + Variables.RIGHT_CLICK, "&7Beheer de server, aleen voor OP's!");
+            }
+        }
     }
 }

@@ -30,61 +30,66 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Listeners;
+package nl.HorizonCraft.PretparkCore.Managers;
 
-import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
-import org.bukkit.Bukkit;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 7:18 PM by Cooltimmetje.
+ * This class has been created on 09/12/2015 at 10:20 AM by Cooltimmetje.
  */
-public class JoinQuitListener implements Listener {
+public class InventoryManager implements Listener {
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
+    public void onPickup(PlayerPickupItemEvent event){
         Player p = event.getPlayer();
-        final Player pfinal = p;
-        event.setJoinMessage(MiscUtils.color("&9Join> &e" + p.getName()));
-
-        MysqlManager.loadProfile(p);
-
-        ScheduleUtils.scheduleTask(20, new Runnable() {
-            @Override
-            public void run() {
-                PlayerUtils.configPlayer(pfinal, false);
-            }
-        });
-
-
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(pl != p){
-                ScoreboardUtils.updateScoreboard(pl, false);
-            }
+        if(!p.hasPermission("pc.bypassgm")){
+           event.setCancelled(true);
         }
-        ScoreboardUtils.constructScoreboard(p);
     }
 
     @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent event){
+    public void onDrop(PlayerDropItemEvent event){
         Player p = event.getPlayer();
-        event.setQuitMessage(MiscUtils.color("&9RageQuit> &e" + p.getName()));
+        if(!p.hasPermission("pc.bypassgm")){
+            event.setCancelled(true);
+        }
+    }
 
-        MysqlManager.saveData(p, true);
+    @EventHandler
+    public void onClick(PlayerInteractEvent event){
+        Player p = event.getPlayer();
+        if(event.getAction().toString().contains("RIGHT")){
+            if(event.getItem() != null){
+                if(event.getItem().hasItemMeta()){
+                    Material m = event.getMaterial();
 
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(pl != p){
-                ScoreboardUtils.updateScoreboard(pl, true);
+                    switch (m){
+                        case SKULL_ITEM:
+                            ChatUtils.sendSoonTag(p, "Profiel");
+                            break;
+                        case MINECART:
+                            ChatUtils.sendSoonTag(p, "Attracties");
+                            break;
+                        case FLINT:
+                            ChatUtils.sendSoonTag(p, "AdminMenu");
+                            break;
+                        case CHEST:
+                            ChatUtils.sendSoonTag(p, "SwagMenu");
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
             }
         }
-        ScoreboardUtils.destroyScoreboard(p);
     }
+
 }
