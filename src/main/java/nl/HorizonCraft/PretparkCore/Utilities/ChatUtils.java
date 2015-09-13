@@ -66,6 +66,7 @@ public class ChatUtils {
         }
     }
 
+
     public static String error = "&c&lERROR! &a";
 
 }

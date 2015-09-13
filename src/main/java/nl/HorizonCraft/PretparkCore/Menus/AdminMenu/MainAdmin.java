@@ -30,10 +30,49 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Menus;
+package nl.HorizonCraft.PretparkCore.Menus.AdminMenu;
+
+import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 
 /**
- * Created by Tim on 9/10/2015.
+ * This class has been created on 09/12/2015 at 5:37 PM by Cooltimmetje.
  */
-public class Temp {
+public class MainAdmin implements Listener {
+
+    public static void openAdminMain(Player p){
+        Inventory inv = Bukkit.createInventory(null, 27, "Admin Menu");
+
+        ItemUtils.createDisplay(inv, 13, Material.WATCH, 1, 0, "&aVerander Tijd", "&7Verander de tijd van de server.");
+        ItemUtils.createDisplay(inv, 15, Material.SKULL_ITEM, 1,SkullType.PLAYER.ordinal(), "&aPlayer Informatie", "&7Bekijk informatie over de spelers die online zijn.");
+
+        p.openInventory(inv);
+    }
+
+    @EventHandler
+    public static void onInventoryClick(InventoryClickEvent event){
+        if(event.getInventory().getName().equals("Admin Menu")){
+            event.setCancelled(true);
+            Player p = (Player) event.getWhoClicked();
+            Material m = event.getCurrentItem().getType();
+            switch (m){
+                default:
+                    break;
+                case WATCH:
+                    TimeAdmin.openTime(p);
+                    break;
+                case SKULL_ITEM:
+                    PlayerAdmin.openPlayer(p);
+                    break;
+            }
+        }
+    }
+
 }

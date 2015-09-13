@@ -30,25 +30,18 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Menus.AdminMenu;
 
-import java.util.HashMap;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
 /**
- * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
+ * This class has been created on 09/13/2015 at 12:23 PM by Cooltimmetje.
  */
-public class Variables {
+public class TimeAdmin implements Listener {
 
-    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
-    public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");
-    public static String WORLD_NAME = "world";
+    public static void openTime(Player p) {
 
-    public static int COIN_TIME = 60;
-    public static int COIN_GAIN = 30;
-    public static int DOUBLE_CHANCE = 10;
-
-    public static HashMap<String,Integer> coins = new HashMap<>();
-    public static HashMap<String,Integer> coinTime = new HashMap<>();
-    public static HashMap<String, Integer> playerId = new HashMap<>();
+    }
 
 }

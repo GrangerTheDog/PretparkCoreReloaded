@@ -38,6 +38,10 @@ import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
+import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
+import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
+import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.TimeAdmin;
+import nl.HorizonCraft.PretparkCore.Menus.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
@@ -71,7 +75,8 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
-                , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager()
+                , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
+                , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
