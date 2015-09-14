@@ -118,7 +118,7 @@ public class PlayerUtils {
         }
 
         if(getSpeed(p)){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 0, false, false));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0, false, false));
         } else {
             if(p.hasPotionEffect(PotionEffectType.SPEED)){
                 p.removePotionEffect(PotionEffectType.SPEED);
