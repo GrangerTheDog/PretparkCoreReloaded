@@ -30,11 +30,13 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Menus.AdminMenu;
+package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
-import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
@@ -46,43 +48,44 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 /**
- * This class has been created on 09/13/2015 at 12:23 PM by Cooltimmetje.
+ * This class has been created on 09/13/2015 at 12:39 PM by Cooltimmetje.
  */
-public class PlayerAdmin implements Listener {
+public class MyHorizonMenu implements Listener{
 
-    public static void openPlayer(Player p) {
-        Inventory inv = Bukkit.createInventory(null, 54, "Player Informatie");
-        int slot = 1;
+    public static void openMyHorizon(Player p, Player pTarget, boolean admin){
+        Inventory inv = Bukkit.createInventory(null, 36, MiscUtils.color("MyHorizon &8\u00BB &7" + pTarget.getName()));
 
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), pl.getDisplayName(), "&7Klik om te bekijken.");
-            SkullMeta im = (SkullMeta) is.getItemMeta();
-            im.setOwner(pl.getName());
-            is.setItemMeta(im);
-            ItemUtils.createDisplay(is, inv, slot);
-            slot = slot + 1;
+        ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName());
+        SkullMeta im = (SkullMeta) is.getItemMeta();
+        im.setOwner(pTarget.getName());
+        is.setItemMeta(im);
+        ItemUtils.createDisplay(is, inv, 13);
+
+        ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen", "&7Verander je instellingen.");
+
+        if(!admin) {
+            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + PlayerUtils.getCoins(pTarget) + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
+        } else {
+            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + PlayerUtils.getCoins(pTarget) + " coins", "&7+30 coins in: " + PlayerUtils.getCoinTime(pTarget));
         }
+
+        ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&dMystery Boxes: &cN/A");
+        ItemUtils.createDisplay(inv, 24, Material.TRIPWIRE_HOOK, 1, 0, "&dMystery Keys: &cN/A");
 
         p.openInventory(inv);
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        if(event.getInventory().getName().equals("Player Informatie")){
+        if(ChatColor.stripColor(event.getInventory().getName()).contains("MyHorizon")){
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
-            switch (event.getCurrentItem().getType()){
-                default:
+            Material m = event.getCurrentItem().getType();
+            switch (m){
+                case REDSTONE_COMPARATOR:
+                    PreferencesMenu.openPrefs(p);
                     break;
-                case SKULL_ITEM:
-                    SkullMeta sm = (SkullMeta) event.getCurrentItem().getItemMeta();
-                    String owner = sm.getOwner();
-                    Player pTarget = Bukkit.getPlayer(owner);
-
-                    if(pTarget != null){
-                        MyHorizonMenu.openMyHorizon(p, pTarget, true);
-                    }
-
+                default:
                     break;
             }
         }

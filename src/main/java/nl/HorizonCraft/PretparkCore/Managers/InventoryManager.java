@@ -33,7 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Managers;
 
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
-import nl.HorizonCraft.PretparkCore.Menus.MyHorizonMenu;
+import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -128,6 +128,22 @@ public class ItemUtils {
         return item;
     }
 
+    public static void createToggle(Inventory inv, int slot, String name, boolean state){
+        ItemStack is = createItemstack(Material.INK_SACK, 1, 8, name, "&7Klik om te togglen.");
+        ItemMeta im = is.getItemMeta();
+
+        if(state) {
+            im.setDisplayName(MiscUtils.color("&a" + name));
+            is.setDurability((short)10);
+        } else {
+            im.setDisplayName(MiscUtils.color("&c" + name));
+            is.setDurability((short)8);
+        }
+
+        is.setItemMeta(im);
+        inv.setItem(slot - 1, is);
+    }
+
 
 
 

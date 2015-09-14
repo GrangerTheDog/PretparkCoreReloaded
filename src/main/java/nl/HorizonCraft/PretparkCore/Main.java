@@ -41,7 +41,8 @@ import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.TimeAdmin;
-import nl.HorizonCraft.PretparkCore.Menus.MyHorizonMenu;
+import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
+import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.PreferencesMenu;
 import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
@@ -76,7 +77,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
-                , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu()
+                , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
@@ -92,6 +93,8 @@ public class Main extends JavaPlugin {
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
         for(Player p : Bukkit.getOnlinePlayers()){
             MysqlManager.loadProfile(p);
+            MysqlManager.loadPrefs(p);
+
             PlayerUtils.configPlayer(p, false);
         }
 

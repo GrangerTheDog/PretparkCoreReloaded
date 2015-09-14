@@ -30,53 +30,50 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Menus;
+package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 /**
- * This class has been created on 09/13/2015 at 12:39 PM by Cooltimmetje.
+ * This class has been created on 09/14/2015 at 7:36 PM by Cooltimmetje.
  */
-public class MyHorizonMenu implements Listener{
+public class PreferencesMenu implements Listener{
 
-    public static void openMyHorizon(Player p, Player pTarget, boolean admin){
-        Inventory inv = Bukkit.createInventory(null, 36, MiscUtils.color("MyHorizon &8\u00BB &7" + pTarget.getName()));
+    public static void openPrefs(Player p){
+        Inventory inv = Bukkit.createInventory(null, 36, "Instellingen \u00BB " + p.getName());
 
-        ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName());
-        SkullMeta im = (SkullMeta) is.getItemMeta();
-        im.setOwner(pTarget.getName());
-        is.setItemMeta(im);
-        ItemUtils.createDisplay(is, inv, 14);
-
-        if(!admin) {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + PlayerUtils.getCoins(pTarget) + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
-        } else {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + PlayerUtils.getCoins(pTarget) + " coins", "&7+30 coins in: " + PlayerUtils.getCoins(pTarget));
-        }
-
-        ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&dMystery Boxes: &cN/A");
-        ItemUtils.createDisplay(inv, 24, Material.TRIPWIRE_HOOK, 1, 0, "&dMystery Keys: &cN/A");
+        ItemUtils.createDisplay(inv, 14, Material.SUGAR, 1, 0, "&aSpeed effect", "&7Wil je wat sneller door het park kunnen gaan?", "&7Zet dan dit aan! &oWOOSH!");
+        ItemUtils.createToggle(inv, 23, "Speed effect", PlayerUtils.getSpeed(p));
 
         p.openInventory(inv);
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        if(ChatColor.stripColor(event.getInventory().getName()).contains("MyHorizon")){
+        Inventory inv = event.getInventory();
+        if(ChatColor.stripColor(inv.getName()).contains("Instellingen")){
             event.setCancelled(true);
+            Player p = (Player) event.getWhoClicked();
+            int slot = event.getSlot() + 1;
+            short data = event.getCurrentItem().getDurability();
+            switch (slot){
+                default:
+                    break;
+                case 23:
+                    PlayerUtils.setSpeed(p, data == 8);
+                    ItemUtils.createToggle(inv, slot, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()), data == 8);
+                    PlayerUtils.configPlayer(p, false);
+                    break;
+            }
         }
     }
 

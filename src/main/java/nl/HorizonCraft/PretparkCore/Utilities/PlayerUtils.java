@@ -40,6 +40,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 
@@ -66,6 +68,14 @@ public class PlayerUtils {
 
     public static int getCoinTime(Player p) {
         return Variables.coinTime.get(p.getName());
+    }
+
+    public static boolean getSpeed(Player p){
+        return Variables.speed.get(p.getName());
+    }
+
+    public static void setSpeed(Player p, boolean speed){
+        Variables.speed.put(p.getName(), speed);
     }
 
     public static void addCoins(Player p, int add, String reason) {
@@ -104,6 +114,14 @@ public class PlayerUtils {
 
             if(p.isOp()) {
                 ItemUtils.createDisplay(p, 7, Material.FLINT, 1, 0, "&aAdmin Menu " + Variables.RIGHT_CLICK, "&7Beheer de server, aleen voor OP's!");
+            }
+        }
+
+        if(getSpeed(p)){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 0, false, false));
+        } else {
+            if(p.hasPotionEffect(PotionEffectType.SPEED)){
+                p.removePotionEffect(PotionEffectType.SPEED);
             }
         }
     }

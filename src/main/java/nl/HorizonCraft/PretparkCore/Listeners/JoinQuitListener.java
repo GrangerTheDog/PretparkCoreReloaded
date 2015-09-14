@@ -56,6 +56,7 @@ public class JoinQuitListener implements Listener {
         event.setJoinMessage(MiscUtils.color("&9Join> &e" + p.getName()));
 
         MysqlManager.loadProfile(p);
+        MysqlManager.loadPrefs(p);
 
         ScheduleUtils.scheduleTask(20, new Runnable() {
             @Override
@@ -79,6 +80,7 @@ public class JoinQuitListener implements Listener {
         event.setQuitMessage(MiscUtils.color("&9RageQuit> &e" + p.getName()));
 
         MysqlManager.saveData(p, true);
+        MysqlManager.savePrefs(p, true);
 
         for(Player pl : Bukkit.getOnlinePlayers()){
             if(pl != p){

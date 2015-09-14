@@ -51,4 +51,6 @@ public class Variables {
     public static HashMap<String,Integer> coinTime = new HashMap<>();
     public static HashMap<String, Integer> playerId = new HashMap<>();
 
+    public static HashMap<String, Boolean> speed = new HashMap<>();
+
 }

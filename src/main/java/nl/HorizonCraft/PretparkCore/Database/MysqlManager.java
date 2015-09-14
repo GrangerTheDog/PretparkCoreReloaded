@@ -199,4 +199,141 @@ public class MysqlManager {
         }
     }
 
+    public static void loadPrefs(Player p){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String uuid = p.getUniqueId().toString();
+        String load = "SELECT * FROM playerprefs WHERE uuid = '" + uuid + "';";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                setPrefs(rs, p);
+            } else {
+                createPrefs(p);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        loadPrefs(p);
+    }
+
+    private static void createPrefs(Player p){
+        Main.getPlugin().getLogger().info("Creating preferences for: " + p.getName());
+        Connection c = null;
+        PreparedStatement ps = null;
+        String uuid = p.getUniqueId().toString();
+        String create = "INSERT INTO playerprefs VALUES(?,?,0)";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(create);
+
+            ps.setString(1, uuid);
+            ps.setString(2, p.getName());
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void setPrefs(ResultSet rs, Player p){
+        try{
+            if(rs.getInt("speed") == 1){
+                Variables.speed.put(p.getName(), true);
+            } else {
+                Variables.speed.put(p.getName(), false);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void savePrefs(Player p, boolean leave){
+        Connection c = null;
+        PreparedStatement ps = null;
+        String uuid = p.getUniqueId().toString();
+        String updateData = "UPDATE playerprefs SET name=?,speed=? WHERE uuid=?";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setString(1, p.getName());
+
+            if(PlayerUtils.getSpeed(p)){
+                ps.setInt(2, 1);
+            } else {
+                ps.setInt(2, 0);
+            }
+            ps.setString(3, uuid);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (leave) {
+            Variables.speed.remove(p.getName());
+        }
+    }
 }
