@@ -119,6 +119,9 @@ public class Main extends JavaPlugin {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);
+
+            MysqlManager.saveData(p, true);
+            MysqlManager.savePrefs(p, true);
         }
 
         plugin = null; //To prevent memory leaks
