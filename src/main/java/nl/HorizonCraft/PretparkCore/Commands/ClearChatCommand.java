@@ -30,43 +30,48 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Commands;
 
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:33 PM by Cooltimmetje.
+ * This class has been created on 09/9/14/2015/2015 at 8:20 PM by 78wesley.
  */
-public class ChatUtils {
 
-    public static void sendMsg(Player p, String msg){
-        p.sendMessage(MiscUtils.color(msg));
+public class ClearChatCommand implements CommandExecutor {
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+       if (cmd.getName().equalsIgnoreCase("cc"))  {
+           if (!(sender instanceof Player)) {
+                return true;
+           }
+           if (args.length == 0) {
+               sender.sendMessage("&c" + "To few arguments.");
+               sender.sendMessage("&c" + "Usage: /cc <Player|All>");
+           }
+           if (args.length >= 2) {
+               sender.sendMessage("&c" + "To many arguments.");
+               sender.sendMessage("&c" + "Usage: /cc <Player|All>");
+           }
+           Player target = Bukkit.getPlayer(args[0]);
+           if (args[0].equalsIgnoreCase("all")) {
+               if (!target.isOp()) {
+                   for (int i = 0; i < 100; i++) {
+                       target.sendMessage("");
+                   }
+               }
+           } else if (target != null) {
+               ChatUtils.clearChat(target);
+           } else if (target == null) {
+               sender.sendMessage(ChatUtils.error);
+           }
+       }
+        return false;
     }
-
-    public static void sendMsgTag(Player p, String tag, String msg){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void bcMsgTag(String tag, String msg){
-        Bukkit.broadcastMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void sendNoPremTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Je mag dit niet doen!"));
-    }
-
-    public static void sendSoonTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "SoonTM!"));
-    }
-
-    public static void clearChat(Player p){
-        for(int i = 0; i < 100; i++){
-            p.sendMessage(" ");
-        }
-    }
-
-
-    public static String error = "&c&lERROR! &a";
-
 }

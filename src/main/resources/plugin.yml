@@ -7,3 +7,5 @@ commands:
         description: fixgm
     resetinv:
         description: resetinv
+    cc:
+        description: Clear de chat

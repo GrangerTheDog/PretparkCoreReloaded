@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore;
 
+import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
@@ -84,6 +85,7 @@ public class Main extends JavaPlugin {
         //TODO: Register commands
         registerCommand("fixgm", new FixGamemodeCommand());
         registerCommand("resetinv", new ResetInventoryCommand());
+        registerCommand("cc", new ClearChatCommand());
         //format: registerCommand("cmd", new ExecutorClass);
 
         getLogger().info("Hooking into API's"); //For opening up API hooks

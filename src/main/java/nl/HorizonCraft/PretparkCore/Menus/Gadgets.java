@@ -21,52 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * In addition to the above:
+ * In additoin to the above:
  * All content in the repo/plugin is created by and owned by HorizonCraft, unless
  * stated otherwise. All content that is not created by us will be placed in their
  * original package, where they were found or that was set by the owner by default.
+ * This will also be stated before the "public class".
  *
  * You are free to use the code anywhere you like, but we will not provide ANY support
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Menus;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:33 PM by Cooltimmetje.
+ * This class has been created on 09/9/11/2015/2015 at 11:57 PM by 78wesley.
  */
-public class ChatUtils {
 
-    public static void sendMsg(Player p, String msg){
-        p.sendMessage(MiscUtils.color(msg));
+public class Gadgets {
+
+    public void gui() {
+        Inventory inv = Bukkit.createInventory(null, 9, "Gadgets");
+        ItemStack item1 = new ItemStack(Material.PISTON_BASE);
+        ItemMeta item1Meta = item1.getItemMeta();
+        item1Meta.setDisplayName("say hi stick");
+        item1.setItemMeta(item1Meta);
+        inv.setItem(1, item1);
     }
-
-    public static void sendMsgTag(Player p, String tag, String msg){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void bcMsgTag(String tag, String msg){
-        Bukkit.broadcastMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void sendNoPremTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Je mag dit niet doen!"));
-    }
-
-    public static void sendSoonTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "SoonTM!"));
-    }
-
-    public static void clearChat(Player p){
-        for(int i = 0; i < 100; i++){
-            p.sendMessage(" ");
-        }
-    }
-
-
-    public static String error = "&c&lERROR! &a";
-
 }
