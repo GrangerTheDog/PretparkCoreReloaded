@@ -220,21 +220,21 @@ public class MysqlManager {
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
-            if(c != null){
+            if (c != null) {
                 try {
                     c.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(ps != null){
+            if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(rs != null){
+            if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException e) {
@@ -242,8 +242,6 @@ public class MysqlManager {
                 }
             }
         }
-
-        loadPrefs(p);
     }
 
     private static void createPrefs(Player p){
