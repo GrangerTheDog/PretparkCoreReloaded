@@ -62,7 +62,7 @@ public class ChatUtils {
 
     public static void clearChat(Player p){
         for(int i = 0; i < 100; i++){
-            p.sendMessage("");
+            p.sendMessage(" ");
         }
     }
 
