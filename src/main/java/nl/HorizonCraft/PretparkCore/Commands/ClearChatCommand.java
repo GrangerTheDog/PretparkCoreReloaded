@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Commands;
 
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -47,31 +48,77 @@ public class ClearChatCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-       if (cmd.getName().equalsIgnoreCase("cc"))  {
-           if (!(sender instanceof Player)) {
-                return true;
-           }
-           if (args.length == 0) {
-               sender.sendMessage("&c" + "To few arguments.");
-               sender.sendMessage("&c" + "Usage: /cc <Player|All>");
-           }
-           if (args.length >= 2) {
-               sender.sendMessage("&c" + "To many arguments.");
-               sender.sendMessage("&c" + "Usage: /cc <Player|All>");
-           }
-           Player target = Bukkit.getPlayer(args[0]);
-           if (args[0].equalsIgnoreCase("all")) {
-               if (!target.isOp()) {
-                   for (int i = 0; i < 100; i++) {
-                       target.sendMessage("");
-                   }
+       if (cmd.getLabel().equalsIgnoreCase("cc"))  {
+            if(!(sender instanceof PlayerUtils)){
+                return false;
+            }
+            Player p = (Player) sender;
+
+           if(args.length == 0){
+               if(p.hasPermission("pc.cc")){
+                    clearChatAll(p);
+                   return true;
+               } else {
+                    clearChat(p);
+                   return true;
                }
-           } else if (target != null) {
-               ChatUtils.clearChat(target);
-           } else if (target == null) {
-               sender.sendMessage(ChatUtils.error);
+           }
+
+           if(args.length >= 1){
+               if(args[0].equalsIgnoreCase("-help")){
+                   if(p.hasPermission("pc.cc")){
+                       ChatUtils.sendMsgTag(p, "ClearChat", "Command gebruik: &o/cc [-help | -own | player]");
+                       return true;
+                   } else {
+                       ChatUtils.sendMsgTag(p, "ClearChat", "Command gebruik: &o/cc [-help]");
+                       return true;
+                   }
+               } else if(p.hasPermission("pc.cc")){
+                   if(args[0].equalsIgnoreCase("-own")){
+                       clearChat(p);
+                       return true;
+                   } else {
+                       Player target = Bukkit.getPlayer(args[0]);
+                       if(target != null){
+                           clearChat(p, target);
+                           return true;
+                       } else {
+                           ChatUtils.sendMsgTag(p, "ClearChat", ChatUtils.error + "Deze speler bestaat niet.");
+                           return false;
+                       }
+                   }
+               } else {
+                   clearChat(p);
+                   return true;
+               }
            }
        }
         return false;
+    }
+
+    //Clears own chat
+    private void clearChat(Player p){
+        ChatUtils.clearChat(p);
+        ChatUtils.sendMsgTag(p, "ClearChat", "Je hebt je eigen chat gecleard.");
+    }
+
+    //Clears target chat
+    private void clearChat(Player p, Player target){
+        ChatUtils.sendMsgTag(p, "ClearChat", "Je hebt de chat van " + target.getDisplayName() + " &agecleard");
+        ChatUtils.clearChat(target);
+        ChatUtils.bcMsgTag("ClearChat", "Jouw chat werd gecleard door: " + p.getDisplayName() + "&a!");
+    }
+
+    //Clears all chat, except those with permission
+    private void clearChatAll(Player p){
+        for(Player pl : Bukkit.getOnlinePlayers()){
+            if(!pl.hasPermission("pc.cc")){
+                ChatUtils.clearChat(pl);
+            } else {
+                ChatUtils.sendMsgTag(p, "ClearChat", "Jouw chat word niet gecleard omdat je hiertoe permissie hebt, wil je alsnog je chat clearen? &o/cc -own");
+            }
+        }
+
+        ChatUtils.bcMsgTag("ClearChat", "Alle chats werden gecleard door: " + p.getDisplayName() + "&a!");
     }
 }
