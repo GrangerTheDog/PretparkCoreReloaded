@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
@@ -49,10 +50,12 @@ import org.bukkit.inventory.Inventory;
 public class PreferencesMenu implements Listener{
 
     public static void openPrefs(Player p){
+        CorePlayer cp = PlayerUtils.getProfile(p);
+
         Inventory inv = Bukkit.createInventory(null, 36, "Instellingen \u00BB " + p.getName());
 
         ItemUtils.createDisplay(inv, 14, Material.SUGAR, 1, 0, "&aSpeed effect", "&7Wil je wat sneller door het park kunnen gaan?", "&7Zet dan dit aan! &oWOOSH!");
-        ItemUtils.createToggle(inv, 23, "Speed effect", PlayerUtils.getSpeed(p));
+        ItemUtils.createToggle(inv, 23, "Speed effect", cp.getSpeed());
 
         p.openInventory(inv);
     }
@@ -63,13 +66,14 @@ public class PreferencesMenu implements Listener{
         if(ChatColor.stripColor(inv.getName()).contains("Instellingen")){
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
+            CorePlayer cp = PlayerUtils.getProfile(p);
             int slot = event.getSlot() + 1;
             short data = event.getCurrentItem().getDurability();
             switch (slot){
                 default:
                     break;
                 case 23:
-                    PlayerUtils.setSpeed(p, data == 8);
+                    cp.setSpeed(data == 8);
                     ItemUtils.createToggle(inv, slot, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()), data == 8);
                     PlayerUtils.configPlayer(p, false);
                     break;

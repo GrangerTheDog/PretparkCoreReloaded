@@ -32,11 +32,8 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
-import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
+import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
+import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,6 +51,8 @@ public class JoinQuitListener implements Listener {
         Player p = event.getPlayer();
         final Player pfinal = p;
         event.setJoinMessage(MiscUtils.color("&9Join> &e" + p.getName()));
+
+        PlayerUtils.createProfile(p);
 
         MysqlManager.loadProfile(p);
         MysqlManager.loadPrefs(p);
@@ -79,8 +78,10 @@ public class JoinQuitListener implements Listener {
         Player p = event.getPlayer();
         event.setQuitMessage(MiscUtils.color("&9RageQuit> &e" + p.getName()));
 
-        MysqlManager.saveData(p, true);
-        MysqlManager.savePrefs(p, true);
+        MysqlManager.saveData(p);
+        MysqlManager.savePrefs(p);
+
+        Variables.profile.remove(p);
 
         for(Player pl : Bukkit.getOnlinePlayers()){
             if(pl != p){

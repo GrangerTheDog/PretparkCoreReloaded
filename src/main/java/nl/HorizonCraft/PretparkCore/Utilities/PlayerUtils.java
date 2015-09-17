@@ -32,67 +32,33 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
-import com.evilmidget38.UUIDFetcher;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Arrays;
-
 /**
  * This class has been created on 09/9/11/2015/2015 at 9:11 PM by Cooltimmetje.
  */
 public class PlayerUtils {
 
-    public static String getUUID(Player p) {
-        String name, uuid = null;
-        name = p.getName();
 
-        try {
-            uuid = new UUIDFetcher(Arrays.asList(name)).call().get(name).toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return uuid;
+    public static CorePlayer getProfile(Player p){
+        return Variables.profile.get(p.getName());
     }
 
-    public static int getCoins(Player p){
-        return Variables.coins.get(p.getName());
-    }
-
-    public static int getCoinTime(Player p) {
-        return Variables.coinTime.get(p.getName());
-    }
-
-    public static boolean getSpeed(Player p){
-        return Variables.speed.get(p.getName());
-    }
-
-    public static void setSpeed(Player p, boolean speed){
-        Variables.speed.put(p.getName(), speed);
-    }
-
-    public static void addCoins(Player p, int add, String reason) {
-        int curCoins = getCoins(p);
-        Variables.coins.remove(p.getName());
-        Variables.coins.put(p.getName(), add + curCoins);
-        ChatUtils.sendMsg(p, "&6+" + add + " coins! (" + reason + ")");
-        p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
-        ScoreboardUtils.updateScoreboard(p, false);
-    }
-
-    public static void setCoinTime(Player p, int time){
-        Variables.coinTime.remove(p.getName());
-        Variables.coinTime.put(p.getName(), time);
+    public static void createProfile(Player p){
+        Variables.profile.put(p.getName(), new CorePlayer(p));
     }
 
     public static void configPlayer(Player p, boolean forceInv) {
+        CorePlayer cp = getProfile(p);
+
         if(p.hasPermission("pc.bypassgm")){
             p.setGameMode(GameMode.CREATIVE);
         } else {
@@ -117,7 +83,7 @@ public class PlayerUtils {
             }
         }
 
-        if(getSpeed(p)){
+        if(cp.getSpeed()){
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0, false, false));
         } else {
             if(p.hasPotionEffect(PotionEffectType.SPEED)){

@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -53,6 +54,8 @@ import org.bukkit.inventory.meta.SkullMeta;
 public class MyHorizonMenu implements Listener{
 
     public static void openMyHorizon(Player p, Player pTarget, boolean admin){
+        CorePlayer cp = PlayerUtils.getProfile(pTarget);
+
         Inventory inv = Bukkit.createInventory(null, 36, MiscUtils.color("MyHorizon &8\u00BB &7" + pTarget.getName()));
 
         ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName());
@@ -64,9 +67,9 @@ public class MyHorizonMenu implements Listener{
         ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen", "&7Verander je instellingen.");
 
         if(!admin) {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + PlayerUtils.getCoins(pTarget) + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
+            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
         } else {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + PlayerUtils.getCoins(pTarget) + " coins", "&7+30 coins in: " + PlayerUtils.getCoinTime(pTarget));
+            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7+30 coins in: " + cp.getCoinTime());
         }
 
         ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&dMystery Boxes: &cN/A");
