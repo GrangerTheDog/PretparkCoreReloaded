@@ -33,7 +33,6 @@
 package nl.HorizonCraft.PretparkCore.Commands;
 
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -49,7 +48,7 @@ public class ClearChatCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
        if (cmd.getLabel().equalsIgnoreCase("cc"))  {
-            if(!(sender instanceof PlayerUtils)){
+            if(!(sender instanceof Player)){
                 return false;
             }
             Player p = (Player) sender;

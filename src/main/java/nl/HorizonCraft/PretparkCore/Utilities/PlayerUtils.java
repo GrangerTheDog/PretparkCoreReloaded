@@ -79,6 +79,9 @@ public class PlayerUtils {
     }
 
     public static void addCoins(Player p, int add, String reason) {
+        if(p.hasPermission("pc.coinmultiplier.2")) {
+            add = add * 2;
+        }
         int curCoins = getCoins(p);
         Variables.coins.remove(p.getName());
         Variables.coins.put(p.getName(), add + curCoins);
