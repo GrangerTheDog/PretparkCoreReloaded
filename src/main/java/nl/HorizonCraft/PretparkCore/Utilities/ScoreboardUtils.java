@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
@@ -49,13 +50,15 @@ public class ScoreboardUtils {
     private static String scoreboardName = MiscUtils.color("&e&lMy&3&lHorizon");
 
     public static void constructScoreboard(Player p) {
+        CorePlayer cp = PlayerUtils.getProfile(p);
+
         Scoreboard board = manager.getNewScoreboard();
         Objective objective = board.registerNewObjective("mainboard", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(Variables.SERVER_NAME);
 
 
-        Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + PlayerUtils.getCoins(p)));
+        Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
         coins.setScore(6);
         Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
         boxes.setScore(5);
@@ -81,6 +84,8 @@ public class ScoreboardUtils {
 
     public static void updateScoreboard(Player p, boolean leave) {
         Scoreboard board = scoreboards.get(p.getName());
+        CorePlayer cp = PlayerUtils.getProfile(p);
+
         if (board != null) {
             scoreboards.remove(p.getName());
             Objective objective = board.getObjective(DisplaySlot.SIDEBAR);
@@ -89,7 +94,7 @@ public class ScoreboardUtils {
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName(Variables.SERVER_NAME);
 
-            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + PlayerUtils.getCoins(p)));
+            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
             coins.setScore(6);
             Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
             boxes.setScore(5);

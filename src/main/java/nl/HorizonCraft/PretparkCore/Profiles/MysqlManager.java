@@ -30,7 +30,7 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Database;
+package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.zaxxer.hikari.HikariDataSource;
 import nl.HorizonCraft.PretparkCore.Main;
@@ -148,28 +148,29 @@ public class MysqlManager {
     }
 
     private static void setData(ResultSet rs, Player p) {
+        CorePlayer cp = PlayerUtils.getProfile(p);
         try {
-            Variables.coins.put(p.getName(), rs.getInt("coins"));
-            Variables.coinTime.put(p.getName(), rs.getInt("coin_time"));
-            Variables.playerId.put(p.getName(), rs.getInt("id"));
+            cp.setCoins(rs.getInt("coins"));
+            cp.setCoinTime(rs.getInt("coin_time"));
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
 
-    public static void saveData(Player p, boolean leave){
+    public static void saveData(Player p){
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
         String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=? WHERE uuid=?";
+        CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
             c = hikari.getConnection();
             ps = c.prepareStatement(updateData);
 
             ps.setString(1, p.getName());
-            ps.setInt(2, PlayerUtils.getCoins(p));
-            ps.setInt(3, PlayerUtils.getCoinTime(p));
+            ps.setInt(2, cp.getCoins());
+            ps.setInt(3, cp.getCoinTime());
             ps.setString(4, uuid);
 
             ps.execute();
@@ -190,12 +191,6 @@ public class MysqlManager {
                     e.printStackTrace();
                 }
             }
-        }
-
-        if (leave) {
-            Variables.coins.remove(p.getName());
-            Variables.playerId.remove(p.getName());
-            Variables.coinTime.remove(p.getName());
         }
     }
 
@@ -280,22 +275,24 @@ public class MysqlManager {
     }
 
     private static void setPrefs(ResultSet rs, Player p){
+        CorePlayer cp = PlayerUtils.getProfile(p);
         try{
             if(rs.getInt("speed") == 1){
-                Variables.speed.put(p.getName(), true);
+                cp.setSpeed(true);
             } else {
-                Variables.speed.put(p.getName(), false);
+                cp.setSpeed(false);
             }
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
 
-    public static void savePrefs(Player p, boolean leave){
+    public static void savePrefs(Player p){
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
         String updateData = "UPDATE playerprefs SET name=?,speed=? WHERE uuid=?";
+        CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
             c = hikari.getConnection();
@@ -303,7 +300,7 @@ public class MysqlManager {
 
             ps.setString(1, p.getName());
 
-            if(PlayerUtils.getSpeed(p)){
+            if(cp.getSpeed()){
                 ps.setInt(2, 1);
             } else {
                 ps.setInt(2, 0);
@@ -328,10 +325,6 @@ public class MysqlManager {
                     e.printStackTrace();
                 }
             }
-        }
-
-        if (leave) {
-            Variables.speed.remove(p.getName());
         }
     }
 }

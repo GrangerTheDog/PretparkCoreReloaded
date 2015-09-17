@@ -32,7 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Timers;
 
-import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
+import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
 import org.bukkit.Bukkit;
@@ -48,8 +48,8 @@ public class DataSaver {
             @Override
             public void run() {
                 for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p, false);
-                    MysqlManager.savePrefs(p, false);
+                    MysqlManager.saveData(p);
+                    MysqlManager.savePrefs(p);
 
                     PlayerUtils.configPlayer(p, false);
                 }

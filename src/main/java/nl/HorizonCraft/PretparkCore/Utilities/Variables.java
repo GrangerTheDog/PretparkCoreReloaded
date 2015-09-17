@@ -32,6 +32,8 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
+
 import java.util.HashMap;
 
 /**
@@ -44,13 +46,9 @@ public class Variables {
     public static String WORLD_NAME = "world";
 
     public static int COIN_TIME = 60;
-    public static int COIN_GAIN = 30;
+    public static int COIN_GAIN = 20;
     public static int DOUBLE_CHANCE = 10;
 
-    public static HashMap<String,Integer> coins = new HashMap<>();
-    public static HashMap<String,Integer> coinTime = new HashMap<>();
-    public static HashMap<String, Integer> playerId = new HashMap<>();
-
-    public static HashMap<String, Boolean> speed = new HashMap<>();
+    public static HashMap<String, CorePlayer> profile = new HashMap<>();
 
 }

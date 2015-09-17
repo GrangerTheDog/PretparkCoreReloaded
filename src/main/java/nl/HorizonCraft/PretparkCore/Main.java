@@ -35,7 +35,6 @@ package nl.HorizonCraft.PretparkCore;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
-import nl.HorizonCraft.PretparkCore.Database.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
@@ -44,6 +43,7 @@ import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.TimeAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.PreferencesMenu;
+import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
@@ -94,6 +94,8 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
         for(Player p : Bukkit.getOnlinePlayers()){
+            PlayerUtils.createProfile(p);
+
             MysqlManager.loadProfile(p);
             MysqlManager.loadPrefs(p);
 
@@ -122,8 +124,10 @@ public class Main extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);
 
-            MysqlManager.saveData(p, true);
-            MysqlManager.savePrefs(p, true);
+            MysqlManager.saveData(p);
+            MysqlManager.savePrefs(p);
+
+
         }
 
         plugin = null; //To prevent memory leaks
