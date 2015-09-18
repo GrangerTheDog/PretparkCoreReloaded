@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
@@ -43,12 +44,14 @@ import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.TimeAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.PreferencesMenu;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -112,7 +115,10 @@ public class Main extends JavaPlugin {
         }
 
         getLogger().info("Finishing up..."); //For stuff that needs to be done after everything.
-        //TODO: Make Finishing
+        for(Player p : Bukkit.getOnlinePlayers()){
+            CorePlayer cp = PlayerUtils.getProfile(p);
+            cp.awardAchievement(p, AchievementsEnum.FIRST_TIME_JOIN);
+        }
 
         getLogger().info("Plugin ready! (Loadtime: " + getLoad() + "ms)");
         sendDebug("&9Debug> &aPlugin load finished! &c(" + getLoad() + "ms) &3&oYou can take a look in the console for more load information.");
@@ -127,7 +133,7 @@ public class Main extends JavaPlugin {
             MysqlManager.saveData(p);
             MysqlManager.savePrefs(p);
 
-
+            Variables.profile.remove(p.getName());
         }
 
         plugin = null; //To prevent memory leaks

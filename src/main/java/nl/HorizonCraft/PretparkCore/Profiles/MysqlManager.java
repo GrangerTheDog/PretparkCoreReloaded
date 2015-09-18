@@ -36,6 +36,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -112,7 +113,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0)";
 
         try {
             c = hikari.getConnection();
@@ -121,6 +122,7 @@ public class MysqlManager {
             ps.setString(1, uuid);
             ps.setString(2, p.getName());
             ps.setInt(3, Variables.COIN_TIME);
+            ps.setString(4, StringUtils.repeat("f", 100));
 
             ps.execute();
         } catch (SQLException e) {
@@ -152,6 +154,12 @@ public class MysqlManager {
         try {
             cp.setCoins(rs.getInt("coins"));
             cp.setCoinTime(rs.getInt("coin_time"));
+            if(rs.getString("achievements") != null) {
+                cp.setAchievements(rs.getString("achievements").toCharArray());
+            } else {
+                cp.setAchievements(StringUtils.repeat("f", 100).toCharArray());
+            }
+            cp.setKeys(rs.getInt("mkeys"));
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -161,7 +169,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -171,7 +179,9 @@ public class MysqlManager {
             ps.setString(1, p.getName());
             ps.setInt(2, cp.getCoins());
             ps.setInt(3, cp.getCoinTime());
-            ps.setString(4, uuid);
+            ps.setString(4, new String(cp.getAchievements()));
+            ps.setInt(5, cp.getKeys());
+            ps.setString(6, uuid);
 
             ps.execute();
         } catch (SQLException e) {

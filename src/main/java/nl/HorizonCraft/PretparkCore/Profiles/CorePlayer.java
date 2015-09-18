@@ -32,7 +32,9 @@
 
 package nl.HorizonCraft.PretparkCore.Profiles;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -50,6 +52,10 @@ public class CorePlayer {
 
     private int coins;
     private int coinTime;
+    private int boxes;
+    private int keys;
+
+    private char[] achievements;
 
     private boolean speed;
 
@@ -64,6 +70,14 @@ public class CorePlayer {
 
     public int getCoinTime(){
         return coinTime;
+    }
+
+    public int getBoxes(){
+        return boxes;
+    }
+
+    public int getKeys(){
+        return keys;
     }
 
     public boolean getSpeed(){
@@ -82,7 +96,33 @@ public class CorePlayer {
         this.speed = value;
     }
 
-    public void addCoins(Player p, int add, String reason, boolean allowMultiplier) {
+    public void setBoxes(int value){
+        this.boxes = value;
+    }
+
+    public void setAchievements(char[] value){
+        this.achievements = value;
+    }
+
+    public char[] getAchievements(){
+        return achievements;
+    }
+
+    public void setKeys(int value){
+        this.keys = value;
+    }
+
+    public void addKeys(Player p, int add, String reason, boolean playSound){
+        setKeys(getKeys() + add);
+
+        ChatUtils.sendMsg(p, "&d+" + add + " Mystery Keys! (" + reason + ")");
+        if(playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public void addCoins(Player p, int add, String reason, boolean allowMultiplier, boolean playSound) {
         if(p.hasPermission("pc.coinmultiplier.2") && allowMultiplier) {
             add = add * 2;
         }
@@ -90,8 +130,26 @@ public class CorePlayer {
         setCoins(getCoins() + add);
 
         ChatUtils.sendMsg(p, "&6+" + add + " coins! (" + reason + ")");
-        p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        if(playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
         ScoreboardUtils.updateScoreboard(p, false);
     }
 
+    public void awardAchievement(Player p, AchievementsEnum achievement){
+        if(achievements[achievement.getId()] == 'f') {
+            achievements[achievement.getId()] = 't';
+
+            p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
+            MiscUtils.shootFirework(p.getLocation(), p.getWorld().getName(), true);
+
+            ChatUtils.sendMsg(p, "&8-------- &a&lACHIEVEMENT GET! &8--------");
+            ChatUtils.sendMsg(p, "&3Naam: &a" + achievement.getName());
+            ChatUtils.sendMsg(p, "&3Beschrijving: &a" + achievement.getDescription());
+            ChatUtils.sendMsg(p, "&3Rewards:");
+            addCoins(p, achievement.getCoinReward(), "Achievement: " + achievement.getName(), false, false);
+            addKeys(p, achievement.getKeyReward(), "Achievement: " + achievement.getName(), false);
+            ChatUtils.sendMsg(p, "&8-------- &a&lACHIEVEMENT GET! &8--------");
+        }
+    }
 }

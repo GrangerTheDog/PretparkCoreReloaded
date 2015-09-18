@@ -32,6 +32,8 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
@@ -53,6 +55,7 @@ public class JoinQuitListener implements Listener {
         event.setJoinMessage(MiscUtils.color("&9Join> &e" + p.getName()));
 
         PlayerUtils.createProfile(p);
+        CorePlayer cp = PlayerUtils.getProfile(p);
 
         MysqlManager.loadProfile(p);
         MysqlManager.loadPrefs(p);
@@ -71,6 +74,8 @@ public class JoinQuitListener implements Listener {
             }
         }
         ScoreboardUtils.constructScoreboard(p);
+
+        cp.awardAchievement(p, AchievementsEnum.FIRST_TIME_JOIN);
     }
 
     @EventHandler
@@ -89,5 +94,7 @@ public class JoinQuitListener implements Listener {
             }
         }
         ScoreboardUtils.destroyScoreboard(p);
+
+        Variables.profile.remove(p.getName());
     }
 }

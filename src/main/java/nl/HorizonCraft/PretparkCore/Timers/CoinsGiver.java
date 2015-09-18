@@ -51,11 +51,11 @@ public class CoinsGiver {
                     if (cp.getCoinTime() == 0) {
                         int chance = MiscUtils.randomInt(1, 100);
                         if (chance <= Variables.DOUBLE_CHANCE) {
-                            cp.addCoins(p, Variables.COIN_GAIN * 2, "1 uur online, dubbel coins", true);
+                            cp.addCoins(p, Variables.COIN_GAIN * 2, "1 uur online, dubbel coins", true, true);
                             ChatUtils.bcMsgTag("Coins", "&c" + p.getName() + " &aheeft zojuist 2x coins ontvangen! Geluksvogel!");
                             cp.setCoinTime(Variables.COIN_TIME);
                         } else {
-                            cp.addCoins(p, Variables.COIN_GAIN, "1 uur online", true);
+                            cp.addCoins(p, Variables.COIN_GAIN, "1 uur online", true, true);
                             cp.setCoinTime(Variables.COIN_TIME);
                         }
                     } else {

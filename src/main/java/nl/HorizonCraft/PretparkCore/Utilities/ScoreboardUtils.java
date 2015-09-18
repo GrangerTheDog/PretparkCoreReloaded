@@ -62,7 +62,7 @@ public class ScoreboardUtils {
         coins.setScore(6);
         Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
         boxes.setScore(5);
-        Score keys = objective.getScore(MiscUtils.color("&b&oMystery Keys: &cN/A"));
+        Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
         keys.setScore(4);
         Score e1 = objective.getScore(" ");
         e1.setScore(3);
@@ -98,7 +98,7 @@ public class ScoreboardUtils {
             coins.setScore(6);
             Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
             boxes.setScore(5);
-            Score keys = objective.getScore(MiscUtils.color("&b&oMystery Keys: &cN/A"));
+            Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
             keys.setScore(4);
             Score e1 = objective.getScore(" ");
             e1.setScore(3);

@@ -30,10 +30,47 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles;
+package nl.HorizonCraft.PretparkCore.Bundles.Achievements;
 
 /**
- * Created by Tim on 9/10/2015.
+ * This class has been created on 09/18/2015 at 3:53 PM by Cooltimmetje.
  */
-public class Temp {
+public enum AchievementsEnum {
+
+    FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1),
+    KOALA_SLAP(1, "I don't like koala's!", "Sla xBrandy!", 10, 1);
+
+    private int id;
+    private String name;
+    private String description;
+    private int coinReward;
+    private int keyReward;
+
+    public int getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public int getCoinReward(){
+        return coinReward;
+    }
+
+    public int getKeyReward(){
+        return keyReward;
+    }
+
+    AchievementsEnum(int i, String s, String s1, int i1, int i2) {
+        this.id = i;
+        this.name = s;
+        this.description = s1;
+        this.coinReward = i1;
+        this.keyReward = i2;
+    }
 }
