@@ -32,10 +32,12 @@
 
 package nl.HorizonCraft.PretparkCore;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
+import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
@@ -44,6 +46,7 @@ import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.TimeAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.PreferencesMenu;
+import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
@@ -81,7 +84,8 @@ public class Main extends JavaPlugin {
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
-                , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu()
+                , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
+                , new GadgetsMenu(), new GadgetTriggers()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.

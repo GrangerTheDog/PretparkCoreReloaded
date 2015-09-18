@@ -160,4 +160,42 @@ public class MiscUtils {
 
         return c;
     }
+
+    public static String formatTime(int cooldown) {
+        int sec,min,hour = 0;
+        sec = cooldown;
+        min = 0;
+        hour = 0;
+        while (sec > 60){
+            min = min + 1;
+            sec = sec - 60;
+        }
+        while (min > 60){
+            hour = hour + 1;
+            min = min - 60;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if(hour != 0) {
+            sb.append(hour + "h");
+        } else if (min != 0){
+            sb.append(min + "m");
+        } else if (sec != 0){
+            sb.append(sec + "s");
+        }
+
+        return sb.toString();
+    }
+
+    public static boolean cooldownCheck(long lastused, int cdtime){
+        long currentTime = System.currentTimeMillis();
+        int cdmillis = cdtime * 1000;
+        return currentTime - lastused >= cdmillis;
+    }
+
+    public static int getTimeRemaining(long lastUsed, int cdtime){
+        long currentTime = System.currentTimeMillis();
+
+        return (int) (((currentTime - lastUsed ) / 1000) - cdtime) * -1;
+    }
 }

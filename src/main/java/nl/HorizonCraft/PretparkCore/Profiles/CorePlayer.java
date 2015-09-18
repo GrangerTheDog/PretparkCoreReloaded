@@ -32,7 +32,8 @@
 
 package nl.HorizonCraft.PretparkCore.Profiles;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
+import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
@@ -56,8 +57,11 @@ public class CorePlayer {
     private int keys;
 
     private char[] achievements;
+    private char[] gadgets;
 
     private boolean speed;
+
+    private GadgetsEnum gadget;
 
     public CorePlayer(Player p){
         this.uuid = p.getUniqueId();
@@ -151,5 +155,25 @@ public class CorePlayer {
             addKeys(p, achievement.getKeyReward(), "Achievement: " + achievement.getName(), false);
             ChatUtils.sendMsg(p, "&8-------- &a&lACHIEVEMENT GET! &8--------");
         }
+    }
+
+    public void addGadget(Player p, GadgetsEnum gadget){
+        gadgets[gadget.getId()] = 't';
+    }
+
+    public char[] getGadgets() {
+        return gadgets;
+    }
+
+    public void setGadgets(char[] gadgets) {
+        this.gadgets = gadgets;
+    }
+
+    public GadgetsEnum getGadget() {
+        return gadget;
+    }
+
+    public void setGadget(GadgetsEnum gadget) {
+        this.gadget = gadget;
     }
 }

@@ -113,7 +113,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?)";
 
         try {
             c = hikari.getConnection();
@@ -123,6 +123,7 @@ public class MysqlManager {
             ps.setString(2, p.getName());
             ps.setInt(3, Variables.COIN_TIME);
             ps.setString(4, StringUtils.repeat("f", 100));
+            ps.setString(5, StringUtils.repeat("f", 100));
 
             ps.execute();
         } catch (SQLException e) {
@@ -160,6 +161,7 @@ public class MysqlManager {
                 cp.setAchievements(StringUtils.repeat("f", 100).toCharArray());
             }
             cp.setKeys(rs.getInt("mkeys"));
+            cp.setGadgets(rs.getString("gadgets").toCharArray());
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -169,7 +171,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -181,7 +183,8 @@ public class MysqlManager {
             ps.setInt(3, cp.getCoinTime());
             ps.setString(4, new String(cp.getAchievements()));
             ps.setInt(5, cp.getKeys());
-            ps.setString(6, uuid);
+            ps.setString(6, new String(cp.getGadgets()));
+            ps.setString(7, uuid);
 
             ps.execute();
         } catch (SQLException e) {
