@@ -32,66 +32,87 @@
 
 package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
+import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 /**
- * This class has been created on 09/13/2015 at 12:39 PM by Cooltimmetje.
+ * This class has been created on 09/18/2015 at 9:17 PM by Cooltimmetje.
  */
-public class MyHorizonMenu implements Listener{
+public class AchievementMenu implements Listener{
 
-    public static void openMyHorizon(Player p, Player pTarget, boolean admin){
-        CorePlayer cp = PlayerUtils.getProfile(pTarget);
+    public static void open(Player p){
+        Inventory inv = Bukkit.createInventory(null, 54, "Achievements");
 
-        Inventory inv = Bukkit.createInventory(null, 36, MiscUtils.color("MyHorizon &8\u00BB &7" + pTarget.getName()));
+        CorePlayer cp = PlayerUtils.getProfile(p);
+        char[] unlocks = cp.getAchievements();
 
-        ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName());
-        SkullMeta im = (SkullMeta) is.getItemMeta();
-        im.setOwner(pTarget.getName());
-        is.setItemMeta(im);
-        ItemUtils.createDisplay(is, inv, 13);
+        int slot = 1;
+        for(AchievementsEnum achievement : AchievementsEnum.values()){
+            int id = achievement.getId();
+            boolean unlocked = unlocks[id] == 't';
+            int coins = achievement.getCoinReward();
+            int keys = achievement.getKeyReward();
+            String name = constructName(achievement.getName(), unlocked);
+            String[] lore = constuctLore(achievement.getDescription(), unlocked, coins, keys);
+            Material m;
+            if(unlocked){
+                m = Material.DIAMOND;
+            } else {
+                m = Material.COAL;
+            }
 
-        ItemUtils.createDisplay(inv, 14, Material.DIAMOND, 1, 0, "&aAchievements", "&7Klik om te openen.");
-
-        ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen", "&7Verander je instellingen.");
-
-        if(!admin) {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
-        } else {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7+30 coins in: " + cp.getCoinTime());
+            ItemUtils.createDisplay(inv, slot, m, 1, 0, name, lore);
+            slot++;
         }
+        ItemUtils.createDisplay(inv, 46, Material.ARROW, 1, 0, "&cTerug");
 
-        ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&dMystery Boxes: &cN/A");
-        ItemUtils.createDisplay(inv, 24, Material.TRIPWIRE_HOOK, 1, 0, "&dMystery Keys: " + cp.getKeys());
+        p.openInventory(inv);
 
         p.openInventory(inv);
     }
 
+    private static String[] constuctLore(String lore, boolean unlocked, int coins, int keys) {
+        StringBuilder sb = new StringBuilder();
+
+        String[] loreArray = lore.split("\n");
+        for(String loreS : loreArray) {
+            sb.append("&3").append(loreS).append("\n");
+        }
+        sb.append("\n");
+        sb.append("&3Rewards: ");
+        sb.append("\n");
+        sb.append("&6").append(coins).append(" coins").append("\n").append("&d").append(keys).append(" Mystery Key(s)");
+
+        return sb.toString().split("\n");
+    }
+
+    private static String constructName(String name, boolean unlocked) {
+        if(unlocked) {
+            return "&a" + name;
+        } else {
+            return "&c" + name;
+        }
+    }
+
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        if(ChatColor.stripColor(event.getInventory().getName()).contains("MyHorizon")){
+        if(ChatColor.stripColor(event.getInventory().getName()).contains("Achievements")){
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
             Material m = event.getCurrentItem().getType();
             switch (m){
-                case REDSTONE_COMPARATOR:
-                    PreferencesMenu.openPrefs(p);
-                    break;
-                case DIAMOND:
-                    AchievementMenu.open(p);
+                case ARROW:
+                    MyHorizonMenu.openMyHorizon(p, p, false);
                     break;
                 default:
                     break;
