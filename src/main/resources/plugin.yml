@@ -8,4 +8,6 @@ commands:
     resetinv:
         description: resetinv
     cc:
-        description: Clear de chat
+        description: cc
+    maze:
+        description: maze

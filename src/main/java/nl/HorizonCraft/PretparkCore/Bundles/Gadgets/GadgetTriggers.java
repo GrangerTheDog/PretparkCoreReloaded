@@ -67,7 +67,7 @@ public class GadgetTriggers implements Listener {
         Player p = event.getPlayer();
         if(event.getAction().toString().contains("RIGHT")){
             if(event.getItem() != null){
-                if(event.getItem().hasItemMeta()) {
+                if(event.getItem().hasItemMeta() && event.getItem().getType() != Material.SKULL_ITEM) {
                     event.setCancelled(true);
                     Material m = event.getMaterial();
                     switch (m) {
@@ -129,10 +129,12 @@ public class GadgetTriggers implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event){
-        if(event.getPlayer().getItemInHand().getType() == Material.PISTON_STICKY_BASE || event.getPlayer().getItemInHand().getType() == Material.SLIME_BLOCK){
+        if(event.getPlayer().getItemInHand().getType() == Material.SLIME_BLOCK){
             if(event.getPlayer().getItemInHand().hasItemMeta()){
                 event.setCancelled(true);
             }
+        } else {
+            event.setCancelled(false);
         }
     }
 

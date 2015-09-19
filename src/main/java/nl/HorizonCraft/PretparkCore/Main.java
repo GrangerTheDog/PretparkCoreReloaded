@@ -36,6 +36,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
+import nl.HorizonCraft.PretparkCore.Commands.MazeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
@@ -94,6 +95,7 @@ public class Main extends JavaPlugin {
         registerCommand("fixgm", new FixGamemodeCommand());
         registerCommand("resetinv", new ResetInventoryCommand());
         registerCommand("cc", new ClearChatCommand());
+        registerCommand("maze", new MazeCommand());
         //format: registerCommand("cmd", new ExecutorClass);
 
         getLogger().info("Hooking into API's"); //For opening up API hooks
@@ -174,7 +176,7 @@ public class Main extends JavaPlugin {
     }
 
      //Used to send debug messages.
-    private void sendDebug(String msg){
+    public static void sendDebug(String msg){
         for(Player p : Bukkit.getOnlinePlayers()) {
             if(p.isOp()) {
                 p.sendMessage(MiscUtils.color(msg));

@@ -39,7 +39,8 @@ public enum AchievementsEnum {
 
     FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1),
     KOALA_SLAP(1, "I don't like koala's!", "Launch xBrandy!", 10, 1),
-    CREEPER_SLAP(2, "It exploded into diamonds!", "Launch klapklap980!", 10, 1);
+    CREEPER_SLAP(2, "It exploded into diamonds!", "Launch klapklap980!", 10, 1),
+    MAZE_COMPLETE_1(3, "Into the maze!", "Haal het einde van doolhof 1!", 25, 2);
 
     private int id;
     private String name;

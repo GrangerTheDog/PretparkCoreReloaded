@@ -43,6 +43,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * This class has been created on 09/12/2015 at 10:20 AM by Cooltimmetje.
@@ -72,10 +74,13 @@ public class InventoryManager implements Listener {
             if(event.getItem() != null){
                 if(event.getItem().hasItemMeta()){
                     Material m = event.getMaterial();
-
+                    ItemStack is = event.getItem();
                     switch (m){
                         case SKULL_ITEM:
-                            MyHorizonMenu.openMyHorizon(p, p, false);
+                            SkullMeta sm = (SkullMeta) is.getItemMeta();
+                            if(sm.getOwner().equals(p.getName())) {
+                                MyHorizonMenu.openMyHorizon(p, p, false);
+                            }
                             break;
                         case MINECART:
                             ChatUtils.sendSoonTag(p, "Attracties");
