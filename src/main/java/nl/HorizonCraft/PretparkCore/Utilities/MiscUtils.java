@@ -162,15 +162,15 @@ public class MiscUtils {
     }
 
     public static String formatTime(int cooldown) {
-        int sec,min,hour = 0;
+        int sec,min,hour;
         sec = cooldown;
         min = 0;
         hour = 0;
-        while (sec > 60){
+        while (sec >= 60){
             min = min + 1;
             sec = sec - 60;
         }
-        while (min > 60){
+        while (min >= 60){
             hour = hour + 1;
             min = min - 60;
         }
@@ -178,9 +178,11 @@ public class MiscUtils {
         StringBuilder sb = new StringBuilder();
         if(hour != 0) {
             sb.append(hour + "h");
-        } else if (min != 0){
+        }
+        if (min != 0){
             sb.append(min + "m");
-        } else if (sec != 0){
+        }
+        if (sec != 0){
             sb.append(sec + "s");
         }
 

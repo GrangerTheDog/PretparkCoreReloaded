@@ -62,26 +62,37 @@ public class MazeCommand implements CommandExecutor {
                     Player p = Bukkit.getPlayer(args[1]);
                     if(p != null){
                         CorePlayer cp = PlayerUtils.getProfile(p);
-                        if(args[0].equals("complete")){
-                            if(args[2].equals("1")){
-                                cp.awardAchievement(p, AchievementsEnum.MAZE_COMPLETE_1);
-                                cp.addCoins(p, 5, "Doolhof 1 opgelost!", true, true);
-                                p.teleport(new Location(p.getWorld(), -78, 66, -381).add(0.5, 0, 0.5));
-                            }
-                            ChatUtils.sendMsgTag(p, "Doolhof", "Goed gedaan! Je tijd is: &c" + getTime(p) + "&a!");
-                        } else if (args[0].equals("start")){
-                            if(args[2].equals("1")){
-                                p.teleport(new Location(p.getWorld(), -76, 66, -384).add(0.5, 0, 0.5));
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 2));
-                            }
-                            mazeTime.put(p.getName(), System.currentTimeMillis());
-                            ChatUtils.sendMsgTag(p, "Doolhof", "Challenge gestart! Vind snel de uitgang!");
-                        } else if (args[0].equals("stop")){
-                            if(args[2].equals("1")){
-                                p.teleport(new Location(p.getWorld(), -76, 66, -378).add(0.5, 0, 0.5));
-                            }
-                            ChatUtils.sendMsgTag(p, "Doolhof", "Challenge gestopt!");
-                            mazeTime.remove(p.getName());
+                        switch (args[0]) {
+                            case "complete":
+                                if (mazeTime.containsKey(p.getName())) {
+                                    if (args[2].equals("1")) {
+                                        cp.awardAchievement(p, AchievementsEnum.MAZE_COMPLETE_1);
+                                        cp.addCoins(p, 5, "Doolhof 1 opgelost!", true, true);
+                                        p.teleport(new Location(p.getWorld(), -78, 66, -381).add(0.5, 0, 0.5));
+                                    }
+                                    ChatUtils.sendMsgTag(p, "Doolhof", "Goed gedaan! Je tijd is: &c" + getTime(p) + "&a!");
+                                    mazeTime.remove(p.getName());
+                                } else {
+                                    ChatUtils.sendMsgTag(p, "Doolhof", ChatUtils.error + "Je hebt geen challenge actief!");
+                                }
+                                break;
+
+                            case "start":
+                                if (args[2].equals("1")) {
+                                    p.teleport(new Location(p.getWorld(), -76, 66, -384).add(0.5, 0, 0.5));
+                                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 2));
+                                }
+                                mazeTime.put(p.getName(), System.currentTimeMillis());
+                                ChatUtils.sendMsgTag(p, "Doolhof", "Challenge gestart! Vind snel de uitgang!");
+                                break;
+
+                            case "stop":
+                                if (args[2].equals("1")) {
+                                    p.teleport(new Location(p.getWorld(), -76, 66, -378).add(0.5, 0, 0.5));
+                                }
+                                ChatUtils.sendMsgTag(p, "Doolhof", "Challenge gestopt!");
+                                mazeTime.remove(p.getName());
+                                break;
                         }
                     }
                 }
