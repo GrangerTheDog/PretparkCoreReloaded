@@ -68,12 +68,12 @@ public class GadgetTriggers implements Listener {
         if(event.getAction().toString().contains("RIGHT")){
             if(event.getItem() != null){
                 if(event.getItem().hasItemMeta() && event.getItem().getType() != Material.SKULL_ITEM) {
-                    event.setCancelled(true);
                     Material m = event.getMaterial();
                     switch (m) {
                         default:
                             break;
                         case FIREWORK_CHARGE:
+                            event.setCancelled(true);
                             shootFirework(p);
                             break;
                     }

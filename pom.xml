@@ -70,10 +70,16 @@
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.5</version>
     </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot</artifactId>
+      <version>1.8.8-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
-    <defaultGoal>clean install</defaultGoal>
+    <defaultGoal>clean package</defaultGoal>
       <finalName>PretparkCore</finalName>
     <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
     <resources>

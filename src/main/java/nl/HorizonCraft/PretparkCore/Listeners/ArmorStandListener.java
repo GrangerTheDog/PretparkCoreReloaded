@@ -30,28 +30,24 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Listeners;
 
-import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 /**
- * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
+ * This class has been created on 09/23/2015 at 8:26 PM by Cooltimmetje.
  */
-public class Variables {
+public class ArmorStandListener {
 
-    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
-    public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");
-    public static String WORLD_NAME = "world";
-
-    public static int COIN_TIME = 60;
-    public static int COIN_GAIN = 20;
-    public static int DOUBLE_CHANCE = 10;
-
-    public static HashMap<String, CorePlayer> profile = new HashMap<>();
-    public static ArrayList<Hologram> holograms = new ArrayList<>();
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event){
+        if(event.getEntity().getType() == EntityType.ARMOR_STAND){
+            ArmorStand as = (ArmorStand) event.getEntity();
+        }
+    }
 
 }
