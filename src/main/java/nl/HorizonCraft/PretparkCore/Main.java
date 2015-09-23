@@ -113,8 +113,8 @@ public class Main extends JavaPlugin {
         }
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
-        DataSaver.start();
-        CoinsGiver.start();
+        DataSaver.start(this);
+        CoinsGiver.start(this);
 
         getLogger().info("Starting post-setup"); //For frontend stuff, like scoreboards.
         for(Player p : Bukkit.getOnlinePlayers()){

@@ -36,14 +36,15 @@ import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  * This class has been created on 09/9/11/2015/2015 at 10:28 PM by Cooltimmetje.
  */
 public class CoinsGiver {
 
-    public static void start(){
-        ScheduleUtils.repeatTask(20, 1200, new Runnable() {
+    public static void start(Plugin plugin) {
+        ScheduleUtils.repeatTask(plugin, 20, 1200, new Runnable() {
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()) {

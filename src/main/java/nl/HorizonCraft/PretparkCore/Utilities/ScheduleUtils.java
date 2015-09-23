@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 
 import nl.HorizonCraft.PretparkCore.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 /**
  * This class has been created on 28-7-2015 at 21:16 by cooltimmetje.
@@ -49,6 +50,10 @@ public class ScheduleUtils {
 
     public static void repeatTask(long startDelay, long repeatDelay, Runnable runnable){
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), runnable, startDelay, repeatDelay);
+    }
+
+    public static void repeatTask(Plugin plugin, long startDelay, long repeatDelay, Runnable runnable) {
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, startDelay, repeatDelay);
     }
 
 }
