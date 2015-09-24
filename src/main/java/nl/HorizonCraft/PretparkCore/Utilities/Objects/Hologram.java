@@ -100,6 +100,10 @@ public class Hologram {
         }
     }
 
+    public HashMap<Integer, ArmorStand> getAllArmorStands() {
+        return armorStands;
+    }
+
     private int getLineCount() {
         return lineCount;
     }

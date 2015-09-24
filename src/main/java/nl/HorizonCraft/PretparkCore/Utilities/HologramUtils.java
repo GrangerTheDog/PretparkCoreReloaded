@@ -30,39 +30,28 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Listeners;
+package nl.HorizonCraft.PretparkCore.Utilities;
 
-import nl.HorizonCraft.PretparkCore.Utilities.HologramUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import sun.org.mozilla.javascript.internal.ContextFactory;
+
+import java.util.HashMap;
 
 /**
- * This class has been created on 09/23/2015 at 8:26 PM by Cooltimmetje.
+ * This class has been created on 09/24/2015 at 08:28 by Cooltimmetje.
  */
-public class ArmorStandListener implements Listener {
+public class HologramUtils {
 
-    @EventHandler
-    public void onEntityDamage(EntityDamageEvent event){
-        if(event.getEntity().getType() == EntityType.ARMOR_STAND){
-            ArmorStand as = (ArmorStand) event.getEntity();
-            if (HologramUtils.isHologram(as)) {
-                event.setCancelled(true);
+    public static boolean isHologram(ArmorStand as) {
+        for (Hologram hologram : Variables.holograms) {
+            HashMap<Integer, ArmorStand> allArmorStands = hologram.getAllArmorStands();
+            for (int i : allArmorStands.keySet()) {
+                if (allArmorStands.get(i) == as) {
+                    return true;
+                }
             }
         }
-    }
-
-    @EventHandler
-    public void onArmorStandChange(PlayerArmorStandManipulateEvent event) {
-        ArmorStand as = event.getRightClicked();
-        if (HologramUtils.isHologram(as)) {
-            event.setCancelled(true);
-        }
+        return false;
     }
 
 }
