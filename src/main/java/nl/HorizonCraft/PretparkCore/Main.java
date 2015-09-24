@@ -100,10 +100,6 @@ public class Main extends JavaPlugin {
         registerCommand("maze", new MazeCommand());
         //format: registerCommand("cmd", new ExecutorClass);
 
-        getLogger().info("Hooking into API's"); //For opening up API hooks
-        //TODO: Hook api's
-        //format: hookApi("Plugin name");
-
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
         for(Player p : Bukkit.getOnlinePlayers()){
             PlayerUtils.createProfile(p);
