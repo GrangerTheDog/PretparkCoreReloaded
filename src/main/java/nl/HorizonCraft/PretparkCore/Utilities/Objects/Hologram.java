@@ -33,10 +33,10 @@
 package nl.HorizonCraft.PretparkCore.Utilities.Objects;
 
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.util.HashMap;
@@ -50,13 +50,15 @@ public class Hologram {
     private int lineCount;
     private HashMap<Integer, String> lines = new HashMap<>();
     private HashMap<Integer, ArmorStand> armorStands = new HashMap<>();
+    private boolean isSpawned;
 
     public Hologram(Location loc, String firstLine){
         this.loc = loc;
         this.lines.put(1, firstLine);
         this.lineCount = 1;
+        this.isSpawned = false;
 
-
+        Variables.holograms.add(this);
     }
 
     public void appendLine(String newLine){
@@ -69,35 +71,47 @@ public class Hologram {
     }
 
     public void spawn(){
+        Location locTemp = loc;
+        locTemp = locTemp.add(0,-1,0);
+
         for(int i : lines.keySet()){
             String text = lines.get(i);
-            Location locTemp = loc;
-            locTemp = locTemp.add(0,-1,0);
 
             ArmorStand as = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(locTemp, EntityType.ARMOR_STAND);
             as.setGravity(false);
-//            as.setBasePlate(false);
-//            as.setVisible(false);
+            as.setBasePlate(false);
+            as.setVisible(false);
             as.setSmall(true);
             as.setCustomName(MiscUtils.color(text));
+            as.setCustomNameVisible(true);
             armorStands.put(i, as);
 
-            locTemp = locTemp.add(0,-0.375,0);
+            locTemp = locTemp.add(0,-0.275,0);
         }
+
+        this.isSpawned = true;
     }
 
     public void updateHologram(){
-        for(int i : armorStands.keySet()){
-            armorStands.get(i).remove();
+        if(isSpawned){
+            for(int i : armorStands.keySet()){
+                armorStands.get(i).remove();
+            }
         }
 
+        this.armorStands.clear();
         spawn();
     }
 
     public void despawn(){
-        for(int i : armorStands.keySet()){
-            armorStands.get(i).remove();
+        if(isSpawned){
+            for(int i : armorStands.keySet()){
+                armorStands.get(i).remove();
+            }
         }
+
+        this.armorStands.clear();
+        this.isSpawned = false;
     }
 
     public HashMap<Integer, ArmorStand> getAllArmorStands() {
@@ -113,5 +127,8 @@ public class Hologram {
     }
 
 
+    public boolean isSpawned() {
+        return isSpawned;
+    }
 
 }

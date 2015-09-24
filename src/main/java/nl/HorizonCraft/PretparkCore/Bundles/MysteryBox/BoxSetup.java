@@ -30,33 +30,44 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
 
+import nl.HorizonCraft.PretparkCore.Utilities.EntityUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-import org.bukkit.entity.ArmorStand;
-
-import java.util.HashMap;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Witch;
+import org.bukkit.inventory.ItemStack;
 
 /**
- * This class has been created on 09/24/2015 at 08:28 by Cooltimmetje.
+ * This class has been created on 09/24/2015 at 7:45 PM by Cooltimmetje.
  */
-public class HologramUtils {
+public class BoxSetup {
 
-    public static boolean isHologram(ArmorStand as) {
-        for (Hologram hologram : Variables.holograms) {
-            HashMap<Integer, ArmorStand> allArmorStands = hologram.getAllArmorStands();
-            for (int i : allArmorStands.keySet()) {
-                if (allArmorStands.get(i) == as) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public static Witch witch;
+
+    public static void setup(){
+        Hologram hologram = new Hologram(new Location(Bukkit.getWorlds().get(0), 98.5,61,-312.5), "&aMystery Vault");
+        hologram.appendLine("&7&lBINNENKORT");
+        hologram.spawn();
+
+
+        witch = (Witch) Bukkit.getWorlds().get(0).spawnEntity(new Location(Bukkit.getWorlds().get(0),96.5,59,-316), EntityType.WITCH);
+        witch.getEquipment().setItemInHand(new ItemStack(Material.ENDER_CHEST));
+        Location loc = witch.getLocation();
+        loc.setYaw(60);
+        witch.teleport(loc);
+        EntityUtils.noAI(witch);
+
+        Hologram hologram1 = new Hologram(loc.add(0,2.5,0), "&dKees de Tovenaar");
+        hologram1.appendLine("&7&lBINNENKORT");
+        hologram1.spawn();
     }
 
-    public static void removeHolos() {
-        for(Hologram hologram : Variables.holograms){
-            hologram.despawn();
-        }
+    public static void destroy(){
+        witch.remove();
     }
+
 }

@@ -30,33 +30,42 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
 
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-import org.bukkit.entity.ArmorStand;
-
-import java.util.HashMap;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Witch;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
- * This class has been created on 09/24/2015 at 08:28 by Cooltimmetje.
+ * This class has been created on 09/24/2015 at 8:31 PM by Cooltimmetje.
  */
-public class HologramUtils {
+public class BoxListener implements Listener {
 
-    public static boolean isHologram(ArmorStand as) {
-        for (Hologram hologram : Variables.holograms) {
-            HashMap<Integer, ArmorStand> allArmorStands = hologram.getAllArmorStands();
-            for (int i : allArmorStands.keySet()) {
-                if (allArmorStands.get(i) == as) {
-                    return true;
-                }
+    @EventHandler
+    public void onBoxClick(PlayerInteractEvent event){
+        if(event.getClickedBlock().getType() == Material.ENDER_CHEST){
+            if(event.getClickedBlock().getLocation() == new Location(Bukkit.getWorlds().get(0), 98,60,-313)) {
+                event.setCancelled(true);
+                ChatUtils.sendSoonTag(event.getPlayer(), "MysteryVault");
             }
         }
-        return false;
     }
 
-    public static void removeHolos() {
-        for(Hologram hologram : Variables.holograms){
-            hologram.despawn();
+    @EventHandler
+    public void onDamage(EntityDamageEvent event){
+        if(event.getEntity().getType() == EntityType.WITCH){
+            Witch witch = (Witch) event.getEntity();
+            if(witch == BoxSetup.witch){
+                event.setCancelled(true);
+            }
         }
     }
+
 }

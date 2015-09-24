@@ -32,31 +32,25 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-import org.bukkit.entity.ArmorStand;
-
-import java.util.HashMap;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.Entity;
 
 /**
- * This class has been created on 09/24/2015 at 08:28 by Cooltimmetje.
+ * This class has been created on 09/24/2015 at 8:40 PM by Cooltimmetje.
  */
-public class HologramUtils {
+public class EntityUtils {
 
-    public static boolean isHologram(ArmorStand as) {
-        for (Hologram hologram : Variables.holograms) {
-            HashMap<Integer, ArmorStand> allArmorStands = hologram.getAllArmorStands();
-            for (int i : allArmorStands.keySet()) {
-                if (allArmorStands.get(i) == as) {
-                    return true;
-                }
-            }
+    public static void noAI(Entity bukkitEntity) {
+        net.minecraft.server.v1_8_R3.Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
+        NBTTagCompound tag = nmsEntity.getNBTTag();
+        if (tag == null) {
+            tag = new NBTTagCompound();
         }
-        return false;
+        nmsEntity.c(tag);
+        tag.setInt("NoAI", 1);
+        tag.setInt("Silent", 1);
+        nmsEntity.f(tag);
     }
 
-    public static void removeHolos() {
-        for(Hologram hologram : Variables.holograms){
-            hologram.despawn();
-        }
-    }
 }

@@ -34,13 +34,11 @@ package nl.HorizonCraft.PretparkCore.Listeners;
 
 import nl.HorizonCraft.PretparkCore.Utilities.HologramUtils;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import sun.org.mozilla.javascript.internal.ContextFactory;
 
 /**
  * This class has been created on 09/23/2015 at 8:26 PM by Cooltimmetje.

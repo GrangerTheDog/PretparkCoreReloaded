@@ -34,11 +34,14 @@ package nl.HorizonCraft.PretparkCore;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxListener;
+import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.MazeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Listeners.ArmorStandListener;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
@@ -53,10 +56,8 @@ import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import nl.HorizonCraft.PretparkCore.Utilities.*;
+import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -87,7 +88,8 @@ public class Main extends JavaPlugin {
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
-                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu()
+                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
+                , new BoxListener()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
@@ -120,6 +122,7 @@ public class Main extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.constructScoreboard(p);
         }
+        BoxSetup.setup();
 
         getLogger().info("Finishing up..."); //For stuff that needs to be done after everything.
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -133,6 +136,8 @@ public class Main extends JavaPlugin {
 
     public void onDisable() {
         getLogger().info("Disabling plugin... Please wait.");
+        HologramUtils.removeHolos();
+        BoxSetup.witch.remove();
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);
