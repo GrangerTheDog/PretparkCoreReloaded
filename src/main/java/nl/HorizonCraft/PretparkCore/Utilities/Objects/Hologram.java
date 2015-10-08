@@ -37,6 +37,7 @@ import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class Hologram {
     private Location loc;
     private int lineCount;
     private HashMap<Integer, String> lines = new HashMap<>();
-    private HashMap<Integer, ArmorStand> armorStands = new HashMap<>();
+    private HashMap<Integer, Entity> armorStands = new HashMap<>();
     private boolean isSpawned;
 
     public Hologram(Location loc, String firstLine){
@@ -114,7 +115,7 @@ public class Hologram {
         this.isSpawned = false;
     }
 
-    public HashMap<Integer, ArmorStand> getAllArmorStands() {
+    public HashMap<Integer, Entity> getAllArmorStands() {
         return armorStands;
     }
 
@@ -125,7 +126,6 @@ public class Hologram {
     private void setLineCount(int lineCount) {
         this.lineCount = lineCount;
     }
-
 
     public boolean isSpawned() {
         return isSpawned;

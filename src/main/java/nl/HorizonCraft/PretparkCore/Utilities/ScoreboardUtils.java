@@ -60,7 +60,7 @@ public class ScoreboardUtils {
 
         Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
         coins.setScore(6);
-        Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
+        Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
         boxes.setScore(5);
         Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
         keys.setScore(4);
@@ -93,16 +93,20 @@ public class ScoreboardUtils {
             objective = board.registerNewObjective("mainboard", "dummy");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName(Variables.SERVER_NAME);
+            int onlineAmount = Bukkit.getOnlinePlayers().size();
+            if(leave){
+                onlineAmount = onlineAmount - 1;
+            }
 
             Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
             coins.setScore(6);
-            Score boxes = objective.getScore(MiscUtils.color("&b&oMystery Boxes: &cN/A"));
+            Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
             boxes.setScore(5);
             Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
             keys.setScore(4);
             Score e1 = objective.getScore(" ");
             e1.setScore(3);
-            Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + Bukkit.getOnlinePlayers().size()));
+            Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + onlineAmount));
             online.setScore(2);
             Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
             unique.setScore(1);

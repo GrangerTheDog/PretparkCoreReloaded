@@ -32,39 +32,27 @@
 
 package nl.HorizonCraft.PretparkCore.Timers;
 
-import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.*;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
+import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.plugin.Plugin;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:28 PM by Cooltimmetje.
+ * This class has been created on 10/08/2015 at 7:10 PM by Cooltimmetje.
  */
-public class CoinsGiver {
+public class HologramMaintainer {
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 20, 1200, new Runnable() {
+    public static void start(Plugin plugin){
+
+        ScheduleUtils.repeatTask(plugin, 36000, 36000, new Runnable() {
             @Override
             public void run() {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    CorePlayer cp = PlayerUtils.getProfile(p);
-                    if (cp.getCoinTime() == 0) {
-                        int chance = MiscUtils.randomInt(1, 100);
-                        if (chance <= Variables.DOUBLE_CHANCE) {
-                            cp.addCoins(p, Variables.COIN_GAIN * 2, "1 uur online, dubbel coins", true, true);
-                            ChatUtils.bcMsgTag("Coins", "&c" + p.getName() + " &aheeft zojuist 2x coins ontvangen! Geluksvogel!");
-                            cp.setCoinTime(Variables.COIN_TIME);
-                        } else {
-                            cp.addCoins(p, Variables.COIN_GAIN, "1 uur online", true, true);
-                            cp.setCoinTime(Variables.COIN_TIME);
-                        }
-                    } else {
-                        cp.setCoinTime(cp.getCoinTime() - 1);
-                    }
+                for(Hologram hologram : Variables.holograms){
+                    hologram.updateHologram();
                 }
             }
         });
+
     }
 
 }

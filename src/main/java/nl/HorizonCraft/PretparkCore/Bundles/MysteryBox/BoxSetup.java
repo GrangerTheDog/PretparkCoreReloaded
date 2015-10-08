@@ -32,42 +32,19 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
 
-import nl.HorizonCraft.PretparkCore.Utilities.EntityUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Witch;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * This class has been created on 09/24/2015 at 7:45 PM by Cooltimmetje.
  */
 public class BoxSetup {
 
-    public static Witch witch;
-
     public static void setup(){
         Hologram hologram = new Hologram(new Location(Bukkit.getWorlds().get(0), 98.5,61,-312.5), "&aMystery Vault");
-        hologram.appendLine("&7&lBINNENKORT");
+        hologram.appendLine("&9&lRECHTER KLIK!");
         hologram.spawn();
-
-
-        witch = (Witch) Bukkit.getWorlds().get(0).spawnEntity(new Location(Bukkit.getWorlds().get(0),96.5,59,-316), EntityType.WITCH);
-        witch.getEquipment().setItemInHand(new ItemStack(Material.ENDER_CHEST));
-        Location loc = witch.getLocation();
-        loc.setYaw(60);
-        witch.teleport(loc);
-        EntityUtils.noAI(witch);
-
-        Hologram hologram1 = new Hologram(loc.add(0,2.5,0), "&dKees de Tovenaar");
-        hologram1.appendLine("&7&lBINNENKORT");
-        hologram1.spawn();
-    }
-
-    public static void destroy(){
-        witch.remove();
     }
 
 }

@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 
 import java.util.HashMap;
 
@@ -44,7 +45,7 @@ public class HologramUtils {
 
     public static boolean isHologram(ArmorStand as) {
         for (Hologram hologram : Variables.holograms) {
-            HashMap<Integer, ArmorStand> allArmorStands = hologram.getAllArmorStands();
+            HashMap<Integer, Entity> allArmorStands = hologram.getAllArmorStands();
             for (int i : allArmorStands.keySet()) {
                 if (allArmorStands.get(i) == as) {
                     return true;

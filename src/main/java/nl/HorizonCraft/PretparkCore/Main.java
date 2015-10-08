@@ -43,6 +43,7 @@ import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Listeners.ArmorStandListener;
 import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
+import nl.HorizonCraft.PretparkCore.Listeners.ServerPingListener;
 import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
@@ -54,10 +55,10 @@ import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.PreferencesMenu;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Timers.CoinsGiver;
+import nl.HorizonCraft.PretparkCore.Timers.CurrencyGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
+import nl.HorizonCraft.PretparkCore.Timers.HologramMaintainer;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -83,13 +84,14 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Starting pre-setup...."); //For everything that will cause issues if it gets done after registering stuff
         MysqlManager.setupHikari();
+        ServerPingListener.setup();
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
-                , new BoxListener()
+                , new BoxListener(), new ServerPingListener()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
@@ -112,7 +114,8 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
-        CoinsGiver.start(this);
+        CurrencyGiver.start(this);
+        HologramMaintainer.start(this);
 
         getLogger().info("Starting post-setup"); //For frontend stuff, like scoreboards.
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -133,7 +136,6 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Disabling plugin... Please wait.");
         HologramUtils.removeHolos();
-        BoxSetup.witch.remove();
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);

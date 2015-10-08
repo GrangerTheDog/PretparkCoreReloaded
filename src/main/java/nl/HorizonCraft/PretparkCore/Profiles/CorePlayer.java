@@ -54,6 +54,7 @@ public class CorePlayer {
     private int coins;
     private int coinTime;
     private int boxes;
+    private int boxTime;
     private int keys;
 
     private char[] achievements;
@@ -140,6 +141,20 @@ public class CorePlayer {
         ScoreboardUtils.updateScoreboard(p, false);
     }
 
+    public void addBoxes(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
+        if(p.hasPermission("pc.boxmultiplier.2") && allowMultiplier) {
+            add = add * 2;
+        }
+
+        setBoxes(getBoxes() + add);
+
+        ChatUtils.sendMsg(p, "&3+" + add + " MysteryBoxes! (" + reason + ")");
+        if(playSound){
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
     public void awardAchievement(Player p, AchievementsEnum achievement){
         if(achievements[achievement.getId()] == 'f') {
             achievements[achievement.getId()] = 't';
@@ -175,5 +190,13 @@ public class CorePlayer {
 
     public void setGadget(GadgetsEnum gadget) {
         this.gadget = gadget;
+    }
+
+    public int getBoxTime() {
+        return boxTime;
+    }
+
+    public void setBoxTime(int boxTime) {
+        this.boxTime = boxTime;
     }
 }

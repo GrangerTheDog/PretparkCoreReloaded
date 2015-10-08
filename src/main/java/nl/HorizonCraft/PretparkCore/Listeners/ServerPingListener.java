@@ -30,49 +30,42 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
+package nl.HorizonCraft.PretparkCore.Listeners;
 
-import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.server.ServerListPingEvent;
+
+import java.util.ArrayList;
 
 /**
- * This class has been created on 09/24/2015 at 8:31 PM by Cooltimmetje.
+ * This class has been created on 10/07/2015 at 9:02 PM by Cooltimmetje.
  */
-public class BoxListener implements Listener {
+public class ServerPingListener implements Listener {
+
+    private static ArrayList<String> sayings = new ArrayList<>();
 
     @EventHandler
-    public void onBoxClick(PlayerInteractEvent event){
-        if(event.getClickedBlock().getType() == Material.ENDER_CHEST){
-            if(event.getClickedBlock() == Bukkit.getWorld(Variables.WORLD_NAME).getBlockAt(98,60,-313)) {
-                event.setCancelled(true);
-                ChatUtils.sendSoonTag(event.getPlayer(), "MysteryBox");
-                //                openBox(event.getPlayer());
-            }
-        }
+    public void onPing(ServerListPingEvent event){
+        String saying = sayings.get(MiscUtils.randomInt(0, sayings.size()));
+        event.setMotd(MiscUtils.color(Variables.SERVER_NAME  + "&8\u00BB &aIn aanbouw.\n&3&lH&6&lC &8\u00BB &b&o" + saying));
     }
 
-    private void openBox(Player p){
-        CorePlayer cp = PlayerUtils.getProfile(p);
-        Inventory inv = Bukkit.createInventory(null, 54, "Mystery Vault");
-        int boxes = cp.getBoxes();
-
-        if(boxes == 0){
-            ItemUtils.createDisplay(inv, 23, Material.STAINED_GLASS_PANE, 1, 15, "&cERROR!", "&7Je hebt geen Mystery Boxes!");
-        } else {
-            for(int i = 0; i < boxes; i++){
-                ItemUtils.createDisplay(inv, i+1, Material.ENDER_CHEST, 1, 0, "&aMystery Box", "&7Klik om te openen!", "&aDit kost: &d1 Mystery Key");
-            }
-        }
+    public static void setup(){
+        sayings.add("Vet vrij!");
+        sayings.add("Bevat koala's! :o");
+        sayings.add("JAAAA VRIEEEEEEND!");
+        sayings.add("Faaabaaahhh Faabaaaah");
+        sayings.add("NEEEE VRIEEEEENDDD!");
+        sayings.add("Nu met een gratis sticker!");
+        sayings.add("Druk niet op de rode knop!");
+        sayings.add("Discord is Bae <3");
+        sayings.add("Like als je Jordy dik vindt");
+        sayings.add("Brandy = Koala #CONFIRMED");
+        sayings.add("KOEKJES!");
+        sayings.add("Jeremy heeft een trekker fetish [lenny]");
     }
 
 }

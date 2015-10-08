@@ -51,6 +51,10 @@ public class Variables {
     public static int COIN_GAIN = 20;
     public static int DOUBLE_CHANCE = 10;
 
+    public static int CHEST_TIME = 120;
+    public static int CHEST_GAIN = 1;
+    public static int CHEST_DOUBLE = 5;
+
     public static HashMap<String, CorePlayer> profile = new HashMap<>();
     public static ArrayList<Hologram> holograms = new ArrayList<>();
 
