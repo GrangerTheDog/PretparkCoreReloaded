@@ -30,62 +30,32 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
+package nl.HorizonCraft.PretparkCore.Utilities.Packets;
 
-import org.bukkit.Material;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 09/18/2015 at 6:41 PM by Cooltimmetje.
+ * This class has been created on 10/08/2015 at 7:45 PM by Cooltimmetje.
  */
-public enum GadgetsEnum {
+public class TitleUtils {
 
-    FIREWORK(0, 100, "Vuurwerkje", "Gewoon een vuurwerkje, niet veel bijzonder.", Material.FIREWORK_CHARGE, 0, 15),
-    STAFF_LAUNCHER(1, 500, "Staff Launcher", "The sky is the limit, letterlijk... \nStuur de staff naar de lucht en weer terug!", Material.SLIME_BLOCK, 0, 60),
-    BOEM_CHICKEN(2, 750, "Exploderende Kip", "Uuh... Kip *boem* Geen kip :D", Material.COOKED_CHICKEN, 0, 45);
+    public static void sendTitle(Player p, String message, PacketPlayOutTitle.EnumTitleAction titlePos, int fadeIn, int stay, int fadeOut){
+        CraftPlayer craftPlayer = (CraftPlayer) p;
+        PacketPlayOutTitle title = new PacketPlayOutTitle(titlePos, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + MiscUtils.color(message) + "\"}"), fadeIn, stay, fadeOut);
 
-    private int id;
-    private int cost;
-    private String name;
-    private String lore;
-    private Material m;
-    private int dmg;
-    private int cooldown;
-
-    GadgetsEnum(int id, int cost, String name, String lore, Material m, int dmg, int cooldown) {
-        this.id = id;
-        this.cost = cost;
-        this.name = name;
-        this.lore = lore;
-        this.m = m;
-        this.dmg = dmg;
-        this.cooldown = cooldown;
+        craftPlayer.getHandle().playerConnection.sendPacket(title);
     }
 
-    public String getLore() {
-        return lore;
+    public static void sendAction(Player p, String message){
+        CraftPlayer craftPlayer = (CraftPlayer) p;
+        PacketPlayOutChat action = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + MiscUtils.color(message) + "\"}"), (byte) 2);
+
+        craftPlayer.getHandle().playerConnection.sendPacket(action);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Material getMaterial() {
-        return m;
-    }
-
-    public int getDmg() {
-        return dmg;
-    }
-
-    public int getCooldown() {
-        return cooldown;
-    }
 }

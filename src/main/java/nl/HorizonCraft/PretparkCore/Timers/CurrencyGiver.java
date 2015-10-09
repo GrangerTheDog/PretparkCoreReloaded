@@ -69,12 +69,12 @@ public class CurrencyGiver {
                     if (cp.getBoxTime() == 0) {
                         int chance = MiscUtils.randomInt(1, 100);
                         if (chance <= Variables.CHEST_DOUBLE) {
-                            cp.addCoins(p, Variables.CHEST_GAIN * 2, "2 uur online, dubbel Mystery Boxes", true, true);
+                            cp.addBoxes(p, Variables.CHEST_GAIN * 2, "2 uur online, dubbel Mystery Boxes", false, true);
                             ChatUtils.bcMsgTag("MysteryBoxes", "&c" + p.getName() + " &aheeft zojuist 2x Mystery Boxes ontvangen! Geluksvogel!");
-                            cp.setCoinTime(Variables.CHEST_TIME);
+                            cp.setBoxTime(Variables.CHEST_TIME);
                         } else {
-                            cp.addCoins(p, Variables.CHEST_GAIN, "2 uur online", true, true);
-                            cp.setCoinTime(Variables.CHEST_TIME);
+                            cp.addBoxes(p, Variables.CHEST_GAIN, "2 uur online", false, true);
+                            cp.setBoxTime(Variables.CHEST_TIME);
                         }
                     } else {
                         cp.setBoxTime(cp.getBoxTime() - 1);

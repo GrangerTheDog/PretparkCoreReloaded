@@ -50,7 +50,7 @@ public class ServerPingListener implements Listener {
     @EventHandler
     public void onPing(ServerListPingEvent event){
         String saying = sayings.get(MiscUtils.randomInt(0, sayings.size()));
-        event.setMotd(MiscUtils.color(Variables.SERVER_NAME  + "&8\u00BB &aIn aanbouw.\n&3&lH&6&lC &8\u00BB &b&o" + saying));
+        event.setMotd(MiscUtils.color(Variables.SERVER_NAME  + "&8\u00BB &a" + Variables.SERVER_PING_MESSAGE + "\n" + Variables.SERVER_NAME_SHORT + " &8\u00BB &b&o" + saying));
     }
 
     public static void setup(){

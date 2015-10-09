@@ -32,13 +32,9 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities.Objects;
 
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 
 import java.util.HashMap;
 
@@ -72,47 +68,47 @@ public class Hologram {
     }
 
     public void spawn(){
-        Location locTemp = loc;
-        locTemp = locTemp.add(0,-1,0);
-
-        for(int i : lines.keySet()){
-            String text = lines.get(i);
-
-            ArmorStand as = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(locTemp, EntityType.ARMOR_STAND);
-            as.setGravity(false);
-            as.setBasePlate(false);
-            as.setVisible(false);
-            as.setSmall(true);
-            as.setCustomName(MiscUtils.color(text));
-            as.setCustomNameVisible(true);
-            armorStands.put(i, as);
-
-            locTemp = locTemp.add(0,-0.275,0);
-        }
-
-        this.isSpawned = true;
+//        Location locTemp = loc;
+//        locTemp = locTemp.add(0,-1,0);
+//
+//        for(int i : lines.keySet()){
+//            String text = lines.get(i);
+//
+//            ArmorStand as = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(locTemp, EntityType.ARMOR_STAND);
+//            as.setGravity(false);
+//            as.setBasePlate(false);
+//            as.setVisible(false);
+//            as.setSmall(true);
+//            as.setCustomName(MiscUtils.color(text));
+//            as.setCustomNameVisible(true);
+//            armorStands.put(i, as);
+//
+//            locTemp = locTemp.add(0,-0.275,0);
+//        }
+//
+//        this.isSpawned = true;
     }
 
     public void updateHologram(){
-        if(isSpawned){
-            for(int i : armorStands.keySet()){
-                armorStands.get(i).remove();
-            }
-        }
-
-        this.armorStands.clear();
-        spawn();
+//        if(isSpawned){
+//            for(int i : armorStands.keySet()){
+//                armorStands.get(i).remove();
+//            }
+//        }
+//
+//        this.armorStands.clear();
+//        spawn();
     }
 
     public void despawn(){
-        if(isSpawned){
-            for(int i : armorStands.keySet()){
-                armorStands.get(i).remove();
-            }
-        }
-
-        this.armorStands.clear();
-        this.isSpawned = false;
+//        if(isSpawned){
+//            for(int i : armorStands.keySet()){
+//                armorStands.get(i).remove();
+//            }
+//        }
+//
+//        this.armorStands.clear();
+//        this.isSpawned = false;
     }
 
     public HashMap<Integer, Entity> getAllArmorStands() {

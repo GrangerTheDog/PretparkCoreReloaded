@@ -32,10 +32,12 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
+import nl.HorizonCraft.PretparkCore.Utilities.Packets.TitleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -64,6 +66,15 @@ public class JoinQuitListener implements Listener {
             @Override
             public void run() {
                 PlayerUtils.configPlayer(pfinal, false);
+
+                TitleUtils.sendTitle(pfinal, "&eWelkom op " + Variables.SERVER_NAME, PacketPlayOutTitle.EnumTitleAction.TITLE, 20, 60, 20);
+            }
+        });
+
+        ScheduleUtils.scheduleTask(40, new Runnable() {
+            @Override
+            public void run() {
+                TitleUtils.sendTitle(pfinal, Variables.SERVER_NAME_SHORT  + " &8\u00BB &e" + Variables.SERVER_PING_MESSAGE, PacketPlayOutTitle.EnumTitleAction.SUBTITLE, 20, 60, 20);
             }
         });
 
@@ -86,7 +97,7 @@ public class JoinQuitListener implements Listener {
         MysqlManager.saveData(p);
         MysqlManager.savePrefs(p);
 
-        Variables.profile.remove(p);
+        Variables.profile.remove(p.getName());
 
         for(Player pl : Bukkit.getOnlinePlayers()){
             if(pl != p){

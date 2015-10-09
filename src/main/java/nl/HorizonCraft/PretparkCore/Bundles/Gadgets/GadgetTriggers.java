@@ -37,9 +37,12 @@ import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,8 +62,10 @@ public class GadgetTriggers implements Listener {
     private HashMap<String,Long> cdPunch = new HashMap<>();
     private HashMap<String,Long> cdPunchStaff = new HashMap<>();
     private HashMap<String,Long> cdFirework = new HashMap<>();
+    private HashMap<String,Long> cdChicken = new HashMap<>();
     private int cdPunchSec = GadgetsEnum.STAFF_LAUNCHER.getCooldown();
     private int cdFireworkSec = GadgetsEnum.FIREWORK.getCooldown();
+    private int cdChickenSec = GadgetsEnum.BOEM_CHICKEN.getCooldown();
 
     @EventHandler
     public void onClick(PlayerInteractEvent event){
@@ -76,9 +81,39 @@ public class GadgetTriggers implements Listener {
                             event.setCancelled(true);
                             shootFirework(p);
                             break;
+                        case COOKED_CHICKEN:
+                            event.setCancelled(true);
+                            shootChicken(p);
+                            break;
                     }
                 }
             }
+        }
+    }
+
+    private void shootChicken(Player p) {
+        if(!cdChicken.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdChicken.get(p.getName()), cdChickenSec)) {
+            ChatUtils.sendMsgTag(p, "ExplodingChicken", "KIIIIIIIIIP! :D");
+            cdChicken.put(p.getName(), System.currentTimeMillis());
+
+            final Player pFinal = p;
+            final Entity chicken = p.getWorld().spawnEntity(p.getLocation(), EntityType.CHICKEN);
+            chicken.setCustomName(MiscUtils.color("&aBrandy's Suicidal Chicken"));
+            chicken.setCustomNameVisible(true);
+
+            ScheduleUtils.scheduleTask(150, new Runnable() {
+                @Override
+                public void run() {
+                    ParticleEffect.EXPLOSION_LARGE.display(2,2,2,1,25,chicken.getLocation(),16);
+                    pFinal.getWorld().playSound(chicken.getLocation(), Sound.EXPLODE, 30, 1);
+                    chicken.remove();
+                    ChatUtils.sendMsgTag(pFinal, "ExplodingChicken", "RIP KIP ;-;");
+                }
+            });
+
+        } else {
+            ChatUtils.sendMsgTag(p, "ExplodingChicken", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdChicken.get(p.getName()), cdChickenSec)) +
+                    " &awachten voordat je dit weer mag gebruiken.");
         }
     }
 

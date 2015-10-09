@@ -122,6 +122,9 @@ public class GadgetsMenu implements Listener {
                 case SLIME_BLOCK:
                     setGadget(GadgetsEnum.STAFF_LAUNCHER, p, cp);
                     break;
+                case COOKED_CHICKEN:
+                    setGadget(GadgetsEnum.BOEM_CHICKEN, p, cp);
+                    break;
             }
         }
     }
