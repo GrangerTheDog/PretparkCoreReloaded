@@ -104,7 +104,7 @@ public class ItemUtils {
     }
 
     public static ItemStack createItemstack(Material m, int amount, int data, String name, String... lore){
-        ItemStack item = new ItemStack(m, amount, (byte) data);
+        ItemStack item = new ItemStack(m, amount, (byte)data);
         ItemMeta itemMeta = item.getItemMeta();
         if (name != null) {
             itemMeta.setDisplayName(MiscUtils.color(name));
@@ -118,8 +118,8 @@ public class ItemUtils {
         return item;
     }
 
-    public static ItemStack createItemstack(Material m, int amount, byte data, String name){
-        ItemStack item = new ItemStack(m, amount, data);
+    public static ItemStack createItemstack(Material m, int amount, int data, String name){
+        ItemStack item = new ItemStack(m, amount, (byte)data);
         ItemMeta itemMeta = item.getItemMeta();
         if (name != null) {
             itemMeta.setDisplayName(MiscUtils.color(name));

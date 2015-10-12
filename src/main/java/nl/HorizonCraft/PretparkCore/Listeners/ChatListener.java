@@ -30,50 +30,27 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Enums;
+package nl.HorizonCraft.PretparkCore.Listeners;
+
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 /**
- * This class has been created on 09/18/2015 at 3:53 PM by Cooltimmetje.
+ * This class has been created on 10/09/2015 at 6:19 PM by Cooltimmetje.
  */
-public enum AchievementsEnum {
+public class ChatListener implements Listener {
 
-    FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1),
-    KOALA_SLAP(1, "I don't like koala's!", "Launch xBrandy!", 10, 1),
-    CREEPER_SLAP(2, "It exploded into diamonds!", "Launch klapklap980!", 10, 1),
-    MAZE_COMPLETE_1(3, "Into the maze!", "Haal het einde van doolhof 1!", 25, 2),
-    FE_RIDE(4, "Boer Harms op de Trekker!", "Maak een ritje op de Farm Expedition!", 25, 1);
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event){
 
-    private int id;
-    private String name;
-    private String description;
-    private int coinReward;
-    private int keyReward;
+        if(event.getPlayer().isOp()){
+            event.setFormat(MiscUtils.color("%s&b: %s"));
+        } else {
+            event.setFormat(MiscUtils.color("%s&f: %s"));
+        }
 
-    public int getId(){
-        return id;
     }
 
-    public String getName(){
-        return name;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public int getCoinReward(){
-        return coinReward;
-    }
-
-    public int getKeyReward(){
-        return keyReward;
-    }
-
-    AchievementsEnum(int i, String s, String s1, int i1, int i2) {
-        this.id = i;
-        this.name = s;
-        this.description = s1;
-        this.coinReward = i1;
-        this.keyReward = i2;
-    }
 }

@@ -200,4 +200,13 @@ public class MiscUtils {
 
         return (int) (((currentTime - lastUsed ) / 1000) - cdtime) * -1;
     }
+
+    public static boolean isInt(String str){
+        try{
+            int num = Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

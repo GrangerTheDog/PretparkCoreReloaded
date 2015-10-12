@@ -41,15 +41,13 @@ import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Minecart;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -106,7 +104,13 @@ public class GadgetTriggers implements Listener {
                 public void run() {
                     ParticleEffect.EXPLOSION_LARGE.display(2,2,2,1,25,chicken.getLocation(),16);
                     pFinal.getWorld().playSound(chicken.getLocation(), Sound.EXPLODE, 30, 1);
-                    chicken.remove();
+                    pFinal.getWorld().playSound(chicken.getLocation(), Sound.CHICKEN_HURT, 30, 1);
+                    pFinal.getWorld().playSound(chicken.getLocation(), Sound.CHICKEN_EGG_POP, 30, 1);
+                    chicken.getWorld().dropItem(chicken.getLocation(), new ItemStack(Material.RAW_CHICKEN,1)).setVelocity(Vector.getRandom().multiply(-0.5));
+                    chicken.getWorld().dropItem(chicken.getLocation(), new ItemStack(Material.EGG, 1)).setVelocity(Vector.getRandom().multiply(0.5));
+                    chicken.getWorld().dropItem(chicken.getLocation(), new ItemStack(Material.FEATHER, 1)).setVelocity(Vector.getRandom().multiply(-0.5));
+                    chicken.getWorld().dropItem(chicken.getLocation(), new ItemStack(Material.BONE, 1)).setVelocity(Vector.getRandom().multiply(0.5));
+                    ((Chicken) chicken).setHealth(0);
                     ChatUtils.sendMsgTag(pFinal, "ExplodingChicken", "RIP KIP ;-;");
                 }
             });

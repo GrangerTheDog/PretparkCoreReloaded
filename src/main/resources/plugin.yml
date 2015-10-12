@@ -1,7 +1,7 @@
 name: PretparkCore
 version: 1.0
 main: nl.HorizonCraft.PretparkCore.Main
-authors: [Cooltimmetje, 78wesley]
+authors: [Cooltimmetje]
 commands:
     fixgm:
         description: fixgm
@@ -11,3 +11,9 @@ commands:
         description: cc
     maze:
         description: maze
+    addride:
+        description: addride
+    setride:
+        description: setride
+    achievementride:
+        description: achievementride

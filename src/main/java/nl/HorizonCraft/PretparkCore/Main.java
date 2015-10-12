@@ -36,15 +36,16 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxListener;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
+import nl.HorizonCraft.PretparkCore.Bundles.Rides.AddRide;
+import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideAchievementCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideStateCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.MazeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
-import nl.HorizonCraft.PretparkCore.Listeners.ArmorStandListener;
-import nl.HorizonCraft.PretparkCore.Listeners.JoinQuitListener;
-import nl.HorizonCraft.PretparkCore.Listeners.ServerPingListener;
-import nl.HorizonCraft.PretparkCore.Listeners.WeatherChangeListener;
+import nl.HorizonCraft.PretparkCore.Listeners.*;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
@@ -91,7 +92,7 @@ public class Main extends JavaPlugin {
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
-                , new BoxListener(), new ServerPingListener()
+                , new BoxListener(), new ServerPingListener(), new ChatListener(), new RideMenu()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
@@ -100,6 +101,9 @@ public class Main extends JavaPlugin {
         registerCommand("resetinv", new ResetInventoryCommand());
         registerCommand("cc", new ClearChatCommand());
         registerCommand("maze", new MazeCommand());
+        registerCommand("addride", new AddRide());
+        registerCommand("setride", new RideStateCommand());
+        registerCommand("achievementride", new RideAchievementCommand());
         //format: registerCommand("cmd", new ExecutorClass);
 
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
@@ -111,6 +115,7 @@ public class Main extends JavaPlugin {
 
             PlayerUtils.configPlayer(p, false);
         }
+        MysqlManager.getRides();
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);

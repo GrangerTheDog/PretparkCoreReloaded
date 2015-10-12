@@ -32,10 +32,10 @@
 
 package nl.HorizonCraft.PretparkCore.Managers;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
-import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -83,7 +83,7 @@ public class InventoryManager implements Listener {
                             }
                             break;
                         case MINECART:
-                            ChatUtils.sendSoonTag(p, "Attracties");
+                            RideMenu.openRide(p);
                             break;
                         case FLINT:
                             MainAdmin.openAdminMain(p);

@@ -30,50 +30,30 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Enums;
+package nl.HorizonCraft.PretparkCore.Bundles.Rides;
 
 /**
- * This class has been created on 09/18/2015 at 3:53 PM by Cooltimmetje.
+ * This class has been created on 10/09/2015 at 6:40 PM by Cooltimmetje.
  */
-public enum AchievementsEnum {
+public enum RideState {
 
-    FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1),
-    KOALA_SLAP(1, "I don't like koala's!", "Launch xBrandy!", 10, 1),
-    CREEPER_SLAP(2, "It exploded into diamonds!", "Launch klapklap980!", 10, 1),
-    MAZE_COMPLETE_1(3, "Into the maze!", "Haal het einde van doolhof 1!", 25, 2),
-    FE_RIDE(4, "Boer Harms op de Trekker!", "Maak een ritje op de Farm Expedition!", 25, 1);
+    OPEN(5,"&2OPEN"),
+    CLOSED(14,"&CGESLOTEN"),
+    MAINTENANCE(1,"&6ONDERHOUD");
 
-    private int id;
-    private String name;
-    private String description;
-    private int coinReward;
-    private int keyReward;
+    private int data;
+    private String stateString;
 
-    public int getId(){
-        return id;
+    RideState(int i, String s) {
+        this.data = i;
+        this.stateString = s;
     }
 
-    public String getName(){
-        return name;
+    public int getClayColor() {
+        return data;
     }
 
-    public String getDescription(){
-        return description;
-    }
-
-    public int getCoinReward(){
-        return coinReward;
-    }
-
-    public int getKeyReward(){
-        return keyReward;
-    }
-
-    AchievementsEnum(int i, String s, String s1, int i1, int i2) {
-        this.id = i;
-        this.name = s;
-        this.description = s1;
-        this.coinReward = i1;
-        this.keyReward = i2;
+    public String getStateString() {
+        return stateString;
     }
 }

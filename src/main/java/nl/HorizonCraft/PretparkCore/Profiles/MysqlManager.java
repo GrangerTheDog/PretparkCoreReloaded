@@ -33,10 +33,14 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.zaxxer.hikari.HikariDataSource;
+import nl.HorizonCraft.PretparkCore.Bundles.Rides.Ride;
+import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideState;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -345,4 +349,129 @@ public class MysqlManager {
             }
         }
     }
+
+    public static void getRides(){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM rides;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            setRides(rs);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void setRides(ResultSet rs) {
+        try {
+            while(rs.next()){
+                String[] locList = rs.getString("location").split(",");
+                Location loc = new Location(Bukkit.getWorld(Variables.WORLD_NAME), Double.parseDouble(locList[0]), Double.parseDouble(locList[1]), Double.parseDouble(locList[2]));
+                loc.setYaw(Float.parseFloat(locList[3]));
+                loc.setPitch(Float.parseFloat(locList[4]));
+                Ride ride = new Ride(rs.getInt("id"), loc, rs.getString("name"), RideState.valueOf(rs.getString("state")));
+//                Main.sendDebug(MiscUtils.color("&7&o[Server: " + "&7&oRide created: " + ride.getId() + "," + ride.getName() + "," + ride.getLocation() + "," + ride.getRideState() + "]"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveRide(Ride ride) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        String updateData = "UPDATE rides SET state=? WHERE id=?";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setString(1, ride.getRideState().toString());
+            ps.setInt(2, ride.getId());
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void addRide(String name, String location){
+        Main.getPlugin().getLogger().info("Creating new ride: " + name);
+        Connection c = null;
+        PreparedStatement ps = null;
+        String create = "INSERT INTO rides VALUES(null,?,?,?)";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(create);
+
+            ps.setString(1, name);
+            ps.setString(2, location);
+            ps.setString(3, RideState.CLOSED.toString());
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 }
