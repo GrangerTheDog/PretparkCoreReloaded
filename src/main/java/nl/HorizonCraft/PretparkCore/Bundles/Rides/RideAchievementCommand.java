@@ -32,7 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.Rides;
 
-import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;

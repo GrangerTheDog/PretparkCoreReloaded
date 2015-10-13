@@ -30,9 +30,9 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
+package nl.HorizonCraft.PretparkCore.Bundles.Achievements;
 
-import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -50,6 +50,44 @@ import org.bukkit.inventory.Inventory;
  */
 public class AchievementMenu implements Listener{
 
+    public static void open(Player p, AchievementType achievementType){
+        Inventory inv = Bukkit.createInventory(null, 54, "Achievements");
+
+        CorePlayer cp = PlayerUtils.getProfile(p);
+        char[] unlocks = cp.getAchievements();
+
+        int slot = 1;
+        for(AchievementsEnum achievement : AchievementsEnum.values()){
+            if(achievement.getType() == achievementType) {
+                int id = achievement.getId();
+                boolean unlocked = unlocks[id] == 't';
+                int coins = achievement.getCoinReward();
+                int keys = achievement.getKeyReward();
+                String name = constructName(achievement.getName(), unlocked);
+                String[] lore = constuctLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
+                Material m;
+                if (unlocked) {
+                    m = Material.DIAMOND;
+                } else {
+                    m = Material.COAL;
+                }
+
+                ItemUtils.createDisplay(inv, slot, m, 1, 0, name, lore);
+                slot++;
+            }
+        }
+        ItemUtils.createDisplay(inv, 46, Material.ARROW, 1, 0, "&cTerug");
+        ItemUtils.createDisplay(inv, 54, Material.LEAVES, 1, 0, "&aSorteer op: &bParkour/Doolhoven");
+        ItemUtils.createDisplay(inv, 53, Material.MINECART, 1, 0, "&aSorteer op: &bAttracties");
+        ItemUtils.createDisplay(inv, 52, Material.SLIME_BLOCK, 1, 0, "&aSorteer op: &bStaff Punching");
+        ItemUtils.createDisplay(inv, 51, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
+        ItemUtils.createDisplay(inv, 50, Material.BARRIER, 1, 0, "&cWis Filter");
+
+        p.openInventory(inv);
+
+        p.openInventory(inv);
+    }
+
     public static void open(Player p){
         Inventory inv = Bukkit.createInventory(null, 54, "Achievements");
 
@@ -63,9 +101,9 @@ public class AchievementMenu implements Listener{
             int coins = achievement.getCoinReward();
             int keys = achievement.getKeyReward();
             String name = constructName(achievement.getName(), unlocked);
-            String[] lore = constuctLore(achievement.getDescription(), unlocked, coins, keys);
+            String[] lore = constuctLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
             Material m;
-            if(unlocked){
+            if (unlocked) {
                 m = Material.DIAMOND;
             } else {
                 m = Material.COAL;
@@ -75,19 +113,24 @@ public class AchievementMenu implements Listener{
             slot++;
         }
         ItemUtils.createDisplay(inv, 46, Material.ARROW, 1, 0, "&cTerug");
+        ItemUtils.createDisplay(inv, 54, Material.LEAVES, 1, 0, "&aSorteer op: &bParkour/Doolhoven");
+        ItemUtils.createDisplay(inv, 53, Material.MINECART, 1, 0, "&aSorteer op: &bAttracties");
+        ItemUtils.createDisplay(inv, 52, Material.SLIME_BLOCK, 1, 0, "&aSorteer op: &bStaff Punching");
+        ItemUtils.createDisplay(inv, 51, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
 
         p.openInventory(inv);
 
         p.openInventory(inv);
     }
 
-    private static String[] constuctLore(String lore, boolean unlocked, int coins, int keys) {
+    private static String[] constuctLore(String lore, boolean unlocked, int coins, int keys, AchievementType type) {
         StringBuilder sb = new StringBuilder();
 
         String[] loreArray = lore.split("\n");
         for(String loreS : loreArray) {
             sb.append("&3").append(loreS).append("\n");
         }
+        sb.append("&3Categorie: &a").append(type.getFriendlyName());
         sb.append("\n");
         sb.append("&3Rewards: ");
         sb.append("\n");
@@ -113,6 +156,21 @@ public class AchievementMenu implements Listener{
             switch (m){
                 case ARROW:
                     MyHorizonMenu.openMyHorizon(p, p, false);
+                    break;
+                case BOOK:
+                    open(p, AchievementType.GENERAL);
+                    break;
+                case BARRIER:
+                    open(p);
+                    break;
+                case SLIME_BLOCK:
+                    open(p, AchievementType.STAFFPUNCH);
+                    break;
+                case LEAVES:
+                    open(p, AchievementType.MAZES_PARKOUR);
+                    break;
+                case MINECART:
+                    open(p, AchievementType.RIDES);
                     break;
                 default:
                     break;

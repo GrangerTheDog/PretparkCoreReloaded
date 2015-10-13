@@ -33,7 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
 
 import com.darkblade12.particleeffect.ParticleEffect;
-import nl.HorizonCraft.PretparkCore.Enums.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;

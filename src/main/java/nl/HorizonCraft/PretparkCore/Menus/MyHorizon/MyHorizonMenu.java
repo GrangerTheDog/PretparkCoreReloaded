@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
