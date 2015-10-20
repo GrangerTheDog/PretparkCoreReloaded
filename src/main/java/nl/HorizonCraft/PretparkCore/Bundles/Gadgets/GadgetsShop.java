@@ -30,10 +30,15 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Events;
+package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
+
+import org.bukkit.event.Listener;
 
 /**
- * Created by Tim on 9/10/2015.
+ * This class has been created on 10/13/2015 at 1:50 PM by Cooltimmetje.
  */
-public class Temp {
+public class GadgetsShop implements Listener{
+
+
+
 }

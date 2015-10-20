@@ -30,57 +30,53 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Achievements;
+package nl.HorizonCraft.PretparkCore.Bundles.Pets;
+
+import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.Weight;
 
 /**
- * This class has been created on 09/18/2015 at 3:53 PM by Cooltimmetje.
+ * This class has been created on 10/13/2015 at 2:17 PM by Cooltimmetje.
  */
-public enum AchievementsEnum {
+public enum PetType {
 
-    FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1, AchievementType.GENERAL),
-    KOALA_SLAP(1, "I don't like koala's!", "Launch xBrandy!", 10, 1, AchievementType.STAFFPUNCH),
-    CREEPER_SLAP(2, "It exploded into diamonds!", "Launch klapklap980!", 10, 1, AchievementType.STAFFPUNCH),
-    MAZE_COMPLETE_1(3, "Into the maze!", "Haal het einde van doolhof 1!", 25, 2, AchievementType.MAZES_PARKOUR),
-    FE_RIDE(4, "Boer Harms op de Trekker!", "Maak een ritje op de Farm Expedition!", 25, 1, AchievementType.RIDES),
-    MELK_SLAP(5, "Maar ik lus geen melk :(", "Launch BekertjeZuivel!", 10, 1, AchievementType.STAFFPUNCH);
+    CREEPER(0, "Creeper", "Nee, deze blaast niet op,\n dus KNUFFELEN MAAR!", 0, Weight.LEGENDARY),
+    SKELETON(1, "Skeleton", "Met of zonder boog, maar geef hem geen pijlen...", 0, Weight.EPIC, false),
+    SPIDER(2, "Spider", "Het is maar waar je van houd als huisdier...", 800, Weight.EPIC),
+    ZOMBIE(3, "Zombie", "Vriendjes voor het leven!\nOw wacht... Hij is al dood...", 0, Weight.LEGENDARY),
+    SLIME_S(4, "Kleine Slime", "AAAWWWWW.... ZO SCHATTIG EN FLUBBERIG!", 800, Weight.LEGENDARY, 1);
+
 
     private int id;
     private String name;
-    private String description;
-    private int coinReward;
-    private int keyReward;
-    private AchievementType achievementType;
+    private String lore;
+    private int price;
+    private Weight weight;
+    private int size;
+    private boolean wither;
 
-    AchievementsEnum(int i, String s, String s1, int i1, int i2, AchievementType achievementType) {
+    PetType(int i, String s, String s1, int i1, Weight w) {
         this.id = i;
         this.name = s;
-        this.description = s1;
-        this.coinReward = i1;
-        this.keyReward = i2;
-        this.achievementType = achievementType;
+        this.lore = s1;
+        this.price = i1;
+        this.weight = w;
     }
 
-    public int getId(){
-        return id;
+    PetType(int i, String s, String s1, int i1, Weight w, boolean b) {
+        this.id = i;
+        this.name = s;
+        this.lore = s1;
+        this.price = i1;
+        this.weight = w;
+        this.wither = b;
     }
 
-    public String getName(){
-        return name;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public int getCoinReward(){
-        return coinReward;
-    }
-
-    public int getKeyReward(){
-        return keyReward;
-    }
-
-    public AchievementType getType() {
-        return achievementType;
+    PetType(int i, String s, String s1, int i1, Weight w, int i2) {
+        this.id = i;
+        this.name = s;
+        this.lore = s1;
+        this.price = i1;
+        this.weight = w;
+        this.size = i2;
     }
 }

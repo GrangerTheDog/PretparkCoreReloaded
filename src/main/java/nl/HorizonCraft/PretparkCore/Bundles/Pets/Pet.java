@@ -30,10 +30,53 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities.Objects;
+package nl.HorizonCraft.PretparkCore.Bundles.Pets;
+
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 /**
  * This class has been created on 09/23/2015 at 7:37 PM by Cooltimmetje.
  */
 public class Pet {
+
+    private UUID entity;
+    private Player owner;
+    private String name;
+    private PetType petType;
+
+    public Pet(Player owner, String name, PetType petType) {
+        this.owner = owner;
+        this.name = name;
+    }
+
+    public void spawn(){
+        Entity entity;
+    }
+
+    public Entity getEntity() {
+        Entity entity;
+
+
+
+        return null;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PetType getPetType() {
+        return petType;
+    }
 }
