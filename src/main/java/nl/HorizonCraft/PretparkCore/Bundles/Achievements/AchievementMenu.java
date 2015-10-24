@@ -50,8 +50,8 @@ import org.bukkit.inventory.Inventory;
  */
 public class AchievementMenu implements Listener{
 
-    public static void open(Player p, AchievementType achievementType){
-        Inventory inv = Bukkit.createInventory(null, 54, "Achievements");
+    public static void open(Player p, Player target, AchievementType achievementType) {
+        Inventory inv = Bukkit.createInventory(null, 54, "Achievements \u00BB" + p.getName());
 
         CorePlayer cp = PlayerUtils.getProfile(p);
         char[] unlocks = cp.getAchievements();
@@ -64,7 +64,7 @@ public class AchievementMenu implements Listener{
                 int coins = achievement.getCoinReward();
                 int keys = achievement.getKeyReward();
                 String name = constructName(achievement.getName(), unlocked);
-                String[] lore = constuctLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
+                String[] lore = constructLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
                 Material m;
                 if (unlocked) {
                     m = Material.DIAMOND;
@@ -83,13 +83,11 @@ public class AchievementMenu implements Listener{
         ItemUtils.createDisplay(inv, 51, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
         ItemUtils.createDisplay(inv, 50, Material.BARRIER, 1, 0, "&cWis Filter");
 
-        p.openInventory(inv);
-
-        p.openInventory(inv);
+        target.openInventory(inv);
     }
 
-    public static void open(Player p){
-        Inventory inv = Bukkit.createInventory(null, 54, "Achievements");
+    public static void open(Player p, Player target) {
+        Inventory inv = Bukkit.createInventory(null, 54, "Achievements \u00BB " + p.getName());
 
         CorePlayer cp = PlayerUtils.getProfile(p);
         char[] unlocks = cp.getAchievements();
@@ -101,7 +99,7 @@ public class AchievementMenu implements Listener{
             int coins = achievement.getCoinReward();
             int keys = achievement.getKeyReward();
             String name = constructName(achievement.getName(), unlocked);
-            String[] lore = constuctLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
+            String[] lore = constructLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
             Material m;
             if (unlocked) {
                 m = Material.DIAMOND;
@@ -118,12 +116,10 @@ public class AchievementMenu implements Listener{
         ItemUtils.createDisplay(inv, 52, Material.SLIME_BLOCK, 1, 0, "&aSorteer op: &bStaff Punching");
         ItemUtils.createDisplay(inv, 51, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
 
-        p.openInventory(inv);
-
-        p.openInventory(inv);
+        target.openInventory(inv);
     }
 
-    private static String[] constuctLore(String lore, boolean unlocked, int coins, int keys, AchievementType type) {
+    private static String[] constructLore(String lore, boolean unlocked, int coins, int keys, AchievementType type) {
         StringBuilder sb = new StringBuilder();
 
         String[] loreArray = lore.split("\n");
@@ -151,26 +147,27 @@ public class AchievementMenu implements Listener{
     public void onClick(InventoryClickEvent event){
         if(ChatColor.stripColor(event.getInventory().getName()).contains("Achievements")){
             event.setCancelled(true);
-            Player p = (Player) event.getWhoClicked();
+            Player p = Bukkit.getPlayer(ChatColor.stripColor(event.getInventory().getName().split(" ")[2]));
+            Player target = (Player) event.getWhoClicked();
             Material m = event.getCurrentItem().getType();
             switch (m){
                 case ARROW:
-                    MyHorizonMenu.openMyHorizon(p, p, false);
+                    MyHorizonMenu.openMyHorizon(p, target, false);
                     break;
                 case BOOK:
-                    open(p, AchievementType.GENERAL);
+                    open(p, target, AchievementType.GENERAL);
                     break;
                 case BARRIER:
-                    open(p);
+                    open(p, target);
                     break;
                 case SLIME_BLOCK:
-                    open(p, AchievementType.STAFFPUNCH);
+                    open(p, target, AchievementType.STAFFPUNCH);
                     break;
                 case LEAVES:
-                    open(p, AchievementType.MAZES_PARKOUR);
+                    open(p, target, AchievementType.MAZES_PARKOUR);
                     break;
                 case MINECART:
-                    open(p, AchievementType.RIDES);
+                    open(p, target, AchievementType.RIDES);
                     break;
                 default:
                     break;

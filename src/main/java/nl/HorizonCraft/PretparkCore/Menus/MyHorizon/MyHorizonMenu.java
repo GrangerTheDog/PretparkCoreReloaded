@@ -32,22 +32,25 @@
 
 package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
+import com.darkblade12.particleeffect.ParticleEffect;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.SkullType;
+import org.bukkit.*;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.util.Vector;
 
 /**
  * This class has been created on 09/13/2015 at 12:39 PM by Cooltimmetje.
@@ -57,7 +60,7 @@ public class MyHorizonMenu implements Listener{
     public static void openMyHorizon(Player p, Player pTarget, boolean admin){
         CorePlayer cp = PlayerUtils.getProfile(pTarget);
 
-        Inventory inv = Bukkit.createInventory(null, 36, MiscUtils.color("MyHorizon &8\u00BB &7" + pTarget.getName()));
+        Inventory inv = Bukkit.createInventory(null, 36, MiscUtils.color("MyHorizon &8\u00BB " + pTarget.getName()));
 
         ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName());
         SkullMeta im = (SkullMeta) is.getItemMeta();
@@ -85,17 +88,37 @@ public class MyHorizonMenu implements Listener{
     public void onClick(InventoryClickEvent event){
         if(ChatColor.stripColor(event.getInventory().getName()).contains("MyHorizon")){
             event.setCancelled(true);
-            Player p = (Player) event.getWhoClicked();
+            Player p = Bukkit.getPlayer(ChatColor.stripColor(event.getInventory().getName().split(" ")[2]));
+            Player target = (Player) event.getWhoClicked();
             Material m = event.getCurrentItem().getType();
             switch (m){
                 case REDSTONE_COMPARATOR:
                     PreferencesMenu.openPrefs(p);
                     break;
                 case DIAMOND:
-                    AchievementMenu.open(p);
+                    AchievementMenu.open(p, target);
                     break;
                 default:
                     break;
+            }
+        }
+    }
+
+    @EventHandler
+    @SuppressWarnings("all")
+    public void onRightClick(PlayerInteractEntityEvent event) {
+        if (!(event.getRightClicked() instanceof Minecart)) {
+            if (event.getPlayer().getItemInHand() != null) {
+                if (event.getPlayer().getItemInHand().getType() == Material.FLINT) {
+                    if (event.getPlayer().getItemInHand().hasItemMeta()) {
+                        event.setCancelled(true);
+                        Player p = event.getPlayer();
+                        if (event.getRightClicked() instanceof Player) {
+                            Player target = (Player) event.getRightClicked();
+                            openMyHorizon(p, target, true);
+                        }
+                    }
+                }
             }
         }
     }
