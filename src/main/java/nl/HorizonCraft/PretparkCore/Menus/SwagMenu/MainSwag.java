@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Menus.SwagMenu;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
@@ -80,7 +81,7 @@ public class MainSwag implements Listener {
                 default:
                     break;
                 case SKULL_ITEM:
-                    ChatUtils.sendSoonTag(p, "Pets");
+                    PetMenu.open(p);
                     break;
                 case IRON_CHESTPLATE:
                     ChatUtils.sendSoonTag(p, "Kledingkast");

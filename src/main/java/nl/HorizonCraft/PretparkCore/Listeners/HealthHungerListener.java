@@ -32,29 +32,24 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 /**
- * This class has been created on 10/09/2015 at 6:19 PM by Cooltimmetje.
+ * This class has been created on 10/24/2015 at 22:02 by Cooltimmetje.
  */
-public class ChatListener implements Listener {
+public class HealthHungerListener implements Listener {
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent event){
-
-        if(event.getPlayer().isOp()){
-            event.setFormat(MiscUtils.color("%s&8: &b%s"));
-        } else {
-            event.setFormat(MiscUtils.color("%s&8: &f%s"));
-        }
-
-        if (event.getPlayer().hasPermission("pc.colorchat")) {
-            event.setMessage(MiscUtils.color(event.getMessage()));
-        }
-
+    public void onHunger(FoodLevelChangeEvent event) {
+        event.setCancelled(true);
     }
 
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+        event.setDamage(0);
+        event.setCancelled(true);
+    }
 }

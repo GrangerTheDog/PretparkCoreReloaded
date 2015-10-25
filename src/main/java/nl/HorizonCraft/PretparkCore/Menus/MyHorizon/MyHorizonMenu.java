@@ -104,23 +104,4 @@ public class MyHorizonMenu implements Listener{
         }
     }
 
-    @EventHandler
-    @SuppressWarnings("all")
-    public void onRightClick(PlayerInteractEntityEvent event) {
-        if (!(event.getRightClicked() instanceof Minecart)) {
-            if (event.getPlayer().getItemInHand() != null) {
-                if (event.getPlayer().getItemInHand().getType() == Material.FLINT) {
-                    if (event.getPlayer().getItemInHand().hasItemMeta()) {
-                        event.setCancelled(true);
-                        Player p = event.getPlayer();
-                        if (event.getRightClicked() instanceof Player) {
-                            Player target = (Player) event.getRightClicked();
-                            openMyHorizon(p, target, true);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 }

@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Profiles;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
@@ -59,6 +60,7 @@ public class CorePlayer {
 
     private char[] achievements;
     private char[] gadgets;
+    private char[] pets;
 
     private boolean speed;
 
@@ -198,5 +200,17 @@ public class CorePlayer {
 
     public void setBoxTime(int boxTime) {
         this.boxTime = boxTime;
+    }
+
+    public boolean hasPet(PetType pet) {
+        return pets[pet.getId()] == 't';
+    }
+
+    public void setPets(char[] pets) {
+        this.pets = pets;
+    }
+
+    public char[] getPets() {
+        return pets;
     }
 }

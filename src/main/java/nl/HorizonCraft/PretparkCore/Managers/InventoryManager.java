@@ -37,10 +37,12 @@ import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
 import org.bukkit.Material;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -86,7 +88,9 @@ public class InventoryManager implements Listener {
                             RideMenu.openRide(p);
                             break;
                         case FLINT:
-                            MainAdmin.openAdminMain(p);
+                            if (!p.isSneaking()) {
+                                MainAdmin.openAdminMain(p);
+                            }
                             break;
                         case CHEST:
                             MainSwag.open(p);
@@ -95,6 +99,27 @@ public class InventoryManager implements Listener {
                             break;
                     }
 
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    @SuppressWarnings("all")
+    public void onRightClick(PlayerInteractEntityEvent event) {
+        if (!(event.getRightClicked() instanceof Minecart) && (event.getRightClicked() instanceof Player)) {
+            if (event.getPlayer().getItemInHand() != null) {
+                if (event.getPlayer().getItemInHand().getType() == Material.FLINT) {
+                    if (event.getPlayer().getItemInHand().hasItemMeta()) {
+                        event.setCancelled(true);
+                        Player p = event.getPlayer();
+                        if (p.isSneaking()) {
+                            if (event.getRightClicked() instanceof Player) {
+                                Player target = (Player) event.getRightClicked();
+                                MyHorizonMenu.openMyHorizon(p, target, true);
+                            }
+                        }
+                    }
                 }
             }
         }
