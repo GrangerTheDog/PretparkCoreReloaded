@@ -83,12 +83,14 @@ public class PlayerUtils {
             }
         }
 
-        if(cp.getSpeed()){
+        if (cp.hasSpeed()) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0, false, false));
         } else {
             if(p.hasPotionEffect(PotionEffectType.SPEED)){
                 p.removePotionEffect(PotionEffectType.SPEED);
             }
         }
+
+        cp.calculateExp(p);
     }
 }

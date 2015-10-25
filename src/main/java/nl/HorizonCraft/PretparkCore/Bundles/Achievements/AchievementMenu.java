@@ -51,7 +51,7 @@ import org.bukkit.inventory.Inventory;
 public class AchievementMenu implements Listener{
 
     public static void open(Player p, Player target, AchievementType achievementType) {
-        Inventory inv = Bukkit.createInventory(null, 54, "Achievements \u00BB" + p.getName());
+        Inventory inv = Bukkit.createInventory(null, 54, "Achievements \u00BB " + p.getName());
 
         CorePlayer cp = PlayerUtils.getProfile(p);
         char[] unlocks = cp.getAchievements();
@@ -63,8 +63,9 @@ public class AchievementMenu implements Listener{
                 boolean unlocked = unlocks[id] == 't';
                 int coins = achievement.getCoinReward();
                 int keys = achievement.getKeyReward();
+                int exp = achievement.getExpReward();
                 String name = constructName(achievement.getName(), unlocked);
-                String[] lore = constructLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
+                String[] lore = constructLore(achievement.getDescription(), unlocked, coins, keys, exp, achievement.getType());
                 Material m;
                 if (unlocked) {
                     m = Material.DIAMOND;
@@ -98,8 +99,9 @@ public class AchievementMenu implements Listener{
             boolean unlocked = unlocks[id] == 't';
             int coins = achievement.getCoinReward();
             int keys = achievement.getKeyReward();
+            int exp = achievement.getExpReward();
             String name = constructName(achievement.getName(), unlocked);
-            String[] lore = constructLore(achievement.getDescription(), unlocked, coins, keys, achievement.getType());
+            String[] lore = constructLore(achievement.getDescription(), unlocked, coins, keys, exp, achievement.getType());
             Material m;
             if (unlocked) {
                 m = Material.DIAMOND;
@@ -119,7 +121,7 @@ public class AchievementMenu implements Listener{
         target.openInventory(inv);
     }
 
-    private static String[] constructLore(String lore, boolean unlocked, int coins, int keys, AchievementType type) {
+    private static String[] constructLore(String lore, boolean unlocked, int coins, int keys, int exp, AchievementType type) {
         StringBuilder sb = new StringBuilder();
 
         String[] loreArray = lore.split("\n");
@@ -127,10 +129,12 @@ public class AchievementMenu implements Listener{
             sb.append("&3").append(loreS).append("\n");
         }
         sb.append("&3Categorie: &a").append(type.getFriendlyName());
-        sb.append("\n");
+        sb.append("\n \n");
         sb.append("&3Rewards: ");
         sb.append("\n");
-        sb.append("&6").append(coins).append(" coins").append("\n").append("&d").append(keys).append(" Mystery Key(s)");
+        sb.append("&6").append(coins).append(" coins").append("\n")
+                .append("&d").append(keys).append(" Mystery Key(s)").append("\n")
+                .append("&9").append(exp).append(" experience");
 
         return sb.toString().split("\n");
     }

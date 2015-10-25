@@ -38,6 +38,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -57,6 +58,8 @@ public class CorePlayer {
     private int boxes;
     private int boxTime;
     private int keys;
+    private int experience;
+    private int experienceTime;
 
     private char[] achievements;
     private char[] gadgets;
@@ -71,72 +74,71 @@ public class CorePlayer {
         this.name = p.getName();
     }
 
-    public int getCoins(){
+    /* --START COINS-- */
+
+    public int getCoins() {
         return coins;
     }
 
-    public int getCoinTime(){
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public int getCoinTime() {
         return coinTime;
     }
 
-    public int getBoxes(){
-        return boxes;
-    }
-
-    public int getKeys(){
-        return keys;
-    }
-
-    public boolean getSpeed(){
-        return speed;
-    }
-
-    public void setCoins(int value){
-        this.coins = value;
-    }
-
-    public void setCoinTime(int value){
-        this.coinTime = value;
-    }
-
-    public void setSpeed(boolean value){
-        this.speed = value;
-    }
-
-    public void setBoxes(int value){
-        this.boxes = value;
-    }
-
-    public void setAchievements(char[] value){
-        this.achievements = value;
-    }
-
-    public char[] getAchievements(){
-        return achievements;
-    }
-
-    public void setKeys(int value){
-        this.keys = value;
-    }
-
-    public void addKeys(Player p, int add, String reason, boolean playSound){
-        setKeys(getKeys() + add);
-
-        ChatUtils.sendMsg(p, "&d+" + add + " Mystery Keys! (" + reason + ")");
-        if(playSound) {
-            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
-        }
-        ScoreboardUtils.updateScoreboard(p, false);
+    public void setCoinTime(int coinTime) {
+        this.coinTime = coinTime;
     }
 
     public void addCoins(Player p, int add, String reason, boolean allowMultiplier, boolean playSound) {
-        if(p.hasPermission("pc.coinmultiplier.2") && allowMultiplier) {
+        if (p.hasPermission("pc.coinmultiplier.2") && allowMultiplier) {
             add = add * 2;
         }
 
         setCoins(getCoins() + add);
 
         ChatUtils.sendMsg(p, "&6+" + add + " coins! (" + reason + ")");
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    /* --END COINS-- */
+
+
+    /* --START BOXES-- */
+
+    public int getBoxes() {
+        return boxes;
+    }
+
+    public void setBoxes(int boxes) {
+        this.boxes = boxes;
+    }
+
+    public int getBoxTime() {
+        return boxTime;
+    }
+
+    public void setBoxTime(int boxTime) {
+        this.boxTime = boxTime;
+    }
+
+    public int getKeys() {
+        return keys;
+    }
+
+    public void setKeys(int keys) {
+        this.keys = keys;
+    }
+
+    public void addKeys(Player p, int add, String reason, boolean playSound){
+        setKeys(getKeys() + add);
+
+        ChatUtils.sendMsg(p, "&d+" + add + " Mystery Keys! (" + reason + ")");
         if(playSound) {
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         }
@@ -157,6 +159,19 @@ public class CorePlayer {
         ScoreboardUtils.updateScoreboard(p, false);
     }
 
+    /* --END BOXES-- */
+
+
+    /* --START ACHIEVEMENTS-- */
+
+    public char[] getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(char[] achievements) {
+        this.achievements = achievements;
+    }
+
     public void awardAchievement(Player p, AchievementsEnum achievement){
         if(achievements[achievement.getId()] == 'f') {
             achievements[achievement.getId()] = 't';
@@ -170,13 +185,15 @@ public class CorePlayer {
             ChatUtils.sendMsg(p, "&3Rewards:");
             addCoins(p, achievement.getCoinReward(), "Achievement: " + achievement.getName(), false, false);
             addKeys(p, achievement.getKeyReward(), "Achievement: " + achievement.getName(), false);
+            addExp(p, achievement.getExpReward(), "Achievement: " + achievement.getName(), false, false);
             ChatUtils.sendMsg(p, "&8-------- &a&lACHIEVEMENT GET! &8--------");
         }
     }
 
-    public void addGadget(Player p, GadgetsEnum gadget){
-        gadgets[gadget.getId()] = 't';
-    }
+    /* --END ACHIEVEMENTS-- */
+
+
+    /* --START GADGETS-- */
 
     public char[] getGadgets() {
         return gadgets;
@@ -186,31 +203,105 @@ public class CorePlayer {
         this.gadgets = gadgets;
     }
 
-    public GadgetsEnum getGadget() {
-        return gadget;
-    }
+    /* --END GADGETS-- */
 
-    public void setGadget(GadgetsEnum gadget) {
-        this.gadget = gadget;
-    }
 
-    public int getBoxTime() {
-        return boxTime;
-    }
+    /* --START PETS-- */
 
-    public void setBoxTime(int boxTime) {
-        this.boxTime = boxTime;
-    }
-
-    public boolean hasPet(PetType pet) {
-        return pets[pet.getId()] == 't';
+    public char[] getPets() {
+        return pets;
     }
 
     public void setPets(char[] pets) {
         this.pets = pets;
     }
 
-    public char[] getPets() {
-        return pets;
+    public boolean hasPet(PetType petType) {
+        return getPets()[petType.getId()] == 't';
     }
+
+    /* --END PETS-- */
+
+
+    /* --START PREFS-- */
+
+    public boolean hasSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(boolean speed) {
+        this.speed = speed;
+    }
+
+    /* --END PREFS-- */
+
+
+    /* --START EXPERIENCE-- */
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public int getExperienceTime() {
+        return experienceTime;
+    }
+
+    public void setExperienceTime(int experienceTime) {
+        this.experienceTime = experienceTime;
+    }
+
+    public void addExp(Player p, int add, String reason, boolean allowMultiplier, boolean playSound) {
+        setExperience(getExperience() + add);
+
+        ChatUtils.sendMsg(p, "&9+" + add + " experience! (" + reason + ")");
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+
+        calculateExp(p);
+    }
+
+    public void calculateExp(Player p) {
+        int exp, level, needed;
+        exp = getExperience();
+        level = 1;
+        needed = Variables.EXP_BASE_LEVEL;
+
+        while (exp >= needed) {
+            exp = exp - needed;
+            level++;
+            needed = (int) (Variables.EXP_BASE_LEVEL * Math.pow(Variables.EXP_MODIFIER, level));
+        }
+
+        p.setLevel(level);
+        p.setExp((float) ((double) exp / (double) needed));
+
+        if (level >= 5) {
+            awardAchievement(p, AchievementsEnum.LEVEL_UP);
+        }
+
+    }
+
+    public String calculateExpString(Player p) {
+        int exp, level, needed;
+        exp = getExperience();
+        level = 1;
+        needed = Variables.EXP_BASE_LEVEL;
+
+        while (exp >= needed) {
+            exp = exp - needed;
+            level++;
+            needed = (int) (Variables.EXP_BASE_LEVEL * Math.pow(Variables.EXP_MODIFIER, level));
+        }
+
+        return needed + "," + exp + "," + level;
+    }
+
+    /* --END EXPERIENCE-- */
+
 }

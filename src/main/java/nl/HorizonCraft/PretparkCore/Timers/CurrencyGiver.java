@@ -62,10 +62,8 @@ public class CurrencyGiver {
                     } else {
                         cp.setCoinTime(cp.getCoinTime() - 1);
                     }
-                }
 
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    CorePlayer cp = PlayerUtils.getProfile(p);
+
                     if (cp.getBoxTime() == 0) {
                         int chance = MiscUtils.randomInt(1, 100);
                         if (chance <= Variables.CHEST_DOUBLE) {
@@ -78,6 +76,21 @@ public class CurrencyGiver {
                         }
                     } else {
                         cp.setBoxTime(cp.getBoxTime() - 1);
+                    }
+
+
+                    if (cp.getExperienceTime() == 0) {
+                        int chance = MiscUtils.randomInt(1, 100);
+                        if (chance <= Variables.EXPERIENCE_DOUBLE) {
+                            cp.addExp(p, Variables.EXPERIENCE_GAIN * 2, "30 minuten online, dubbel experience", false, true);
+                            ChatUtils.bcMsgTag("Experience", "&c" + p.getName() + " &aheeft zojuist 2x experience ontvangen! Geluksvogel!");
+                            cp.setExperienceTime(Variables.EXPERIENCE_TIME);
+                        } else {
+                            cp.addExp(p, Variables.EXPERIENCE_GAIN, "30 minuten online", false, true);
+                            cp.setExperienceTime(Variables.EXPERIENCE_TIME);
+                        }
+                    } else {
+                        cp.setExperienceTime(cp.getExperienceTime() - 1);
                     }
                 }
             }

@@ -30,40 +30,29 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Listeners;
 
-import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 
 /**
- * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
+ * This class has been created on 10/25/2015 at 17:15 by Cooltimmetje.
  */
-public class Variables {
+public class GamemodeListener implements Listener {
 
-    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
-    public static String SERVER_NAME_SHORT = MiscUtils.color("&3&lH&6&lC");
-    public static String SERVER_PING_MESSAGE = MiscUtils.color("In aanbouw.");
-    public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");
-    public static String WORLD_NAME = "world";
-
-    public static int COIN_TIME = 60;
-    public static int COIN_GAIN = 20;
-    public static int DOUBLE_CHANCE = 10;
-
-    public static int CHEST_TIME = 120;
-    public static int CHEST_GAIN = 1;
-    public static int CHEST_DOUBLE = 5;
-
-    public static int EXPERIENCE_TIME = 30;
-    public static int EXPERIENCE_GAIN = 100;
-    public static int EXPERIENCE_DOUBLE = 10;
-    public static int EXP_BASE_LEVEL = 5000;
-    public static double EXP_MODIFIER = 1.1;
-
-    public static HashMap<String, CorePlayer> profile = new HashMap<>();
-    public static ArrayList<Hologram> holograms = new ArrayList<>();
+    @EventHandler
+    public void onGameModeChange(PlayerGameModeChangeEvent event) {
+        final Player p = event.getPlayer();
+        ScheduleUtils.scheduleTask(20, new Runnable() {
+            @Override
+            public void run() {
+                ScoreboardUtils.updateScoreboard(p, false);
+            }
+        });
+    }
 
 }

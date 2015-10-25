@@ -117,7 +117,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?)";
 
         try {
             c = hikari.getConnection();
@@ -130,6 +130,7 @@ public class MysqlManager {
             ps.setString(5, StringUtils.repeat("f", 100));
             ps.setInt(6, Variables.CHEST_TIME);
             ps.setString(7, StringUtils.repeat("f", 100));
+            ps.setInt(8, Variables.EXPERIENCE_TIME);
 
             ps.execute();
         } catch (SQLException e) {
@@ -171,6 +172,8 @@ public class MysqlManager {
             cp.setBoxes(rs.getInt("boxes"));
             cp.setBoxTime(rs.getInt("box_time"));
             cp.setPets(rs.getString("pets").toCharArray());
+            cp.setExperience(rs.getInt("exp"));
+            cp.setExperienceTime(rs.getInt("exp_time"));
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -180,7 +183,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -196,7 +199,9 @@ public class MysqlManager {
             ps.setInt(7, cp.getBoxes());
             ps.setInt(8, cp.getBoxTime());
             ps.setString(9, new String(cp.getPets()));
-            ps.setString(10, uuid);
+            ps.setInt(10, cp.getExperience());
+            ps.setInt(11, cp.getExperienceTime());
+            ps.setString(12, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -325,7 +330,7 @@ public class MysqlManager {
 
             ps.setString(1, p.getName());
 
-            if(cp.getSpeed()){
+            if (cp.hasSpeed()) {
                 ps.setInt(2, 1);
             } else {
                 ps.setInt(2, 0);

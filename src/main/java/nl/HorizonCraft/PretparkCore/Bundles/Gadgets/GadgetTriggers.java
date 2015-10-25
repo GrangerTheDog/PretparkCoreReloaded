@@ -143,8 +143,8 @@ public class GadgetTriggers implements Listener {
                                         cdPunchStaff.put(target.getName(), System.currentTimeMillis());
                                         if(target.getName().equals("xBrandy")) {
                                             PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
-                                        } else if(target.getName().equals("klapklap980")){
-                                            PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.CREEPER_SLAP);
+                                        } else if (target.getName().equals("78wesley")) {
+                                            PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
                                         } else if(target.getName().equalsIgnoreCase("BekertjeZuivel")){
                                             PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
                                         }

@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
@@ -58,18 +59,44 @@ public class ScoreboardUtils {
         objective.setDisplayName(Variables.SERVER_NAME);
 
 
-        Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
-        coins.setScore(6);
-        Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
-        boxes.setScore(5);
-        Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
-        keys.setScore(4);
-        Score e1 = objective.getScore(" ");
-        e1.setScore(3);
-        Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + Bukkit.getOnlinePlayers().size()));
-        online.setScore(2);
-        Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
-        unique.setScore(1);
+        if (p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR) {
+            String[] exp = cp.calculateExpString(p).split(",");
+            int levelI, neededI, expI;
+            levelI = Integer.parseInt(exp[2]);
+            expI = Integer.parseInt(exp[1]);
+            neededI = Integer.parseInt(exp[0]);
+            String levelProgress = progress(expI, neededI);
+
+            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+            coins.setScore(8);
+            Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
+            boxes.setScore(7);
+            Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
+            keys.setScore(6);
+            Score level = objective.getScore(MiscUtils.color("&bLevel: &a" + levelI));
+            level.setScore(5);
+            Score needed = objective.getScore(MiscUtils.color("&bLvlUp: " + levelProgress));
+            needed.setScore(4);
+            Score e1 = objective.getScore(" ");
+            e1.setScore(3);
+            Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + Bukkit.getOnlinePlayers().size()));
+            online.setScore(2);
+            Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
+            unique.setScore(1);
+        } else {
+            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+            coins.setScore(6);
+            Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
+            boxes.setScore(5);
+            Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
+            keys.setScore(4);
+            Score e1 = objective.getScore(" ");
+            e1.setScore(3);
+            Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + Bukkit.getOnlinePlayers().size()));
+            online.setScore(2);
+            Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
+            unique.setScore(1);
+        }
 
         p.setScoreboard(board);
         scoreboards.put(p.getName(), board);
@@ -98,22 +125,66 @@ public class ScoreboardUtils {
                 onlineAmount = onlineAmount - 1;
             }
 
-            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
-            coins.setScore(6);
-            Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
-            boxes.setScore(5);
-            Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
-            keys.setScore(4);
-            Score e1 = objective.getScore(" ");
-            e1.setScore(3);
-            Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + onlineAmount));
-            online.setScore(2);
-            Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
-            unique.setScore(1);
+            if (p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR) {
+                String[] exp = cp.calculateExpString(p).split(",");
+                int levelI, neededI, expI;
+                levelI = Integer.parseInt(exp[2]);
+                expI = Integer.parseInt(exp[1]);
+                neededI = Integer.parseInt(exp[0]);
+                String levelProgress = progress(expI, neededI);
+
+                Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+                coins.setScore(8);
+                Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
+                boxes.setScore(7);
+                Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
+                keys.setScore(6);
+                Score level = objective.getScore(MiscUtils.color("&bLevel: &a" + levelI));
+                level.setScore(5);
+                Score needed = objective.getScore(MiscUtils.color("&bLvlUp: " + levelProgress));
+                needed.setScore(4);
+                Score e1 = objective.getScore(" ");
+                e1.setScore(3);
+                Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + onlineAmount));
+                online.setScore(2);
+                Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
+                unique.setScore(1);
+            } else {
+                Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+                coins.setScore(6);
+                Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
+                boxes.setScore(5);
+                Score keys = objective.getScore(MiscUtils.color("&bMystery Keys: &a" + cp.getKeys()));
+                keys.setScore(4);
+                Score e1 = objective.getScore(" ");
+                e1.setScore(3);
+                Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + onlineAmount));
+                online.setScore(2);
+                Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
+                unique.setScore(1);
+            }
 
             scoreboards.put(p.getName(), board);
         } else {
             constructScoreboard(p);
         }
+    }
+
+    private static String progress(int exp, int needed) {
+        double d = (double) exp / (double) needed;
+        double d1 = d * 10;
+        double d2 = Math.round(d1);
+        int i = (int) d2;
+
+        StringBuilder sb = new StringBuilder();
+        for (int i2 = 1; i2 < 11; i2++) {
+            if (i2 <= i) {
+                sb.append("&a|");
+            } else {
+                sb.append("&8|");
+            }
+        }
+
+        return sb.toString().trim();
     }
 }

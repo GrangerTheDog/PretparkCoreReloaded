@@ -37,26 +37,29 @@ package nl.HorizonCraft.PretparkCore.Bundles.Achievements;
  */
 public enum AchievementsEnum {
 
-    FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1, AchievementType.GENERAL),
-    KOALA_SLAP(1, "I don't like koala's!", "Launch xBrandy!", 10, 1, AchievementType.STAFFPUNCH),
-    CREEPER_SLAP(2, "It exploded into diamonds!", "Launch klapklap980!", 10, 1, AchievementType.STAFFPUNCH),
-    MAZE_COMPLETE_1(3, "Into the maze!", "Haal het einde van doolhof 1!", 25, 2, AchievementType.MAZES_PARKOUR),
-    FE_RIDE(4, "Boer Harms op de Trekker!", "Maak een ritje op de Farm Expedition!", 25, 1, AchievementType.RIDES),
-    MELK_SLAP(5, "Maar ik lus geen melk :(", "Launch BekertjeZuivel!", 10, 1, AchievementType.STAFFPUNCH);
+    FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1, 100, AchievementType.GENERAL),
+    KOALA_SLAP(1, "I don't like koala's!", "Launch xBrandy!", 10, 1, 200, AchievementType.STAFFPUNCH),
+    PEDOBEAR_SLAP(2, "PEDOBEAR!", "Launch 78wesley!", 10, 1, 200, AchievementType.STAFFPUNCH),
+    MAZE_COMPLETE_1(3, "Into the maze!", "Haal het einde van doolhof 1!", 25, 2, 500, AchievementType.MAZES_PARKOUR),
+    FE_RIDE(4, "Boer Harms op de Trekker!", "Maak een ritje op de Farm Expedition!", 25, 1, 600, AchievementType.RIDES),
+    MELK_SLAP(5, "Maar ik lus geen melk :(", "Launch BekertjeZuivel!", 10, 1, 200, AchievementType.STAFFPUNCH),
+    LEVEL_UP(6, "Leveling Up...", "Haal level 5.", 100, 3, 750, AchievementType.GENERAL);
 
     private int id;
     private String name;
     private String description;
     private int coinReward;
     private int keyReward;
+    private int expReward;
     private AchievementType achievementType;
 
-    AchievementsEnum(int i, String s, String s1, int i1, int i2, AchievementType achievementType) {
+    AchievementsEnum(int i, String s, String s1, int i1, int i2, int i3, AchievementType achievementType) {
         this.id = i;
         this.name = s;
         this.description = s1;
         this.coinReward = i1;
         this.keyReward = i2;
+        this.expReward = i3;
         this.achievementType = achievementType;
     }
 
@@ -82,5 +85,9 @@ public enum AchievementsEnum {
 
     public AchievementType getType() {
         return achievementType;
+    }
+
+    public int getExpReward() {
+        return expReward;
     }
 }

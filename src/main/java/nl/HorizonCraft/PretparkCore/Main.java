@@ -94,7 +94,7 @@ public class Main extends JavaPlugin {
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
                 , new BoxListener(), new ServerPingListener(), new ChatListener(), new RideMenu()
-                , new HealthHungerListener(), new PetMenu()
+                , new HealthHungerListener(), new PetMenu(), new GamemodeListener()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.

@@ -55,7 +55,7 @@ public class PreferencesMenu implements Listener{
         Inventory inv = Bukkit.createInventory(null, 36, "Instellingen \u00BB " + p.getName());
 
         ItemUtils.createDisplay(inv, 14, Material.SUGAR, 1, 0, "&aSpeed effect", "&7Wil je wat sneller door het park kunnen gaan?", "&7Zet dan dit aan! &oWOOSH!");
-        ItemUtils.createToggle(inv, 23, "Speed effect", cp.getSpeed());
+        ItemUtils.createToggle(inv, 23, "Speed effect", cp.hasSpeed());
 
         p.openInventory(inv);
     }
