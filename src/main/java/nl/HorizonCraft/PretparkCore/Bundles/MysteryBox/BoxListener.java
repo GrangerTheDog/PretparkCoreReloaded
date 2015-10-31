@@ -38,6 +38,7 @@ import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,7 +54,7 @@ public class BoxListener implements Listener {
     @EventHandler
     public void onBoxClick(PlayerInteractEvent event){
         if(event.getClickedBlock().getType() == Material.ENDER_CHEST){
-            if(event.getClickedBlock() == Bukkit.getWorld(Variables.WORLD_NAME).getBlockAt(98,60,-313)) {
+            if (event.getClickedBlock().getLocation() == new Location(Bukkit.getWorld(Variables.WORLD_NAME), 98, 60, -313)) {
                 event.setCancelled(true);
                 ChatUtils.sendSoonTag(event.getPlayer(), "MysteryBox");
                 //                openBox(event.getPlayer());

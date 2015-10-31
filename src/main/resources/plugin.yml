@@ -17,3 +17,9 @@ commands:
         description: setride
     achievementride:
         description: achievementride
+    unlockall:
+        description: unlockall
+    coins:
+        description: coins
+    exp:
+        description: exp

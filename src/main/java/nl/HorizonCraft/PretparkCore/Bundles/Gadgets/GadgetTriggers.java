@@ -141,13 +141,24 @@ public class GadgetTriggers implements Listener {
                                         target.setVelocity(new Vector(0, 3, 0));
                                         cdPunch.put(p.getName(), System.currentTimeMillis());
                                         cdPunchStaff.put(target.getName(), System.currentTimeMillis());
-                                        if(target.getName().equals("xBrandy")) {
-                                            PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
-                                        } else if (target.getName().equals("78wesley")) {
-                                            PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
-                                        } else if(target.getName().equalsIgnoreCase("BekertjeZuivel")){
-                                            PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
+
+                                        switch (target.getName()) {
+                                            case "xBrandy":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
+                                                break;
+                                            case "78wesley":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
+                                                break;
+                                            case "BekertjeZuivel":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
+                                                break;
+                                            case "Cooltimmetje":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
+                                                break;
+                                            default:
+                                                break;
                                         }
+
                                     } else {
                                         ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunchStaff.get(p.getName()), cdPunchSec)) +
                                                 " &awachten voordat&c " + target.getName() + " &aje weer kan punchen!");

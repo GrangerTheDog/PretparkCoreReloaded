@@ -84,7 +84,7 @@ public class MainSwag implements Listener {
                     PetMenu.open(p);
                     break;
                 case IRON_CHESTPLATE:
-                    ChatUtils.sendSoonTag(p, "Kledingkast");
+                    ChatUtils.sendSoonTag(p, "Wardrobe");
                     break;
                 case PISTON_BASE:
                     GadgetsMenu.open(p);

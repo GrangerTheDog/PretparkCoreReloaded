@@ -36,6 +36,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -52,17 +53,12 @@ public class RideAchievementCommand implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
         if(cmd.getName().equalsIgnoreCase("achievementride")){
-            Main.sendDebug("achievementride triggered");
             if(!(sender instanceof Player)){
-                Main.sendDebug("achievementride > Commandblock");
                 switch (args[0]){
                     default:
-                        Main.sendDebug("achievementride > Default");
                         break;
                     case "fe":
-                        Main.sendDebug("achievementride > FE");
                         for(Player p : Bukkit.getOnlinePlayers()){
-                            Main.sendDebug("achievementride > Checking player " + p.getName());
                             CorePlayer cp = PlayerUtils.getProfile(p);
                             Location pLoc = p.getLocation();
                             if(pLoc.getX() <= -43 && pLoc.getX() >= -53){
@@ -70,6 +66,7 @@ public class RideAchievementCommand implements CommandExecutor{
                                     if(pLoc.getZ() <= -597 && pLoc.getZ() >= -599) {
                                         if (p.isInsideVehicle()) {
                                             cp.awardAchievement(p, AchievementsEnum.FE_RIDE);
+                                            cp.addExp(p, MiscUtils.randomInt(10, 50), "Farm Expediton ritje", true, true);
                                         }
                                     }
                                 }

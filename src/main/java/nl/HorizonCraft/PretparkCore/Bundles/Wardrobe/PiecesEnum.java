@@ -30,29 +30,42 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Listeners;
-
-import org.bukkit.entity.EntityType;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
+package nl.HorizonCraft.PretparkCore.Bundles.Wardrobe;
 
 /**
- * This class has been created on 10/24/2015 at 22:02 by Cooltimmetje.
+ * This class has been created on 10/27/2015 at 10:32 by Cooltimmetje.
  */
-public class HealthHungerListener implements Listener {
+public enum PiecesEnum {
 
-    @EventHandler
-    public void onHunger(FoodLevelChangeEvent event) {
-        event.setCancelled(true);
+    NINJA_H(0),
+    NINJA_C(1),
+    NINJA_L(2),
+    NINJA_B(3),
+
+    OLAF_H(4),
+    OLAF_C(5),
+    OLAF_L(6),
+    OLAF_B(7),
+
+    LOVE_H(8),
+    LOVE_C(9),
+    LOVE_L(10),
+    LOVE_B(11),
+
+    VAMPIRE_H(12),
+    VAMPIRE_C(13),
+    VAMPIRE_L(14),
+    VAMPIRE_B(15),
+
+    SKELETON_H(16),
+    SKELETON_C(17),
+    SKELETON_L(18),
+    SKELETON_B(19);
+
+    private int id;
+
+    PiecesEnum(int i) {
+        this.id = i;
     }
 
-    @EventHandler
-    public void onDamage(EntityDamageEvent event) {
-        if (event.getEntity().getType() == EntityType.PLAYER) {
-            event.setDamage(0);
-            event.setCancelled(true);
-        }
-    }
 }

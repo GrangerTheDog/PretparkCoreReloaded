@@ -60,7 +60,7 @@ public class MyHorizonMenu implements Listener{
     public static void openMyHorizon(Player p, Player pTarget, boolean admin){
         CorePlayer cp = PlayerUtils.getProfile(pTarget);
 
-        Inventory inv = Bukkit.createInventory(null, 36, MiscUtils.color("MyHorizon &8\u00BB " + pTarget.getName()));
+        Inventory inv = Bukkit.createInventory(null, 45, MiscUtils.color("MyHorizon &8\u00BB " + pTarget.getName()));
 
         ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName());
         SkullMeta im = (SkullMeta) is.getItemMeta();
@@ -70,7 +70,7 @@ public class MyHorizonMenu implements Listener{
 
         ItemUtils.createDisplay(inv, 14, Material.DIAMOND, 1, 0, "&aAchievements", "&7Klik om te openen.");
 
-        ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen", "&7Verander je instellingen.");
+        ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen &8\u00BB &cDISABLED", "&7Verander je instellingen.");
 
         if(!admin) {
             ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
@@ -78,8 +78,14 @@ public class MyHorizonMenu implements Listener{
             ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7+30 coins in: " + cp.getCoinTime());
         }
 
-        ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&dMystery Boxes: &cN/A");
-        ItemUtils.createDisplay(inv, 24, Material.TRIPWIRE_HOOK, 1, 0, "&dMystery Keys: " + cp.getKeys());
+        ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&3Mystery Boxes: &c" + cp.getBoxes());
+        ItemUtils.createDisplay(inv, 24, Material.TRIPWIRE_HOOK, 1, 0, "&dMystery Keys: &c" + cp.getKeys());
+
+        String[] expInfo = cp.calculateExpString(p).split(",");
+        int needed = Integer.parseInt(expInfo[0]);
+        int exp = Integer.parseInt(expInfo[1]);
+
+        ItemUtils.createDisplay(inv, 32, Material.EXP_BOTTLE, 1, 0, "&9Experience:", "&3Level: &a" + cp.getLevel(), "&3Totaal EXP: &a" + cp.getExperience(), "&3Nodig tot volgend level: &a" + (needed - exp), "&3Progress: " + progress(exp, needed));
 
         p.openInventory(inv);
     }
@@ -93,7 +99,7 @@ public class MyHorizonMenu implements Listener{
             Material m = event.getCurrentItem().getType();
             switch (m){
                 case REDSTONE_COMPARATOR:
-                    PreferencesMenu.openPrefs(p);
+//                    PreferencesMenu.openPrefs(p);
                     break;
                 case DIAMOND:
                     AchievementMenu.open(p, target);
@@ -102,6 +108,24 @@ public class MyHorizonMenu implements Listener{
                     break;
             }
         }
+    }
+
+    private static String progress(int exp, int needed) {
+        double d = (double) exp / (double) needed;
+        double d1 = d * 10;
+        double d2 = Math.round(d1);
+        int i = (int) d2;
+
+        StringBuilder sb = new StringBuilder();
+        for (int i2 = 1; i2 < 11; i2++) {
+            if (i2 <= i) {
+                sb.append("&a|");
+            } else {
+                sb.append("&8|");
+            }
+        }
+
+        return sb.toString().trim();
     }
 
 }

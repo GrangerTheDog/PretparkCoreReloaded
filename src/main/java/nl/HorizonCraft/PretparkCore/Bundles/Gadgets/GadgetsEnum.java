@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
 
+import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.Weight;
 import org.bukkit.Material;
 
 /**
@@ -39,9 +40,9 @@ import org.bukkit.Material;
  */
 public enum GadgetsEnum {
 
-    FIREWORK(0, 100, "Vuurwerkje", "Gewoon een vuurwerkje, niet veel bijzonder.", Material.FIREWORK_CHARGE, 0, 15),
-    STAFF_LAUNCHER(1, 500, "Staff Launcher", "The sky is the limit, letterlijk... \nStuur de staff naar de lucht en weer terug!", Material.SLIME_BLOCK, 0, 60),
-    BOEM_CHICKEN(2, 750, "Exploderende Kip", "Uuh... Kip *boem* Geen kip :D", Material.COOKED_CHICKEN, 0, 45);
+    FIREWORK(0, 100, "Vuurwerkje", "Gewoon een vuurwerkje, niet veel bijzonder.", Material.FIREWORK_CHARGE, 0, 15, Weight.COMMON),
+    STAFF_LAUNCHER(1, 500, "Staff Launcher", "The sky is the limit, letterlijk... \nStuur de staff naar de lucht en weer terug!", Material.SLIME_BLOCK, 0, 60, Weight.LEGENDARY),
+    BOEM_CHICKEN(2, 750, "Exploderende Kip", "Uuh... Kip *boem* Geen kip :D", Material.COOKED_CHICKEN, 0, 45, Weight.EPIC);
 
     private int id;
     private int cost;
@@ -50,8 +51,9 @@ public enum GadgetsEnum {
     private Material m;
     private int dmg;
     private int cooldown;
+    private Weight weight;
 
-    GadgetsEnum(int id, int cost, String name, String lore, Material m, int dmg, int cooldown) {
+    GadgetsEnum(int id, int cost, String name, String lore, Material m, int dmg, int cooldown, Weight w) {
         this.id = id;
         this.cost = cost;
         this.name = name;
@@ -59,6 +61,7 @@ public enum GadgetsEnum {
         this.m = m;
         this.dmg = dmg;
         this.cooldown = cooldown;
+        this.weight = w;
     }
 
     public String getLore() {
@@ -87,5 +90,9 @@ public enum GadgetsEnum {
 
     public int getCooldown() {
         return cooldown;
+    }
+
+    public Weight getWeight() {
+        return weight;
     }
 }

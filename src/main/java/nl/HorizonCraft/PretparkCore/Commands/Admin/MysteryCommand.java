@@ -30,55 +30,43 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
+package nl.HorizonCraft.PretparkCore.Commands.Admin;
 
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:33 PM by Cooltimmetje.
+ * This class has been created on 10/27/2015 at 16:00 by Cooltimmetje.
  */
-public class ChatUtils {
+public class MysteryCommand implements CommandExecutor {
 
-    public static void sendMsg(Player p, String msg){
-        p.sendMessage(MiscUtils.color(msg));
-    }
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        if (cmd.getLabel().equalsIgnoreCase("mystery")) {
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                if (p.getName().equals("Jordy010NL") || p.getName().equals("Cooltimmetje")) {
+                    if (args.length >= 1) {
 
-    public static void sendMsgTag(Player p, String tag, String msg){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
 
-    public static void bcMsgTag(String tag, String msg){
-        Bukkit.broadcastMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void sendNoPremTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Je mag dit niet doen!"));
-    }
-
-    public static void sendSoonTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "SoonTM!"));
-    }
-
-    public static void sendArugmentsError(Player p, String tag, String usage) {
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Ongeldige argumenten. &oGebruik: " + usage));
-    }
-
-    public static void sendFalseInt(Player p, String tag, String falseInt) {
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Ongeldig getal: &c" + falseInt));
-    }
-
-    public static void sendFaslePlayer(Player p, String tag, String falsePlayer) {
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Ongeldige speler: &c" + falsePlayer));
-    }
-
-    public static void clearChat(Player p){
-        for(int i = 0; i < 100; i++){
-            p.sendMessage(" ");
+                    } else {
+                        ChatUtils.sendArugmentsError(p, "MysteryAdmin", "/mystery <box/key> <add/remove/set> <player> <amount> &aof &o/mystery <box/key> mass <amount>");
+                    }
+                } else if (p.getName().equals("xBrandy")) {
+                    ChatUtils.sendMsgTag(p, "AntiBrandy", "Nee Brandy... Nee.");
+                } else {
+                    ChatUtils.sendNoPremTag(p, "MysteryAdmin");
+                }
+            }
         }
+        return false;
     }
-
-
-    public static String error = "&c&lERROR! &a";
 
 }

@@ -41,6 +41,9 @@ import nl.HorizonCraft.PretparkCore.Bundles.Rides.AddRide;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideStateCommand;
+import nl.HorizonCraft.PretparkCore.Commands.Admin.CoinsCommand;
+import nl.HorizonCraft.PretparkCore.Commands.Admin.ExperienceCommand;
+import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.MazeCommand;
@@ -106,6 +109,9 @@ public class Main extends JavaPlugin {
         registerCommand("addride", new AddRide());
         registerCommand("setride", new RideStateCommand());
         registerCommand("achievementride", new RideAchievementCommand());
+        registerCommand("unlockall", new UnlockAllCommand());
+        registerCommand("coins", new CoinsCommand());
+        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
 
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.

@@ -91,6 +91,6 @@ public class PlayerUtils {
             }
         }
 
-        cp.calculateExp(p);
+        cp.calculateExp(p, true);
     }
 }

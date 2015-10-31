@@ -32,13 +32,13 @@
 
 package nl.HorizonCraft.PretparkCore.Profiles;
 
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
-import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScoreboardUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import nl.HorizonCraft.PretparkCore.Utilities.*;
+import nl.HorizonCraft.PretparkCore.Utilities.Packets.TitleUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -60,6 +60,7 @@ public class CorePlayer {
     private int keys;
     private int experience;
     private int experienceTime;
+    private int level;
 
     private char[] achievements;
     private char[] gadgets;
@@ -105,6 +106,28 @@ public class CorePlayer {
         }
         ScoreboardUtils.updateScoreboard(p, false);
     }
+
+    public void removeCoins(Player p, int remove, String reason, boolean playSound) {
+        setCoins(getCoins() - remove);
+
+        ChatUtils.sendMsg(p, "&6-" + remove + " coins! (" + reason + ")");
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public void setCoinsTrans(Player p, int set, String reason, boolean playSound) {
+        setCoins(set);
+
+        ChatUtils.sendMsg(p, "&6=" + set + " coins! (" + reason + ")");
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+
 
     /* --END COINS-- */
 
@@ -203,6 +226,24 @@ public class CorePlayer {
         this.gadgets = gadgets;
     }
 
+    public void unlockGadget(GadgetsEnum gagdet, Player p, boolean playSound, boolean playFirework, boolean playChat) {
+        if (pets[gagdet.getId()] == 'f') {
+            pets[gagdet.getId()] = 't';
+
+            if (playSound)
+                p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
+
+            if (playFirework)
+                MiscUtils.shootFirework(p.getLocation(), p.getWorld().getName(), true);
+
+            if (playChat) {
+                ChatUtils.sendMsg(p, "&8-------- &a&lGADGET UNLOCKED! &8--------");
+                ChatUtils.sendMsg(p, "&" + gagdet.getWeight().getColor() + gagdet.getName());
+                ChatUtils.sendMsg(p, "&8-------- &a&lGADGET UNLOCKED! &8--------");
+            }
+        }
+    }
+
     /* --END GADGETS-- */
 
 
@@ -218,6 +259,24 @@ public class CorePlayer {
 
     public boolean hasPet(PetType petType) {
         return getPets()[petType.getId()] == 't';
+    }
+
+    public void unlockPet(PetType petType, Player p, boolean playSound, boolean playFirework, boolean playChat) {
+        if (pets[petType.getId()] == 'f') {
+            pets[petType.getId()] = 't';
+
+            if (playSound)
+                p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
+
+            if (playFirework)
+                MiscUtils.shootFirework(p.getLocation(), p.getWorld().getName(), true);
+
+            if (playChat) {
+                ChatUtils.sendMsg(p, "&8-------- &a&lPET UNLOCKED! &8--------");
+                ChatUtils.sendMsg(p, "&" + petType.getWeight().getColor() + petType.getName());
+                ChatUtils.sendMsg(p, "&8-------- &a&lPET UNLOCKED! &8--------");
+            }
+        }
     }
 
     /* --END PETS-- */
@@ -263,10 +322,10 @@ public class CorePlayer {
         }
         ScoreboardUtils.updateScoreboard(p, false);
 
-        calculateExp(p);
+        calculateExp(p, false);
     }
 
-    public void calculateExp(Player p) {
+    public void calculateExp(Player p, boolean join) {
         int exp, level, needed;
         exp = getExperience();
         level = 1;
@@ -285,6 +344,27 @@ public class CorePlayer {
             awardAchievement(p, AchievementsEnum.LEVEL_UP);
         }
 
+        if (join) {
+            setLevel(level);
+        } else {
+            if (level != getLevel()) {
+                setLevel(level);
+                final Player pfinal = p;
+                ScheduleUtils.scheduleTask(20, new Runnable() {
+                    @Override
+                    public void run() {
+                        TitleUtils.sendTitle(pfinal, "&e&lLEVEL UP!", PacketPlayOutTitle.EnumTitleAction.TITLE, 20, 60, 20);
+                    }
+                });
+
+                ScheduleUtils.scheduleTask(40, new Runnable() {
+                    @Override
+                    public void run() {
+                        TitleUtils.sendTitle(pfinal, "&eJe bent nu level &9" + getLevel() + "&e!", PacketPlayOutTitle.EnumTitleAction.SUBTITLE, 20, 60, 20);
+                    }
+                });
+            }
+        }
     }
 
     public String calculateExpString(Player p) {
@@ -300,6 +380,38 @@ public class CorePlayer {
         }
 
         return needed + "," + exp + "," + level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    private void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void removeExp(Player p, int remove, String reason, boolean playSound) {
+        setExperience(getExperience() - remove);
+
+        ChatUtils.sendMsg(p, "&9-" + remove + " experience! (" + reason + ")");
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+
+        calculateExp(p, false);
+    }
+
+    public void setExp(Player p, int set, String reason, boolean playSound) {
+        setExperience(set);
+
+        ChatUtils.sendMsg(p, "&9=" + set + " experience! (" + reason + ")");
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+
+        calculateExp(p, false);
     }
 
     /* --END EXPERIENCE-- */

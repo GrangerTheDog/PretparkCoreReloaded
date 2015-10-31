@@ -67,7 +67,8 @@ public class MazeCommand implements CommandExecutor {
                                 if (mazeTime.containsKey(p.getName())) {
                                     if (args[2].equals("1")) {
                                         cp.awardAchievement(p, AchievementsEnum.MAZE_COMPLETE_1);
-                                        cp.addCoins(p, 5, "Doolhof 1 opgelost!", true, true);
+                                        cp.addCoins(p, MiscUtils.randomInt(5, 10), "Doolhof 1 opgelost!", true, true);
+                                        cp.addExp(p, MiscUtils.randomInt(10, 30), "Doolhof 1 opgelost!", true, true);
                                         p.teleport(new Location(p.getWorld(), -78, 66, -381).add(0.5, 0, 0.5));
                                     }
                                     ChatUtils.sendMsgTag(p, "Doolhof", "Goed gedaan! Je tijd is: &c" + getTime(p) + "&a!");
