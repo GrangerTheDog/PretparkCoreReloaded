@@ -59,7 +59,7 @@ public class RideStateCommand implements CommandExecutor{
                                 break;
                             case "o":
                                 ride.setRideState(RideState.OPEN);
-                                ChatUtils.bcMsgTag("Omroep", "De &2" + ride.getName() + " &ais nu &2geopened&a! &oOpen je AttractieMenu om te teleporteren.");
+                                ChatUtils.bcMsgTag("Omroep", "De &2" + ride.getName() + " &ais nu &2geopend&a! &oOpen je AttractieMenu om te teleporteren.");
                                 break;
                             case "m":
                                 ride.setRideState(RideState.MAINTENANCE);

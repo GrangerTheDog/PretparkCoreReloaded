@@ -33,7 +33,6 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
@@ -50,6 +49,7 @@ import java.util.UUID;
 
 public class CorePlayer {
 
+    private int id;
     private UUID uuid;
     private String name;
 
@@ -73,6 +73,14 @@ public class CorePlayer {
     public CorePlayer(Player p){
         this.uuid = p.getUniqueId();
         this.name = p.getName();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /* --START COINS-- */
@@ -158,7 +166,7 @@ public class CorePlayer {
         this.keys = keys;
     }
 
-    public void addKeys(Player p, int add, String reason, boolean playSound){
+    public void addKeys(Player p, int add, String reason, boolean playSound, boolean allowMultiplier){
         setKeys(getKeys() + add);
 
         ChatUtils.sendMsg(p, "&d+" + add + " Mystery Keys! (" + reason + ")");
@@ -207,7 +215,7 @@ public class CorePlayer {
             ChatUtils.sendMsg(p, "&3Beschrijving: &a" + achievement.getDescription());
             ChatUtils.sendMsg(p, "&3Rewards:");
             addCoins(p, achievement.getCoinReward(), "Achievement: " + achievement.getName(), false, false);
-            addKeys(p, achievement.getKeyReward(), "Achievement: " + achievement.getName(), false);
+            addKeys(p, achievement.getKeyReward(), "Achievement: " + achievement.getName(), false, false);
             addExp(p, achievement.getExpReward(), "Achievement: " + achievement.getName(), false, false);
             ChatUtils.sendMsg(p, "&8-------- &a&lACHIEVEMENT GET! &8--------");
         }
@@ -226,9 +234,9 @@ public class CorePlayer {
         this.gadgets = gadgets;
     }
 
-    public void unlockGadget(GadgetsEnum gagdet, Player p, boolean playSound, boolean playFirework, boolean playChat) {
-        if (pets[gagdet.getId()] == 'f') {
-            pets[gagdet.getId()] = 't';
+    public void unlockGadget(GadgetsEnum gadget, Player p, boolean playSound, boolean playFirework, boolean playChat) {
+        if (gadgets[gadget.getId()] == 'f') {
+            gadgets[gadget.getId()] = 't';
 
             if (playSound)
                 p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
@@ -238,7 +246,7 @@ public class CorePlayer {
 
             if (playChat) {
                 ChatUtils.sendMsg(p, "&8-------- &a&lGADGET UNLOCKED! &8--------");
-                ChatUtils.sendMsg(p, "&" + gagdet.getWeight().getColor() + gagdet.getName());
+                ChatUtils.sendMsg(p, "&" + gadget.getWeight().getColor() + gadget.getName());
                 ChatUtils.sendMsg(p, "&8-------- &a&lGADGET UNLOCKED! &8--------");
             }
         }
@@ -413,6 +421,8 @@ public class CorePlayer {
 
         calculateExp(p, false);
     }
+
+
 
     /* --END EXPERIENCE-- */
 

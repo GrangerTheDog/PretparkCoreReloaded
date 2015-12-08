@@ -37,34 +37,34 @@ package nl.HorizonCraft.PretparkCore.Bundles.Wardrobe;
  */
 public enum PiecesEnum {
 
-    NINJA_H(0),
-    NINJA_C(1),
-    NINJA_L(2),
-    NINJA_B(3),
+    NINJA_H(0, SuitsEnum.NINJA),
+    NINJA_C(1, SuitsEnum.NINJA),
+    NINJA_L(2, SuitsEnum.NINJA),
+    NINJA_B(3, SuitsEnum.NINJA),
 
-    OLAF_H(4),
-    OLAF_C(5),
-    OLAF_L(6),
-    OLAF_B(7),
+    OLAF_H(4, SuitsEnum.OLAF),
+    OLAF_C(5, SuitsEnum.OLAF),
+    OLAF_L(6, SuitsEnum.OLAF),
+    OLAF_B(7, SuitsEnum.OLAF),
 
-    LOVE_H(8),
-    LOVE_C(9),
-    LOVE_L(10),
-    LOVE_B(11),
+    LOVE_H(8, SuitsEnum.LOVE),
+    LOVE_C(9, SuitsEnum.LOVE),
+    LOVE_L(10, SuitsEnum.LOVE),
+    LOVE_B(11, SuitsEnum.LOVE),
 
-    VAMPIRE_H(12),
-    VAMPIRE_C(13),
-    VAMPIRE_L(14),
-    VAMPIRE_B(15),
+    VAMPIRE_H(12, SuitsEnum.VAMPIRE),
+    VAMPIRE_C(13, SuitsEnum.VAMPIRE),
+    VAMPIRE_L(14, SuitsEnum.VAMPIRE),
+    VAMPIRE_B(15, SuitsEnum.VAMPIRE),
 
-    SKELETON_H(16),
-    SKELETON_C(17),
-    SKELETON_L(18),
-    SKELETON_B(19);
+    SKELETON_H(16, SuitsEnum.SKELETON),
+    SKELETON_C(17, SuitsEnum.SKELETON),
+    SKELETON_L(18, SuitsEnum.SKELETON),
+    SKELETON_B(19, SuitsEnum.SKELETON);
 
     private int id;
 
-    PiecesEnum(int i) {
+    PiecesEnum(int i, SuitsEnum skeleton) {
         this.id = i;
     }
 

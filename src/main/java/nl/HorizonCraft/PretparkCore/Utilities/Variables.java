@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
+import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,10 +61,11 @@ public class Variables {
     public static int EXPERIENCE_TIME = 30;
     public static int EXPERIENCE_GAIN = 100;
     public static int EXPERIENCE_DOUBLE = 10;
-    public static int EXP_BASE_LEVEL = 5000;
+    public static int EXP_BASE_LEVEL = 4500;
     public static double EXP_MODIFIER = 1.1;
 
     public static HashMap<String, CorePlayer> profile = new HashMap<>();
     public static ArrayList<Hologram> holograms = new ArrayList<>();
+    public static ArrayList<Voucher> vouchers = new ArrayList<>();
 
 }

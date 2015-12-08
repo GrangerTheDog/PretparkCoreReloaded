@@ -30,36 +30,42 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Timers;
+package nl.HorizonCraft.PretparkCore.Commands;
 
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 12/8/2015 at 6:18 PM.
  */
-public class DataSaver {
+public class RedeemVoucherCommand implements CommandExecutor {
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p);
-                    MysqlManager.savePrefs(p);
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        if(cmd.getLabel().equals("redeem")){
+            if(sender instanceof Player){
+                Player p = (Player) sender;
+                if(args.length >= 1){
+                    ChatUtils.sendMsgTag(p, "Voucher", "Voucher inwisselen...");
 
-                    PlayerUtils.configPlayer(p, false);
+                    Voucher voucher = MiscUtils.getVoucher(args[0].toUpperCase());
+                    if(voucher != null){
+                        voucher.redeem(p, PlayerUtils.getProfile(p));
+                    } else {
+                        ChatUtils.sendMsgTag(p, "Voucher", ChatUtils.error + "Dit is een ongeldige voucher!");
+                    }
+                } else {
+                    ChatUtils.sendMsgTag(p, "Voucher", ChatUtils.error + "Vul een code in!");
                 }
-
-                MiscUtils.updateVouchers();
             }
-        });
+        }
+        return true;
     }
 
 }

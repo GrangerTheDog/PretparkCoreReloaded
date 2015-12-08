@@ -95,4 +95,13 @@ public enum GadgetsEnum {
     public Weight getWeight() {
         return weight;
     }
+
+    public static GadgetsEnum getFromMaterial(Material m){
+        for(GadgetsEnum gadget : GadgetsEnum.values()){
+            if(gadget.getMaterial() == m){
+                return gadget;
+            }
+        }
+        return null;
+    }
 }

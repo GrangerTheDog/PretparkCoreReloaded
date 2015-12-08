@@ -36,8 +36,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.Ride;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideState;
 import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -174,6 +176,7 @@ public class MysqlManager {
             cp.setPets(rs.getString("pets").toCharArray());
             cp.setExperience(rs.getInt("exp"));
             cp.setExperienceTime(rs.getInt("exp_time"));
+            cp.setId(rs.getInt("id"));
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -478,6 +481,131 @@ public class MysqlManager {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    public static void deleteVoucher(Voucher voucher) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        String updateData = "DELETE FROM vouchers WHERE code=?";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setString(1, voucher.getCode());
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void updateVoucher(Voucher voucher) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        String updateData = "INSERT INTO vouchers VALUES(?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE uses_left=?,used_by=?";
+        String uses = voucher.getUses();
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setString(1, voucher.getCode());
+            ps.setInt(2, voucher.getCoins());
+            ps.setInt(3, voucher.getExp());
+            ps.setInt(4, voucher.getBoxes());
+            ps.setInt(5, voucher.getKeys());
+            ps.setInt(6, voucher.getUses_left());
+            ps.setString(7, uses);
+
+            ps.setInt(8, voucher.getUses_left());
+            ps.setString(9, uses);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void getVouchers(){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM vouchers;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            setVouchers(rs);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void setVouchers(ResultSet rs) {
+        try {
+            while(rs.next()){
+                Voucher voucher = new Voucher(rs.getString("code"),rs.getInt("coins"),rs.getInt("exp"),rs.getInt("box"),rs.getInt("mkeys"),rs.getInt("uses_left"));
+                voucher.addUsers(rs.getString("used_by"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

@@ -44,7 +44,9 @@ public enum AchievementsEnum {
     FE_RIDE(4, "Boer Harms op de Trekker!", "Maak een ritje op de Farm Expedition!", 25, 1, 600, AchievementType.RIDES),
     MELK_SLAP(5, "Maar ik lus geen melk :(", "Launch BekertjeZuivel!", 10, 1, 200, AchievementType.STAFFPUNCH),
     LEVEL_UP(6, "Leveling Up...", "Haal level 5.", 100, 3, 750, AchievementType.GENERAL),
-    COOL_SLAP(7, "Not so cool anymore, I guess!", "Launch Cooltimmetje", 100, 5, 1000, AchievementType.STAFFPUNCH);
+    COOL_SLAP(7, "Not so cool anymore, I guess!", "Launch Cooltimmetje", 100, 5, 1000, AchievementType.STAFFPUNCH),
+    SVEN_SLAP(8, "ENZO KNOL?!", "Launch SVENZOKNOL", 10, 1, 200, AchievementType.STAFFPUNCH),
+    UNLOCK_GADGET(9, "FANCY TECHNOLOGY!", "Unlock je eerste gadget!", 25, 1, 500, AchievementType.GENERAL);
 
     private int id;
     private String name;

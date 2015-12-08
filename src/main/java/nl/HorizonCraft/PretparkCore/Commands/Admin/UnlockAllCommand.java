@@ -55,7 +55,7 @@ public class UnlockAllCommand implements CommandExecutor {
     private HashMap<Player, Player> confirmMap = new HashMap<>();
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
         if (cmd.getLabel().equalsIgnoreCase("unlockall")) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
@@ -71,6 +71,7 @@ public class UnlockAllCommand implements CommandExecutor {
                                 for (GadgetsEnum gadget : GadgetsEnum.values()) {
                                     cp.unlockGadget(gadget, target, false, false, false);
                                 }
+
                                 for (PetType pet : PetType.values()) {
                                     cp.unlockPet(pet, target, false, false, false);
                                 }

@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -208,5 +209,20 @@ public class MiscUtils {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static void updateVouchers(){
+        for(Voucher voucher : Variables.vouchers){
+            voucher.update();
+        }
+    }
+
+    public static Voucher getVoucher(String code){
+        for(Voucher voucher : Variables.vouchers){
+            if(voucher.getCode().equals(code)){
+                return voucher;
+            }
+        }
+        return null;
     }
 }

@@ -30,15 +30,33 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
+package nl.HorizonCraft.PretparkCore.Bundles.Shops;
 
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 /**
- * This class has been created on 10/13/2015 at 1:50 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 12/7/2015 at 9:08 PM.
  */
-public class GadgetsShop implements Listener{
+public class Test implements Listener {
 
+    @EventHandler
+    public void onClick(PlayerInteractEntityEvent event){
+        if(event.getRightClicked().getType() == EntityType.PLAYER){
+            if(event.getPlayer().isOp()){
+                if(event.getPlayer().isSneaking()){
+                    Player p = event.getPlayer();
+                    Entity e = event.getRightClicked();
 
+                    p.sendMessage(e.getUniqueId().toString());
+                    p.sendMessage(e.getName());
+                }
+            }
+        }
+    }
 
 }

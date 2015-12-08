@@ -51,13 +51,15 @@ import org.bukkit.inventory.Inventory;
  */
 public class BoxListener implements Listener {
 
-    @EventHandler
+//    @EventHandler
     public void onBoxClick(PlayerInteractEvent event){
-        if(event.getClickedBlock().getType() == Material.ENDER_CHEST){
-            if (event.getClickedBlock().getLocation() == new Location(Bukkit.getWorld(Variables.WORLD_NAME), 98, 60, -313)) {
-                event.setCancelled(true);
-                ChatUtils.sendSoonTag(event.getPlayer(), "MysteryBox");
-                //                openBox(event.getPlayer());
+        if(event.getClickedBlock() != null){
+            if (event.getClickedBlock().getType() == Material.ENDER_CHEST) {
+                if (event.getClickedBlock().getLocation() == new Location(Bukkit.getWorld(Variables.WORLD_NAME), 98, 60, -313)) {
+                    event.setCancelled(true);
+                    ChatUtils.sendSoonTag(event.getPlayer(), "MysteryBox");
+                    //                openBox(event.getPlayer());
+                }
             }
         }
     }

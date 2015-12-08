@@ -155,6 +155,9 @@ public class GadgetTriggers implements Listener {
                                             case "Cooltimmetje":
                                                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
                                                 break;
+                                            case "SVENZOKNOL":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
+                                                break;
                                             default:
                                                 break;
                                         }

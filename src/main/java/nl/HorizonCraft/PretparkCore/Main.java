@@ -41,13 +41,14 @@ import nl.HorizonCraft.PretparkCore.Bundles.Rides.AddRide;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideStateCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Shops.Gadget.GadgetsShop;
+import nl.HorizonCraft.PretparkCore.Bundles.Shops.ShopTrigger;
+import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
+import nl.HorizonCraft.PretparkCore.Commands.*;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CoinsCommand;
+import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.ExperienceCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
-import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
-import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
-import nl.HorizonCraft.PretparkCore.Commands.MazeCommand;
-import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Listeners.*;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
@@ -96,12 +97,12 @@ public class Main extends JavaPlugin {
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
-                , new BoxListener(), new ServerPingListener(), new ChatListener(), new RideMenu()
-                , new HealthHungerListener(), new PetMenu(), new GamemodeListener()
+                /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new RideMenu()
+                , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
+                , new GadgetsShop()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
-        //TODO: Register commands
         registerCommand("fixgm", new FixGamemodeCommand());
         registerCommand("resetinv", new ResetInventoryCommand());
         registerCommand("cc", new ClearChatCommand());
@@ -110,8 +111,10 @@ public class Main extends JavaPlugin {
         registerCommand("setride", new RideStateCommand());
         registerCommand("achievementride", new RideAchievementCommand());
         registerCommand("unlockall", new UnlockAllCommand());
-        registerCommand("coins", new CoinsCommand());
-        registerCommand("exp", new ExperienceCommand());
+        registerCommand("createvoucher", new CreateVoucherCommand());
+        registerCommand("redeem", new RedeemVoucherCommand());
+//        registerCommand("coins", new CoinsCommand());
+//        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
 
         getLogger().info("Starting setup"); //For stuff like, loading arraylists and databases.
@@ -124,6 +127,7 @@ public class Main extends JavaPlugin {
             PlayerUtils.configPlayer(p, false);
         }
         MysqlManager.getRides();
+        MysqlManager.getVouchers();
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
@@ -149,6 +153,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Disabling plugin... Please wait.");
         HologramUtils.removeHolos();
+        MiscUtils.updateVouchers();
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);

@@ -23,3 +23,7 @@ commands:
         description: coins
     exp:
         description: exp
+    createvoucher:
+        description: createvoucher
+    redeem:
+        description: redeem
