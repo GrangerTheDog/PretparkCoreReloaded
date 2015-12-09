@@ -76,7 +76,7 @@ public class CreateVoucherCommand implements CommandExecutor {
 
                                 if((args.length >= 6)) {
                                     if(args[5].length() <= 50){
-                                        code = args[5];
+                                        code = args[5].toUpperCase();
                                     } else {
                                         ChatUtils.sendMsgTag(p, "Vouchers", ChatUtils.error + "De code mag maximaal 50 karakters zijn.");
                                     }
