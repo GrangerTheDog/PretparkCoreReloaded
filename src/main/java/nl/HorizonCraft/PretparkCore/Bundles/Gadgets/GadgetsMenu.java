@@ -63,7 +63,7 @@ public class GadgetsMenu implements Listener {
             int id = gadget.getId();
             boolean unlocked = unlocks[id] == 't';
             int cooldown = gadget.getCooldown();
-            String name = constructName(gadget.getName(), unlocked);
+            String name = "&" + gadget.getWeight().getColor() + gadget.getName();
             String[] lore = constuctLore(gadget.getLore(), unlocked, cooldown);
             Material m = gadget.getMaterial();
             int data = gadget.getDmg();
@@ -90,21 +90,13 @@ public class GadgetsMenu implements Listener {
         for(String loreS : loreArray) {
             sb.append("&3").append(loreS).append("\n");
         }
-        sb.append(" \n");
         if(!unlocked){
+            sb.append(" \n");
             sb.append("&cLOCKED").append("\n");
             sb.append("&aKoop dit item in de shop!");
         }
 
         return sb.toString().split("\n");
-    }
-
-    private static String constructName(String name, boolean unlocked) {
-        if(unlocked) {
-            return "&a" + name;
-        } else {
-            return "&c" + name;
-        }
     }
 
     @EventHandler
@@ -134,7 +126,7 @@ public class GadgetsMenu implements Listener {
     private void setGadget(GadgetsEnum gadget, Player p, CorePlayer cp){
         int id = gadget.getId();
         int cooldown = gadget.getCooldown();
-        String name = constructName(gadget.getName(), true);
+        String name = "&" + gadget.getWeight().getColor() + gadget.getName();
         String[] lore = constuctLore(gadget.getLore(), true, cooldown);
         Material m = gadget.getMaterial();
         int data = gadget.getDmg();

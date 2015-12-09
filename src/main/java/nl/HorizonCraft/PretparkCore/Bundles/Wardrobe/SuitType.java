@@ -30,35 +30,32 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Shops;
-
-import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+package nl.HorizonCraft.PretparkCore.Bundles.Wardrobe;
 
 /**
- * Created by Cooltimmetje on 12/8/2015 at 4:17 PM.
+ * Created by Cooltimmetje on 12/9/2015 at 4:12 PM.
  */
-public class ShopTrigger implements Listener {
+public enum SuitType {
 
-    @EventHandler
-    public void onShopNpcClick(PlayerInteractEntityEvent event){
-        Entity clicked = event.getRightClicked();
-        Player p = event.getPlayer();
+    HELMET(0,"Helmet"),
+    CHESTPLATE(1,"Chestplate"),
+    LEGGINGS(2,"Leggings"),
+    BOOTS(3,"Boots");
 
-        if(clicked.getType() == EntityType.PLAYER){
-            switch (clicked.getUniqueId().toString()){
-                case "855293e0-bade-2989-a29d-0a20d3ebe374": //GADGET SHOP
-                    GadgetsShop.open(p);
-                    break;
-                default:
-                    break;
-            }
-        }
+    private int move;
+    private String name;
+
+    SuitType(int move, String name){
+        this.move = move;
+        this.name = name;
     }
 
+    public int getMove(){
+        return move;
+    }
+
+
+    public String getName() {
+        return name;
+    }
 }

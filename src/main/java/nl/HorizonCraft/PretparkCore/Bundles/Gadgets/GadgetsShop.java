@@ -30,7 +30,7 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Shops.Gadget;
+package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
@@ -63,7 +63,7 @@ public class GadgetsShop implements Listener{
            boolean unlocked = unlocks[id] == 't';
            int cooldown = gadget.getCooldown();
            int cost = gadget.getCost();
-           String name = constructName(gadget.getName(), unlocked);
+           String name = "&" + gadget.getWeight().getColor() + gadget.getName();
            String[] lore = constuctLore(gadget.getLore(), unlocked, cooldown, cost);
            Material m = gadget.getMaterial();
            int data = gadget.getDmg();

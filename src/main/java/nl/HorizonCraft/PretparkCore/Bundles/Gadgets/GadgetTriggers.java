@@ -112,6 +112,8 @@ public class GadgetTriggers implements Listener {
                     chicken.getWorld().dropItem(chicken.getLocation(), new ItemStack(Material.BONE, 1)).setVelocity(Vector.getRandom().multiply(0.5));
                     ((Chicken) chicken).setHealth(0);
                     ChatUtils.sendMsgTag(pFinal, "ExplodingChicken", "RIP KIP ;-;");
+
+                    //TODO: MAKE ITEMS DESPAWN
                 }
             });
 

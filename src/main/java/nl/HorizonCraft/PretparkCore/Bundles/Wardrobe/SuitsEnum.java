@@ -41,11 +41,11 @@ public enum SuitsEnum {
     OLAF("Olaf", "Do you wanna build a snowman?", "Spawn Snowmans"),
     LOVE("Love", "It's so lovely!", "Spread the love!"),
     VAMPIRE("Vampier", "Niet bijten!", "Blood Bite"),
-    SKELETON("Skeleton", "", "Explosive arrows");
+    SKELETON("Skeleton", "Beetje mager, of niet dan?", "Explosive arrows");
 
-    String name;
-    String lore;
-    String ability;
+    private String name;
+    private String lore;
+    private String ability;
 
     SuitsEnum(String s, String s1, String s2) {
         this.name = s;
@@ -53,5 +53,15 @@ public enum SuitsEnum {
         this.ability = s2;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public String getLore() {
+        return lore;
+    }
+
+    public String getAbility() {
+        return ability;
+    }
 }

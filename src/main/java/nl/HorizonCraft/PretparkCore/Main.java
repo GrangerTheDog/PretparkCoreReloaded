@@ -34,20 +34,18 @@ package nl.HorizonCraft.PretparkCore;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
-import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxListener;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.AddRide;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideStateCommand;
-import nl.HorizonCraft.PretparkCore.Bundles.Shops.Gadget.GadgetsShop;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.ShopTrigger;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
+import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
 import nl.HorizonCraft.PretparkCore.Commands.*;
-import nl.HorizonCraft.PretparkCore.Commands.Admin.CoinsCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
-import nl.HorizonCraft.PretparkCore.Commands.Admin.ExperienceCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Listeners.*;
@@ -99,7 +97,7 @@ public class Main extends JavaPlugin {
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
                 /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new RideMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
-                , new GadgetsShop()
+                , new GadgetsShop(), new WardrobeMenu()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
