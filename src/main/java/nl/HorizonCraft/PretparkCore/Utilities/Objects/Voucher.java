@@ -125,7 +125,7 @@ public class Voucher {
                     cp.addBoxes(p, getBoxes(), "Voucher: " + getCode(), false, true);
                 }
                 if (getKeys() != 0) {
-                    cp.addKeys(p, getKeys(), "Voucher: " + getCode(), true, false);
+                    cp.addKeys(p, getKeys(), "Voucher: " + getCode(), false, true);
                 }
 
                 this.uses_left = getUses_left() - 1;

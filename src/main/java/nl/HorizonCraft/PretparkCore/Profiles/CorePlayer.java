@@ -166,7 +166,11 @@ public class CorePlayer {
         this.keys = keys;
     }
 
-    public void addKeys(Player p, int add, String reason, boolean playSound, boolean allowMultiplier){
+    public void addKeys(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
+        if(p.hasPermission("pc.keymulitplier.2") && allowMultiplier){
+            add = add * 2;
+        }
+
         setKeys(getKeys() + add);
 
         ChatUtils.sendMsg(p, "&d+" + add + " Mystery Keys! (" + reason + ")");

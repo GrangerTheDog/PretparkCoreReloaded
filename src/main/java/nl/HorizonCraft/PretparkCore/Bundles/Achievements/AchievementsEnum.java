@@ -45,7 +45,7 @@ public enum AchievementsEnum {
     MELK_SLAP(5, "Maar ik lus geen melk :(", "Launch BekertjeZuivel!", 10, 1, 200, AchievementType.STAFFPUNCH),
     LEVEL_UP(6, "Leveling Up...", "Haal level 5.", 100, 3, 750, AchievementType.GENERAL),
     COOL_SLAP(7, "Not so cool anymore, I guess!", "Launch Cooltimmetje", 100, 5, 1000, AchievementType.STAFFPUNCH),
-    SVEN_SLAP(8, "ENZO KNOL?!", "Launch SVENZOKNOL", 10, 1, 200, AchievementType.STAFFPUNCH),
+    SVEN_SLAP(8, "ENZO KNOL?!", "Launch SVENZOKNOL!", 10, 1, 200, AchievementType.STAFFPUNCH),
     UNLOCK_GADGET(9, "FANCY TECHNOLOGY!", "Unlock je eerste gadget!", 25, 1, 500, AchievementType.GENERAL);
 
     private int id;
@@ -56,14 +56,14 @@ public enum AchievementsEnum {
     private int expReward;
     private AchievementType achievementType;
 
-    AchievementsEnum(int i, String s, String s1, int i1, int i2, int i3, AchievementType achievementType) {
+    AchievementsEnum(int i, String s, String s1, int i1, int i2, int i3, AchievementType at) {
         this.id = i;
         this.name = s;
         this.description = s1;
         this.coinReward = i1;
         this.keyReward = i2;
         this.expReward = i3;
-        this.achievementType = achievementType;
+        this.achievementType = at;
     }
 
     public int getId(){

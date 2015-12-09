@@ -73,6 +73,15 @@ public class CreateVoucherCommand implements CommandExecutor {
                         if (args.length >= 5) {
                             if (MiscUtils.isInt(args[0]) && MiscUtils.isInt(args[1]) && MiscUtils.isInt(args[2]) && MiscUtils.isInt(args[3]) && MiscUtils.isInt(args[4])) {
                                 String code = randomString(6);
+
+                                if((args.length >= 6)) {
+                                    if(args[5].length() <= 50){
+                                        code = args[5];
+                                    } else {
+                                        ChatUtils.sendMsgTag(p, "Vouchers", ChatUtils.error + "De code mag maximaal 50 karakters zijn.");
+                                    }
+                                }
+
                                 if (MiscUtils.getVoucher(code) == null) {
                                     Voucher voucher = new Voucher(code, Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
                                     ChatUtils.sendMsg(p, "&8&l--- &a&lVOUCHER AANGEMAAKT &8&l---");
@@ -86,10 +95,10 @@ public class CreateVoucherCommand implements CommandExecutor {
                                     ChatUtils.sendMsgTag(p, "Vouchers", ChatUtils.error + "Er ging iets mis, probeer het nog eens.");
                                 }
                             } else {
-                                ChatUtils.sendMsgTag(p, "Vouchers", ChatUtils.error + "Gebruik: /createvoucher <coins> <exp> <boxes> <keys> <uses>");
+                                ChatUtils.sendMsgTag(p, "Vouchers", ChatUtils.error + "Gebruik: /createvoucher <coins> <exp> <boxes> <keys> <uses> [code]");
                             }
                         } else {
-                            ChatUtils.sendMsgTag(p, "Vouchers", ChatUtils.error + "Gebruik: /createvoucher <coins> <exp> <boxes> <keys> <uses>");
+                            ChatUtils.sendMsgTag(p, "Vouchers", ChatUtils.error + "Gebruik: /createvoucher <coins> <exp> <boxes> <keys> <uses> [code]");
                         }
                     }
                 } else {
