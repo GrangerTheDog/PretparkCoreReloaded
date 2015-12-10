@@ -120,6 +120,7 @@ public class GadgetsShop implements Listener{
                 default:
                     GadgetsEnum gadget = GadgetsEnum.getFromMaterial(m);
                     if(cp.getCoins() >= gadget.getCost()){
+                        cp.removeCoins(p, gadget.getCost(), "Gadget unlock: " + gadget.getName(), false);
                         cp.unlockGadget(gadget, p, true, true, true);
                         cp.awardAchievement(p, AchievementsEnum.UNLOCK_GADGET);
                         open(p);
