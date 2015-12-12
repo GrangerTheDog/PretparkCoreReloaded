@@ -36,6 +36,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.AddRide;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
@@ -98,7 +99,7 @@ public class Main extends JavaPlugin {
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
                 /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new RideMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
-                , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop()
+                , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop(), new PetShop()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.

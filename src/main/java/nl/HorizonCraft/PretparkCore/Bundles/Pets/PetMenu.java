@@ -68,7 +68,7 @@ public class PetMenu implements Listener {
             lore = pet.getLore();
             unlocked = cp.hasPet(pet);
             isMysteryBoxExclusive = pet.isMysteryBoxExclusive();
-            price = pet.getPrice();
+            price = pet.getCost();
 
             StringBuilder loreBuilder = new StringBuilder();
             for (String string : lore.split("\n")) {
@@ -76,20 +76,8 @@ public class PetMenu implements Listener {
             }
             loreBuilder.append(" \n");
 
-            if (unlocked) {
-                loreBuilder.append("&aUNLOCKED").append("\n");
-                if (!isMysteryBoxExclusive) {
-                    loreBuilder.append("&8&mKost: ").append(price).append(" coins");
-                } else {
-                    loreBuilder.append("&8&mMysterybox Exclusive");
-                }
-            } else {
-                loreBuilder.append("&cLOCKED").append("\n");
-                if (!isMysteryBoxExclusive) {
-                    loreBuilder.append("&bKost: &6&l").append(price).append(" &bcoins");
-                } else {
-                    loreBuilder.append("&6&lMysterybox Exclusive");
-                }
+            if (!unlocked) {
+                loreBuilder.append("&cLOCKED").append("\n").append("&aKoop dit item in de shop");
             }
 
             loreArray = loreBuilder.toString().trim().split("\n");

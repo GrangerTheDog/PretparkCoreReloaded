@@ -40,7 +40,8 @@ public enum AchievementType {
     GENERAL("Algemeen"),
     RIDES("Attracties"),
     STAFFPUNCH("Staff Launches"),
-    MAZES_PARKOUR("Parkouren/Doolhoven");
+    MAZES_PARKOUR("Parkouren/Doolhoven"),
+    UNLOCKABLES("Unlockables");
 
     private String friendlyName;
 

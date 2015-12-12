@@ -32,7 +32,6 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.Pets;
 
-import com.avaje.ebeaninternal.server.deploy.BeanDescriptor;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.Weight;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -98,7 +97,7 @@ public enum PetType {
         return lore;
     }
 
-    public int getPrice() {
+    public int getCost() {
         return price;
     }
 
@@ -111,7 +110,7 @@ public enum PetType {
     }
 
     public boolean isMysteryBoxExclusive() {
-        return getPrice() == 0;
+        return getCost() == 0;
     }
 
     public EntityType getEntityType() {

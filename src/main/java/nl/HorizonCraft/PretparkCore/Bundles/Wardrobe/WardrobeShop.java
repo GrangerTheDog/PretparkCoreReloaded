@@ -170,27 +170,29 @@ public class WardrobeShop implements Listener{
     @EventHandler
     public void onClick(InventoryClickEvent event){
         Inventory inv = event.getInventory();
-        if(ChatColor.stripColor(inv.getName()).contains("Kleding Shop")){
+        if(ChatColor.stripColor(inv.getName()).contains("Kleding Shop")) {
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
             CorePlayer cp = PlayerUtils.getProfile(p);
-            Material m = event.getCurrentItem().getType();
-            switch (m){
-                default:
-                    PiecesEnum piece = slots.get(event.getSlot());
+            if (event.getCurrentItem() != null) {
+                Material m = event.getCurrentItem().getType();
+                switch (m) {
+                    default:
+                        PiecesEnum piece = slots.get(event.getSlot());
 
-                    if(cp.getCoins() >= piece.getCost()){
-                        cp.removeCoins(p, piece.getCost(), "Kleding unlock: " + piece.getCost(), false);
-                        cp.unlockClothing(piece, p, true, true, true);
-                        cp.awardAchievement(p, AchievementsEnum.UNLOCK_CLOTHING);
-                        open(p);
-                    } else {
-                        ChatUtils.sendMsgTag(p, "KledingShop", ChatUtils.error + "Je hebt niet genoeg coins!");
-                    }
-                    break;
-                case ENDER_CHEST:
-                    ChatUtils.sendMsgTag(p, "KledingShop", ChatUtils.error + "Unlock dit in de Mystery Box!");
-                    break;
+                        if (cp.getCoins() >= piece.getCost()) {
+                            cp.removeCoins(p, piece.getCost(), "Kleding unlock: " + piece.getCost(), false);
+                            cp.unlockClothing(piece, p, true, true, true);
+                            cp.awardAchievement(p, AchievementsEnum.UNLOCK_CLOTHING);
+                            open(p);
+                        } else {
+                            ChatUtils.sendMsgTag(p, "KledingShop", ChatUtils.error + "Je hebt niet genoeg coins!");
+                        }
+                        break;
+                    case ENDER_CHEST:
+                        ChatUtils.sendMsgTag(p, "KledingShop", ChatUtils.error + "Unlock dit in de Mystery Box!");
+                        break;
+                }
             }
         }
     }

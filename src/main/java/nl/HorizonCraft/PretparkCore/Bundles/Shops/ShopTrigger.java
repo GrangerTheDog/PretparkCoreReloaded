@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Bundles.Shops;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
+import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -58,6 +59,9 @@ public class ShopTrigger implements Listener {
                     break;
                 case "57a33322-4d9a-2725-a158-eca0738370b0": //WARDROBE SHOP
                     WardrobeShop.open(p);
+                    break;
+                case "e200cf10-5aee-2cea-9c6c-cf3ddb155852": //PET SHOP
+                    PetShop.open(p);
                     break;
                 default:
                     break;

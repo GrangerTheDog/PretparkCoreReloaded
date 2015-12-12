@@ -580,7 +580,7 @@ public class MysqlManager {
             ps.setInt(4, voucher.getBoxes());
             ps.setInt(5, voucher.getKeys());
             ps.setInt(6, voucher.getUses_left());
-            ps.setString(7, uses);
+            ps.setString(7, "0");
 
             ps.setInt(8, voucher.getUses_left());
             ps.setString(9, uses);

@@ -81,8 +81,9 @@ public class AchievementMenu implements Listener{
         ItemUtils.createDisplay(inv, 54, Material.LEAVES, 1, 0, "&aSorteer op: &bParkour/Doolhoven");
         ItemUtils.createDisplay(inv, 53, Material.MINECART, 1, 0, "&aSorteer op: &bAttracties");
         ItemUtils.createDisplay(inv, 52, Material.SLIME_BLOCK, 1, 0, "&aSorteer op: &bStaff Punching");
-        ItemUtils.createDisplay(inv, 51, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
-        ItemUtils.createDisplay(inv, 50, Material.BARRIER, 1, 0, "&cWis Filter");
+        ItemUtils.createDisplay(inv, 51, Material.GOLD_INGOT, 1, 0, "&aSorteer op: &bUnlockables");
+        ItemUtils.createDisplay(inv, 50, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
+        ItemUtils.createDisplay(inv, 49, Material.BARRIER, 1, 0, "&cWis Filter");
 
         target.openInventory(inv);
     }
@@ -116,7 +117,9 @@ public class AchievementMenu implements Listener{
         ItemUtils.createDisplay(inv, 54, Material.LEAVES, 1, 0, "&aSorteer op: &bParkour/Doolhoven");
         ItemUtils.createDisplay(inv, 53, Material.MINECART, 1, 0, "&aSorteer op: &bAttracties");
         ItemUtils.createDisplay(inv, 52, Material.SLIME_BLOCK, 1, 0, "&aSorteer op: &bStaff Punching");
-        ItemUtils.createDisplay(inv, 51, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
+        ItemUtils.createDisplay(inv, 51, Material.GOLD_INGOT, 1, 0, "&aSorteer op: &bUnlockables");
+        ItemUtils.createDisplay(inv, 50, Material.BOOK, 1, 0, "&aSorteer op: &bAlgemeen");
+
 
         target.openInventory(inv);
     }
@@ -173,6 +176,8 @@ public class AchievementMenu implements Listener{
                 case MINECART:
                     open(p, target, AchievementType.RIDES);
                     break;
+                case GOLD_INGOT:
+                    open(p, target, AchievementType.UNLOCKABLES);
                 default:
                     break;
             }
