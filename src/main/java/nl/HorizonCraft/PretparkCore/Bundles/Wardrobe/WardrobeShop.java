@@ -33,7 +33,6 @@
 package nl.HorizonCraft.PretparkCore.Bundles.Wardrobe;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
-import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
@@ -182,7 +181,7 @@ public class WardrobeShop implements Listener{
 
                     if(cp.getCoins() >= piece.getCost()){
                         cp.removeCoins(p, piece.getCost(), "Kleding unlock: " + piece.getCost(), false);
-                        cp.unlockGadget(piece, p, true, true, true);
+                        cp.unlockClothing(piece, p, true, true, true);
                         cp.awardAchievement(p, AchievementsEnum.UNLOCK_CLOTHING);
                         open(p);
                     } else {

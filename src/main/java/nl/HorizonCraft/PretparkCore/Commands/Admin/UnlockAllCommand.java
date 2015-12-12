@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Commands.Admin;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
+import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
@@ -74,6 +75,10 @@ public class UnlockAllCommand implements CommandExecutor {
 
                                 for (PetType pet : PetType.values()) {
                                     cp.unlockPet(pet, target, false, false, false);
+                                }
+
+                                for (PiecesEnum piece : PiecesEnum.values()){
+                                    cp.unlockClothing(piece, target, false, false, false);
                                 }
 
                                 ChatUtils.sendMsgTag(target, "UnlockAll", p.getDisplayName() + " &aheeft alles voor je geunlockt!");

@@ -444,7 +444,7 @@ public class CorePlayer {
         this.pieces = pieces;
     }
 
-    public void unlockGadget(PiecesEnum piece, Player p, boolean playSound, boolean playFirework, boolean playChat) {
+    public void unlockClothing(PiecesEnum piece, Player p, boolean playSound, boolean playFirework, boolean playChat) {
         if (pieces[piece.getId()] == 'f') {
             pieces[piece.getId()] = 't';
 
