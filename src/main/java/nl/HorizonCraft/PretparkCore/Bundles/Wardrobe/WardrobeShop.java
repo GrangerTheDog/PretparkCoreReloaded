@@ -32,7 +32,10 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.Wardrobe;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -56,7 +59,7 @@ import java.util.HashMap;
 /**
  * Created by Cooltimmetje on 12/9/2015 at 6:54 PM.
  */
-public class WardrobeMenu implements Listener{
+public class WardrobeShop implements Listener{
 
     private static HashMap<Integer,PiecesEnum> slots = new HashMap<>();
 
@@ -64,7 +67,7 @@ public class WardrobeMenu implements Listener{
         if(!slots.isEmpty()){
             slots.clear();
         }
-        Inventory inv = Bukkit.createInventory(null, 54, "Kledingkast");
+        Inventory inv = Bukkit.createInventory(null, 54, "Kleding Shop");
         HashMap<SuitsEnum,Integer> colums = new HashMap<>();
         CorePlayer cp = PlayerUtils.getProfile(p);
         char[] unlocks = cp.getPieces();
@@ -81,9 +84,9 @@ public class WardrobeMenu implements Listener{
             String name = MiscUtils.color("&" + piece.getWeight().getColor() + piece.getSuit().getName() + " " + piece.getSuitType().getName());
             ItemStack is = new ItemStack(piece.getMaterial(), 1, (byte)0);
 
-            if(!unlocked){
+            if(unlocked){
                 is.setType(Material.INK_SACK);
-                is.setDurability((short)8);
+                is.setDurability((short)10);
 
                 ItemMeta sm = is.getItemMeta();
                 String[] loreA = getLore(piece, unlocked);
@@ -95,6 +98,19 @@ public class WardrobeMenu implements Listener{
                 sm.setDisplayName(name);
                 is.setItemMeta(sm);
 
+            } else if (piece.getCost() == 0 && !unlocked){
+                is.setDurability((short) 0);
+                is.setType(Material.ENDER_CHEST);
+
+                ItemMeta sm = is.getItemMeta();
+                String[] loreA = getLore(piece, unlocked);
+                ArrayList<String> lore = new ArrayList<>();
+                for(String loreS : loreA){
+                    lore.add(MiscUtils.color(loreS));
+                }
+                sm.setLore(lore);
+                sm.setDisplayName(name);
+                is.setItemMeta(sm);
 
             } else {
                 if(piece.getSuitType() == SuitType.HELMET){
@@ -140,7 +156,13 @@ public class WardrobeMenu implements Listener{
         if(!unlocked) {
             sb.append("\n \n");
             sb.append("&cLOCKED").append("\n");
-            sb.append("&aKoop dit item in de shop!");
+            if(piece.getCost() != 0) {
+                sb.append("&aPrijs: &6").append(piece.getCost());
+            } else {
+                sb.append("&6&lMYSTERY BOX EXCLUSIVE");
+            }
+        } else {
+            sb.append("\n \n&aUNLOCKED &8\u00BB &9Open je Swag Menu om te gebruiken!").append("\n").append("&8&mPrijs: ").append(piece.getCost()).append(" coins");
         }
 
         return sb.toString().trim().split("\n");
@@ -149,7 +171,7 @@ public class WardrobeMenu implements Listener{
     @EventHandler
     public void onClick(InventoryClickEvent event){
         Inventory inv = event.getInventory();
-        if(ChatColor.stripColor(inv.getName()).contains("Kledingkast")){
+        if(ChatColor.stripColor(inv.getName()).contains("Kleding Shop")){
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
             CorePlayer cp = PlayerUtils.getProfile(p);
@@ -157,22 +179,18 @@ public class WardrobeMenu implements Listener{
             switch (m){
                 default:
                     PiecesEnum piece = slots.get(event.getSlot());
-                    switch (piece.getSuitType()){
-                        case HELMET:
-                            cp.setHead(piece);
-                            break;
-                        case CHESTPLATE:
-                            cp.setChest(piece);
-                            break;
-                        case LEGGINGS:
-                            cp.setLegs(piece);
-                            break;
-                        case BOOTS:
-                            cp.setBoots(piece);
-                            break;
-                    }
 
-                    PlayerUtils.configPlayer(p, false);
+                    if(cp.getCoins() >= piece.getCost()){
+                        cp.removeCoins(p, piece.getCost(), "Kleding unlock: " + piece.getCost(), false);
+                        cp.unlockGadget(piece, p, true, true, true);
+                        cp.awardAchievement(p, AchievementsEnum.UNLOCK_CLOTHING);
+                        open(p);
+                    } else {
+                        ChatUtils.sendMsgTag(p, "KledingShop", ChatUtils.error + "Je hebt niet genoeg coins!");
+                    }
+                    break;
+                case ENDER_CHEST:
+                    ChatUtils.sendMsgTag(p, "KledingShop", ChatUtils.error + "Unlock dit in de Mystery Box!");
                     break;
             }
         }

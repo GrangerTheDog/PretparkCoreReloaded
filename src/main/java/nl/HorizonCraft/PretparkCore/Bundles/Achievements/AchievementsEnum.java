@@ -46,7 +46,8 @@ public enum AchievementsEnum {
     LEVEL_UP(6, "Leveling Up...", "Haal level 5.", 100, 3, 750, AchievementType.GENERAL),
     COOL_SLAP(7, "Not so cool anymore, I guess!", "Launch Cooltimmetje", 100, 5, 1000, AchievementType.STAFFPUNCH),
     SVEN_SLAP(8, "ENZO KNOL?!", "Launch SVENZOKNOL!", 10, 1, 200, AchievementType.STAFFPUNCH),
-    UNLOCK_GADGET(9, "FANCY TECHNOLOGY!", "Unlock je eerste gadget!", 25, 1, 500, AchievementType.GENERAL);
+    UNLOCK_GADGET(9, "FANCY TECHNOLOGY!", "Unlock je eerste gadget!", 25, 1, 500, AchievementType.GENERAL),
+    UNLOCK_CLOTHING(10, "WEARING THE SWAG", "Unlock je eerste kledingstuk!", 25, 1, 500, AchievementType.GENERAL);
 
     private int id;
     private String name;

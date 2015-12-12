@@ -75,6 +75,7 @@ public class InventoryManager implements Listener {
         if(event.getAction().toString().contains("RIGHT")){
             if(event.getItem() != null){
                 if(event.getItem().hasItemMeta()){
+                    event.setCancelled(true);
                     Material m = event.getMaterial();
                     ItemStack is = event.getItem();
                     switch (m){

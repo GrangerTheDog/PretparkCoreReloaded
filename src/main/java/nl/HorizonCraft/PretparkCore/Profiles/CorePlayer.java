@@ -36,6 +36,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
+import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import nl.HorizonCraft.PretparkCore.Utilities.Packets.TitleUtils;
 import org.bukkit.Sound;
@@ -65,6 +66,12 @@ public class CorePlayer {
     private char[] achievements;
     private char[] gadgets;
     private char[] pets;
+    private char[] pieces;
+
+    private PiecesEnum head;
+    private PiecesEnum chest;
+    private PiecesEnum legs;
+    private PiecesEnum boots;
 
     private boolean speed;
 
@@ -221,7 +228,6 @@ public class CorePlayer {
             addCoins(p, achievement.getCoinReward(), "Achievement: " + achievement.getName(), false, false);
             addKeys(p, achievement.getKeyReward(), "Achievement: " + achievement.getName(), false, false);
             addExp(p, achievement.getExpReward(), "Achievement: " + achievement.getName(), false, false);
-            ChatUtils.sendMsg(p, "&8-------- &a&lACHIEVEMENT GET! &8--------");
         }
     }
 
@@ -251,7 +257,6 @@ public class CorePlayer {
             if (playChat) {
                 ChatUtils.sendMsg(p, "&8-------- &a&lGADGET UNLOCKED! &8--------");
                 ChatUtils.sendMsg(p, "&" + gadget.getWeight().getColor() + gadget.getName());
-                ChatUtils.sendMsg(p, "&8-------- &a&lGADGET UNLOCKED! &8--------");
             }
         }
     }
@@ -286,7 +291,6 @@ public class CorePlayer {
             if (playChat) {
                 ChatUtils.sendMsg(p, "&8-------- &a&lPET UNLOCKED! &8--------");
                 ChatUtils.sendMsg(p, "&" + petType.getWeight().getColor() + petType.getName());
-                ChatUtils.sendMsg(p, "&8-------- &a&lPET UNLOCKED! &8--------");
             }
         }
     }
@@ -429,5 +433,66 @@ public class CorePlayer {
 
 
     /* --END EXPERIENCE-- */
+
+    /* --START WARDROBE-- */
+
+    public char[] getPieces() {
+        return pieces;
+    }
+
+    public void setPieces(char[] pieces) {
+        this.pieces = pieces;
+    }
+
+    public void unlockGadget(PiecesEnum piece, Player p, boolean playSound, boolean playFirework, boolean playChat) {
+        if (pieces[piece.getId()] == 'f') {
+            pieces[piece.getId()] = 't';
+
+            if (playSound)
+                p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
+
+            if (playFirework)
+                MiscUtils.shootFirework(p.getLocation(), p.getWorld().getName(), true);
+
+            if (playChat) {
+                ChatUtils.sendMsg(p, "&8-------- &a&lKLEDING UNLOCKED! &8--------");
+                ChatUtils.sendMsg(p, "&" + piece.getWeight().getColor() + piece.getSuit().getName() + " " + piece.getSuitType().getName());
+            }
+        }
+    }
+
+    public void setHead(PiecesEnum head) {
+        this.head = head;
+    }
+
+    public void setChest(PiecesEnum chest) {
+        this.chest = chest;
+    }
+
+    public void setLegs(PiecesEnum legs) {
+        this.legs = legs;
+    }
+
+    public PiecesEnum getBoots() {
+        return boots;
+    }
+
+    public void setBoots(PiecesEnum boots) {
+        this.boots = boots;
+    }
+
+    public PiecesEnum getLegs() {
+        return legs;
+    }
+
+    public PiecesEnum getChest() {
+        return chest;
+    }
+
+    public PiecesEnum getHead() {
+        return head;
+    }
+
+    /* --END WARDROBE-- */
 
 }

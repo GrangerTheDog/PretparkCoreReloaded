@@ -35,6 +35,7 @@ package nl.HorizonCraft.PretparkCore.Profiles;
 import com.zaxxer.hikari.HikariDataSource;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.Ride;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideState;
+import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -119,7 +120,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?)";
 
         try {
             c = hikari.getConnection();
@@ -133,6 +134,7 @@ public class MysqlManager {
             ps.setInt(6, Variables.CHEST_TIME);
             ps.setString(7, StringUtils.repeat("f", 100));
             ps.setInt(8, Variables.EXPERIENCE_TIME);
+            ps.setString(9, StringUtils.repeat("f", 100));
 
             ps.execute();
         } catch (SQLException e) {
@@ -164,11 +166,8 @@ public class MysqlManager {
         try {
             cp.setCoins(rs.getInt("coins"));
             cp.setCoinTime(rs.getInt("coin_time"));
-            if(rs.getString("achievements") != null) {
-                cp.setAchievements(rs.getString("achievements").toCharArray());
-            } else {
-                cp.setAchievements(StringUtils.repeat("f", 100).toCharArray());
-            }
+            cp.setAchievements(rs.getString("achievements").toCharArray());
+            cp.setPieces(rs.getString("wardrobe").toCharArray());
             cp.setKeys(rs.getInt("mkeys"));
             cp.setGadgets(rs.getString("gadgets").toCharArray());
             cp.setBoxes(rs.getInt("boxes"));
@@ -186,7 +185,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?,wardrobe=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -204,7 +203,8 @@ public class MysqlManager {
             ps.setString(9, new String(cp.getPets()));
             ps.setInt(10, cp.getExperience());
             ps.setInt(11, cp.getExperienceTime());
-            ps.setString(12, uuid);
+            ps.setString(12, new String(cp.getPieces()));
+            ps.setString(13, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -277,7 +277,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerprefs VALUES(?,?,0)";
+        String create = "INSERT INTO playerprefs VALUES(?,?,0,?,?,?,?)";
 
         try {
             c = hikari.getConnection();
@@ -285,6 +285,10 @@ public class MysqlManager {
 
             ps.setString(1, uuid);
             ps.setString(2, p.getName());
+            ps.setString(3, "NOTHING");
+            ps.setString(4, "NOTHING");
+            ps.setString(5, "NOTHING");
+            ps.setString(6, "NOTHING");
 
             ps.execute();
         } catch (SQLException e) {
@@ -315,6 +319,28 @@ public class MysqlManager {
             } else {
                 cp.setSpeed(false);
             }
+
+            if(rs.getString("head").equals("NOTHING")){
+                cp.setHead(null);
+            } else {
+                cp.setHead(PiecesEnum.valueOf(rs.getString("head")));
+            }
+            if(rs.getString("chest").equals("NOTHING")){
+                cp.setChest(null);
+            } else {
+                cp.setChest(PiecesEnum.valueOf(rs.getString("chest")));
+            }
+            if(rs.getString("legs").equals("NOTHING")){
+                cp.setLegs(null);
+            } else {
+                cp.setLegs(PiecesEnum.valueOf(rs.getString("legs")));
+            }
+            if(rs.getString("boots").equals("NOTHING")){
+                cp.setBoots(null);
+            } else {
+                cp.setBoots(PiecesEnum.valueOf(rs.getString("boots")));
+            }
+
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -324,7 +350,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerprefs SET name=?,speed=? WHERE uuid=?";
+        String updateData = "UPDATE playerprefs SET name=?,speed=?,head=?,chest=?,legs=?,boots=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -338,7 +364,29 @@ public class MysqlManager {
             } else {
                 ps.setInt(2, 0);
             }
-            ps.setString(3, uuid);
+
+            if(cp.getHead() == null){
+                ps.setString(3, "NOTHING");
+            } else {
+                ps.setString(3, cp.getHead().toString());
+            }
+            if(cp.getChest() == null){
+                ps.setString(4, "NOTHING");
+            } else {
+                ps.setString(4, cp.getChest().toString());
+            }
+            if(cp.getLegs() == null){
+                ps.setString(5, "NOTHING");
+            } else {
+                ps.setString(5, cp.getLegs().toString());
+            }
+            if(cp.getBoots() == null){
+                ps.setString(6, "NOTHING");
+            } else {
+                ps.setString(6, cp.getBoots().toString());
+            }
+
+            ps.setString(7, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -602,7 +650,7 @@ public class MysqlManager {
         try {
             while(rs.next()){
                 Voucher voucher = new Voucher(rs.getString("code"),rs.getInt("coins"),rs.getInt("exp"),rs.getInt("box"),rs.getInt("mkeys"),rs.getInt("uses_left"));
-                voucher.addUsers(rs.getString("used_by"));
+//                voucher.addUsers(rs.getString("used_by"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

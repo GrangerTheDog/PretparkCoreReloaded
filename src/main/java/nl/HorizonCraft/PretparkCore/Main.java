@@ -44,6 +44,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.ShopTrigger;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
 import nl.HorizonCraft.PretparkCore.Commands.*;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
@@ -97,7 +98,7 @@ public class Main extends JavaPlugin {
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
                 /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new RideMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
-                , new GadgetsShop(), new WardrobeMenu()
+                , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.

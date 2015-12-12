@@ -32,15 +32,20 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.SuitType;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
 
 /**
  * This class has been created on 09/9/11/2015/2015 at 9:11 PM by Cooltimmetje.
@@ -83,6 +88,11 @@ public class PlayerUtils {
             }
         }
 
+        setPiece(cp.getHead(),p);
+        setPiece(cp.getLegs(),p);
+        setPiece(cp.getBoots(),p);
+        setPiece(cp.getChest(),p);
+
         if (cp.hasSpeed()) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0, false, false));
         } else {
@@ -92,5 +102,67 @@ public class PlayerUtils {
         }
 
         cp.calculateExp(p, true);
+    }
+
+    public static void setPiece(PiecesEnum piece, Player p){
+        if(piece != null){
+            CorePlayer cp = PlayerUtils.getProfile(p);
+            String name = MiscUtils.color("&" + piece.getWeight().getColor() + piece.getSuit().getName() + " " + piece.getSuitType().getName());
+            ItemStack is = new ItemStack(piece.getMaterial(), 1, (byte)0);
+
+
+            if(piece.getSuitType() == SuitType.HELMET){
+                SkullMeta sm = (SkullMeta) is.getItemMeta();
+                sm.setOwner(piece.getSkullUUID());
+                String[] loreA = getLore(piece);
+                ArrayList<String> lore = new ArrayList<>();
+                for(String loreS : loreA){
+                    lore.add(MiscUtils.color(loreS));
+                }
+                sm.setLore(lore);
+                sm.setDisplayName(name);
+                is.setItemMeta(sm);
+                is.setDurability((short) SkullType.PLAYER.ordinal());
+            } else {
+                LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
+                lam.setColor(piece.getColor());
+                String[] loreA = getLore(piece);
+                ArrayList<String> lore = new ArrayList<>();
+                for(String loreS : loreA){
+                    lore.add(MiscUtils.color(loreS));
+                }
+                lam.setLore(lore);
+                lam.setDisplayName(name);
+                is.setItemMeta(lam);
+            }
+
+            switch (piece.getSuitType()){
+                case HELMET:
+                    cp.setHead(piece);
+                    p.getInventory().setHelmet(is);
+                    break;
+                case CHESTPLATE:
+                    cp.setChest(piece);
+                    p.getInventory().setChestplate(is);
+                    break;
+                case LEGGINGS:
+                    cp.setLegs(piece);
+                    p.getInventory().setLeggings(is);
+                    break;
+                case BOOTS:
+                    cp.setBoots(piece);
+                    p.getInventory().setBoots(is);
+                    break;
+            }
+        }
+    }
+
+    private static String[] getLore(PiecesEnum piece){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("&3").append(piece.getSuit().getLore()).append("\n \n");
+        sb.append("&bFull Suit Ability:\n&3").append(piece.getSuit().getAbility());
+
+        return sb.toString().trim().split("\n");
     }
 }
