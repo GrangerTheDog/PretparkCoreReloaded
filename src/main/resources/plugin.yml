@@ -8,7 +8,7 @@ commands:
     resetinv:
         description: resetinv het zelfde als rejoin
     resetinv:
-            description: rejoin het zelfde als resetinv
+        description: rejoin het zelfde als resetinv
     cc:
         description: cc
     maze:
