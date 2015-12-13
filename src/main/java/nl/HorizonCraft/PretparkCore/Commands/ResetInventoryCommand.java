@@ -43,7 +43,7 @@ import org.bukkit.entity.Player;
  * This class has been created on 09/12/2015 at 10:36 AM by Cooltimmetje.
  */
 public class ResetInventoryCommand implements CommandExecutor {
-    
+
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getLabel().equalsIgnoreCase("resetinv") || cmd.getLabel().equalsIgnoreCase("rejoin")){
             if (sender instanceof Player){
