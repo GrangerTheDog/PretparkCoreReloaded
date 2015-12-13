@@ -58,7 +58,6 @@ public class CreateVoucherCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 if (p.getName().equals("Jordy010NL") || p.getName().equals("Cooltimmetje")) {
-
                     if(args[0].equals("-list")){
                         for(Voucher voucher : Variables.vouchers){
                             ChatUtils.sendMsg(p, "&aCode: " + voucher.getCode());

@@ -259,6 +259,7 @@ public class CorePlayer {
                 ChatUtils.sendMsg(p, "&" + gadget.getWeight().getColor() + gadget.getName());
             }
         }
+        awardAchievement(p, AchievementsEnum.UNLOCK_GADGET);
     }
 
     /* --END GADGETS-- */
@@ -293,6 +294,7 @@ public class CorePlayer {
                 ChatUtils.sendMsg(p, "&" + petType.getWeight().getColor() + petType.getName());
             }
         }
+        awardAchievement(p, AchievementsEnum.UNLOCK_PET);
     }
 
     /* --END PETS-- */
@@ -459,6 +461,7 @@ public class CorePlayer {
                 ChatUtils.sendMsg(p, "&" + piece.getWeight().getColor() + piece.getSuit().getName() + " " + piece.getSuitType().getName());
             }
         }
+        awardAchievement(p, AchievementsEnum.UNLOCK_CLOTHING);
     }
 
     public void setHead(PiecesEnum head) {

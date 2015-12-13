@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.SuitType;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
@@ -102,6 +103,28 @@ public class PlayerUtils {
         }
 
         cp.calculateExp(p, true);
+
+        switch (p.getName()) {
+            case "xBrandy":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
+                break;
+            case "78wesley":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
+                break;
+            case "BekertjeZuivel":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
+                break;
+            case "Cooltimmetje":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
+                break;
+            case "SVENZOKNOL":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
+                break;
+            case "roobein123":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.ROO_SLAP);
+            default:
+                break;
+        }
     }
 
     public static void setPiece(PiecesEnum piece, Player p){
