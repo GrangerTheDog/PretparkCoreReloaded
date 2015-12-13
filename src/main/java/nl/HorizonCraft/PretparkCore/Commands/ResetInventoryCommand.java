@@ -43,12 +43,12 @@ import org.bukkit.entity.Player;
  * This class has been created on 09/12/2015 at 10:36 AM by Cooltimmetje.
  */
 public class ResetInventoryCommand implements CommandExecutor {
-    @Override
+    
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if(cmd.getLabel().equalsIgnoreCase("resetinv")){
-            if(sender instanceof Player){
+        if (cmd.getLabel().equalsIgnoreCase("resetinv") || cmd.getLabel().equalsIgnoreCase("rejoin")){
+            if (sender instanceof Player){
                 Player p = (Player) sender;
-                if(p.hasPermission("pc.bypassgm")) {
+                if (p.hasPermission("pc.bypassgm")) {
                     ChatUtils.sendMsgTag(p, "ResetInv", "Je inventory is gereset.");
                     PlayerUtils.configPlayer(p, true);
                 } else {
