@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Listeners;
 
 import static org.bukkit.ChatColor.*;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -45,9 +46,9 @@ public class MonsterEggBlockPlaceListener implements Listener{
 
     public void onBlockPlaceEvent(BlockPlaceEvent e) {
         Player p = e.getPlayer();
-        if (e.getBlock().getType().getData().getName() == "Monster EGG") {
+        if (e.getBlock().getType() == Material.MONSTER_EGG) {
             e.setCancelled(true);
-            p.sendMessage(RED +"Dit Block mag niet geplaast worden!");
+            p.sendMessage(RED + "Dit Block mag niet geplaast worden!");
         } else {
             e.setCancelled(false);
         }
