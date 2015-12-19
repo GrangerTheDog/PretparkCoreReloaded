@@ -52,5 +52,6 @@ public class MonsterEggBlockPlaceListener implements Listener{
         } else {
             e.setCancelled(false);
         }
+        
     }
 }
