@@ -105,6 +105,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
         registerCommand("fixgm", new FixGamemodeCommand());
         registerCommand("resetinv", new ResetInventoryCommand());
+        registerCommand("rejoin", new ResetInventoryCommand());
         registerCommand("cc", new ClearChatCommand());
         registerCommand("maze", new MazeCommand());
         registerCommand("addride", new AddRide());
