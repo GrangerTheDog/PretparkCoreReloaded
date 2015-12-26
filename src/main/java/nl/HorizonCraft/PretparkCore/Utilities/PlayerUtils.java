@@ -105,9 +105,9 @@ public class PlayerUtils {
         cp.calculateExp(p, true);
 
         switch (p.getName()) {
-            case "xBrandy":
-                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
-                break;
+//            case "xBrandy":
+//                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
+//                break;
             case "78wesley":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
                 break;
@@ -117,7 +117,7 @@ public class PlayerUtils {
             case "Cooltimmetje":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
                 break;
-            case "SVENZOKNOL":
+            case "SVENBEER":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
                 break;
             case "roobein123":

@@ -145,9 +145,9 @@ public class GadgetTriggers implements Listener {
                                         cdPunchStaff.put(target.getName(), System.currentTimeMillis());
 
                                         switch (target.getName()) {
-                                            case "xBrandy":
-                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
-                                                break;
+//                                            case "xBrandy":
+//                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
+//                                                break;
                                             case "78wesley":
                                                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
                                                 break;
@@ -157,7 +157,7 @@ public class GadgetTriggers implements Listener {
                                             case "Cooltimmetje":
                                                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
                                                 break;
-                                            case "SVENZOKNOL":
+                                            case "SVENBEER":
                                                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
                                                 break;
                                             case "roobein123":
