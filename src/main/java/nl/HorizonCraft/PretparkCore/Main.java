@@ -99,7 +99,7 @@ public class Main extends JavaPlugin {
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
                 /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new RideMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
-                , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop(), new PetShop()
+                , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop(), new PetShop(), new MonsterEggBlockPlaceListener()
         );
 
         getLogger().info("Registering Commands..."); //Can you guess what this does? Yes! It registers the commands.
