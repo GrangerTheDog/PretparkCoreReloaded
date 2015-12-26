@@ -7,7 +7,7 @@ commands:
         description: fixgm
     resetinv:
         description: resetinv het zelfde als rejoin
-    resetinv:
+    rejoin:
         description: rejoin het zelfde als resetinv
     cc:
         description: cc
