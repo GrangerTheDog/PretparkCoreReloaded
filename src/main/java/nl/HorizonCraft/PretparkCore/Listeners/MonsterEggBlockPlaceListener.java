@@ -49,6 +49,9 @@ public class MonsterEggBlockPlaceListener implements Listener{
         if (e.getBlock().getType().getData().getName().equalsIgnoreCase("Monster Egg")) {
             e.setCancelled(true);
             p.sendMessage(RED + "Dit Block mag niet geplaast worden!");
+        } else if (e.getBlock().getType() == Material.MONSTER_EGGS) {
+            p.sendMessage("miss werkt deze wel idk");
+            e.setCancelled(true);
         } else {
             p.sendMessage("doesn't work");
             e.setCancelled(false);
