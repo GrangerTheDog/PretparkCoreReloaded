@@ -48,14 +48,10 @@ public class MonsterEggBlockPlaceListener implements Listener{
     @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent e) {
         Player p = e.getPlayer();
-        if (e.getBlock().getType().getData().getName().equalsIgnoreCase("Monster Egg")) {
+        if (e.getBlock().getType() == Material.MONSTER_EGGS) {
             e.setCancelled(true);
             p.sendMessage(RED + "Dit Block mag niet geplaast worden!");
-        } else if (e.getBlock().getType() == Material.MONSTER_EGGS) {
-            p.sendMessage("miss werkt deze wel idk");
-            e.setCancelled(true);
         } else {
-            p.sendMessage("doesn't work");
             e.setCancelled(false);
         }
     }
