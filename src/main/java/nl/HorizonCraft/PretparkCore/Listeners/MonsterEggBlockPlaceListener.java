@@ -35,6 +35,7 @@ package nl.HorizonCraft.PretparkCore.Listeners;
 import static org.bukkit.ChatColor.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
@@ -44,6 +45,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class MonsterEggBlockPlaceListener implements Listener{
 
+    @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         if (e.getBlock().getType().getData().getName().equalsIgnoreCase("Monster Egg")) {
