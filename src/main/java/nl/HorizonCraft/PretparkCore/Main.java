@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
@@ -114,6 +115,7 @@ public class Main extends JavaPlugin {
         registerCommand("unlockall", new UnlockAllCommand());
         registerCommand("createvoucher", new CreateVoucherCommand());
         registerCommand("redeem", new RedeemVoucherCommand());
+        registerCommand("awardachievement", new AchievementCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);

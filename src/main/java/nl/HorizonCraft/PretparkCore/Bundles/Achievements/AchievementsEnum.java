@@ -49,7 +49,8 @@ public enum AchievementsEnum {
     UNLOCK_GADGET(9, "FANCY TECHNOLOGY!", "Unlock je eerste gadget!", 25, 1, 500, AchievementType.UNLOCKABLES),
     UNLOCK_CLOTHING(10, "WEARING THE SWAG", "Unlock je eerste kledingstuk!", 25, 1, 500, AchievementType.UNLOCKABLES),
     UNLOCK_PET(11, "EEN VRIENDJE!", "Unlock je eerste pet!", 25, 1, 500, AchievementType.UNLOCKABLES),
-    ROO_SLAP(12, "3..2..1.. LIFT OFF!", "Launch Roobein123", 10, 1, 200, AchievementType.STAFFPUNCH);
+    ROO_SLAP(12, "3..2..1.. LIFT OFF!", "Launch Roobein123", 10, 1, 200, AchievementType.STAFFPUNCH),
+    GROT_FIND(13, "Het geheime kamertje...", "Vind het geheime kamertje in de berg.", 50, 1, 250, AchievementType.GENERAL);
 
     private int id;
     private String name;

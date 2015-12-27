@@ -29,3 +29,5 @@ commands:
         description: createvoucher
     redeem:
         description: redeem
+    awardachievement:
+        description: awardachievement
