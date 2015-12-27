@@ -30,46 +30,11 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Shops;
-
-import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
-import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
-import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+package nl.HorizonCraft.PretparkCore.Bundles.Firework;
 
 /**
- * Created by Cooltimmetje on 12/8/2015 at 4:17 PM.
+ * This class has been created on 12/12/27/2015/2015 at 5:14 PM by 78wesley.
  */
-public class ShopTrigger implements Listener {
 
-    @EventHandler
-    public void onShopNpcClick(PlayerInteractEntityEvent event){
-        Entity clicked = event.getRightClicked();
-        Player p = event.getPlayer();
-
-        if(clicked.getType() == EntityType.PLAYER){
-            switch (clicked.getUniqueId().toString()){
-                case "855293e0-bade-2989-a29d-0a20d3ebe374": //GADGET SHOP
-                    GadgetsShop.open(p);
-                    break;
-                case "57a33322-4d9a-2725-a158-eca0738370b0": //WARDROBE SHOP
-                    WardrobeShop.open(p);
-                    break;
-                case "e200cf10-5aee-2cea-9c6c-cf3ddb155852": //PET SHOP
-                    PetShop.open(p);
-                    break;
-                case "4ac1403a-4111-2c61-f240ba5ef55f": // FIREWORK SHOP
-                    //TODO Moet nog classes shit maken hher voor !
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
+public class Firework {
 }
