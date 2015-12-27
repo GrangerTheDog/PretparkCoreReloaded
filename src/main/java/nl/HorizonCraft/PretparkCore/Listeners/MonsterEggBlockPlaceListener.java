@@ -46,7 +46,7 @@ public class MonsterEggBlockPlaceListener implements Listener{
 
     public void onBlockPlaceEvent(BlockPlaceEvent e) {
         Player p = e.getPlayer();
-        if (e.getBlock().getType().getData().getName() == "Monster Egg") {
+        if (e.getBlock().getType().getData().getName().equalsIgnoreCase("Monster Egg")) {
             e.setCancelled(true);
             p.sendMessage(RED + "Dit Block mag niet geplaast worden!");
         } else {
