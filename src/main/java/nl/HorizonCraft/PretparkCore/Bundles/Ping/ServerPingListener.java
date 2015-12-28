@@ -70,8 +70,8 @@ public class ServerPingListener implements Listener {
             case "25/12":
                 saying = "Gefeliciteerd Jordy010NL!";
                 break;
-            case "06/07":
-                saying = "Gefeliciteerd ";
+            case "07/06":
+                saying = "Gefeliciteerd 78wesley!";
                 break;
             case "26/10":
                 saying = "Gefeliciteerd SVENBEER!";
