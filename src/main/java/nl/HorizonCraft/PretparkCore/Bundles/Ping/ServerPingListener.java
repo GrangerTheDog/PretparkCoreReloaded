@@ -100,7 +100,7 @@ public class ServerPingListener implements Listener {
                 thatDay.set(Calendar.YEAR, 2016);
 
                 Calendar today = Calendar.getInstance();
-                long diff =  thatDay.getTimeInMillis() - today.getTimeInMillis();
+                long diff =  thatDay.getTimeInMillis() - (today.getTimeInMillis() + 3600000);
                 long diffSec = diff / 1000;
 
                 long days = diffSec / SECONDS_IN_A_DAY;
