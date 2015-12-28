@@ -56,7 +56,8 @@ public enum SayingsEnum {
     BUGS("Bevat bugs."),
     BUTTON("What does this button do?"),
     BMW("Dikke BMW jongens, DIKKE BMW."),
-    FRIETJES("Gratis frietjes!");
+    FRIETJES("Gratis frietjes!"),
+    MOTTO("Plezier tot aan de horizon en terug.");
 
     private String saying;
 
