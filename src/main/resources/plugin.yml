@@ -1,7 +1,7 @@
 name: PretparkCore
 version: 1.0
 main: nl.HorizonCraft.PretparkCore.Main
-authors: [Cooltimmetje]
+authors: [Cooltimmetje, 78wesley]
 commands:
     fixgm:
         description: fixgm
