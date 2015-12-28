@@ -38,6 +38,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
+import nl.HorizonCraft.PretparkCore.Bundles.Ping.ServerPingListener;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.AddRide;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
@@ -91,7 +92,6 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Starting pre-setup...."); //For everything that will cause issues if it gets done after registering stuff
         MysqlManager.setupHikari();
-        ServerPingListener.setup();
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this

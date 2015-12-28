@@ -30,42 +30,50 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Listeners;
+package nl.HorizonCraft.PretparkCore.Bundles.Ping;
 
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.Variables;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.ServerListPingEvent;
-
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
- * This class has been created on 10/07/2015 at 9:02 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 12/28/2015 at 11:16 AM.
  */
-public class ServerPingListener implements Listener {
+public enum SayingsEnum {
 
-    private static ArrayList<String> sayings = new ArrayList<>();
+    FAT_FREE("Vet vrij!"),
+    YES_FRIEND("JAAAA VRIEEEEEEND!"),
+    FAABAAH("Faaabaaahhh Faabaaaah"),
+    NO_FRIEND("NEEEE VRIEEEEENDDD!"),
+    STICKER("Nu met een gratis sticker!"),
+    RED_BUTTON("Druk niet op de rode knop!"),
+    DISCORD("Discord is Bae <3"),
+    COOKIE("KOEKJES!"),
+    NOU_NEE("Nooouuu.... Nee."),
+    HEALTHY("Nu 101% gezonder."),
+    TREKKER("Tim en Bram hebben een trekker."),
+    BUGS("Bevat bugs."),
+    BUTTON("What does this button do?"),
+    BMW("Dikke BMW jongens, DIKKE BMW."),
+    FRIETJES("Gratis frietjes!");
 
-    @EventHandler
-    public void onPing(ServerListPingEvent event){
-        String saying = sayings.get(MiscUtils.randomInt(0, sayings.size()));
-        event.setMotd(MiscUtils.color(Variables.SERVER_NAME  + "&8\u00BB &a" + Variables.SERVER_PING_MESSAGE + "\n" + Variables.SERVER_NAME_SHORT + " &8\u00BB &b&o" + saying));
+    private String saying;
+
+    SayingsEnum(String s) {
+        this.saying = s;
     }
 
-    public static void setup(){
-        sayings.add("Vet vrij!");
-        sayings.add("Bevat koala's! :o");
-        sayings.add("JAAAA VRIEEEEEEND!");
-        sayings.add("Faaabaaahhh Faabaaaah");
-        sayings.add("NEEEE VRIEEEEENDDD!");
-        sayings.add("Nu met een gratis sticker!");
-        sayings.add("Druk niet op de rode knop!");
-        sayings.add("Discord is Bae <3");
-        sayings.add("Like als je Jordy dik vindt");
-        sayings.add("Brandy = Koala #CONFIRMED");
-        sayings.add("KOEKJES!");
-        sayings.add("Jeremy heeft een trekker fetish [lenny]");
+    public String getSaying() {
+        return saying;
     }
 
+    private static final List<SayingsEnum> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+
+    public static SayingsEnum randomMessage()  {
+        return VALUES.get(RANDOM.nextInt(SIZE));
+    }
 }

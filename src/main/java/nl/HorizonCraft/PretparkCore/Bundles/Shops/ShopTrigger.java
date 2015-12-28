@@ -64,7 +64,7 @@ public class ShopTrigger implements Listener {
                     PetShop.open(p);
                     break;
                 case "4ac1403a-4111-2c61-f240ba5ef55f": // FIREWORK SHOP
-                    //TODO Moet nog classes shit maken hher voor !
+                    //TODO Moet nog classes shit maken hier voor !
                     break;
                 default:
                     break;
