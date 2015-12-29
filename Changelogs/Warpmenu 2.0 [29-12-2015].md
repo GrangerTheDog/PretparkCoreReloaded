@@ -33,7 +33,7 @@
 2. Open de chat en typ: ```/createwarp <type> <name...>```
 3. Vervang ```<type>``` door het type.
   * De types zijn: ```SHOP - WARP - RIDE - MAZE - PARKOUR``` *(niet hoofdletter gevoelig)*
-4. Vervang ```<name...>``` door de naam. Hierin zijn spaties toegestaan! *(De plugin zet er niet automatisch een lidwoord voor (de,het,een) dit moet je zelf doen, denk daar dus om! Een lidwoord is niet verplicht.)
+4. Vervang ```<name...>``` door de naam. Hierin zijn spaties toegestaan! *(De plugin zet er niet automatisch een lidwoord voor (de,het,een) dit moet je zelf doen, denk daar dus om! Een lidwoord is niet verplicht.)*
 5. Druk op enter, en wacht terwijl je attractie naar de database word gestuurd en de cache word gereloaded!
 6. Gefeliciteerd! Je hebt een warp toegevoegd! :tada:
 
