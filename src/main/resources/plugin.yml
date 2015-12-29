@@ -13,10 +13,10 @@ commands:
         description: cc
     maze:
         description: maze
-    addride:
-        description: addride
-    setride:
-        description: setride
+    createwarp:
+        description: createwarp
+    warpstate:
+        description: warpstate
     achievementride:
         description: achievementride
     unlockall:

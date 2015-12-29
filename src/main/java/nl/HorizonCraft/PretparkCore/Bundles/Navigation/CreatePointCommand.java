@@ -61,14 +61,13 @@ public class CreatePointCommand implements CommandExecutor {
                                 sb.append(args[i]);
                             }
 
-                            StringBuilder sb1 = new StringBuilder();
-                            sb.append(p.getLocation().getX()).append(",");
-                            sb.append(p.getLocation().getY()).append(",");
-                            sb.append(p.getLocation().getZ()).append(",");
-                            sb.append(p.getLocation().getYaw()).append(",");
-                            sb.append(p.getLocation().getPitch());
+                            String sb1 = String.valueOf(p.getLocation().getX()) + "," +
+                                    p.getLocation().getY() + "," +
+                                    p.getLocation().getZ() + "," +
+                                    p.getLocation().getYaw() + "," +
+                                    p.getLocation().getPitch();
 
-                            MysqlManager.addWarp(sb.toString().trim(), sb.toString().trim(), PointType.valueOf(args[0].toUpperCase()));
+                            MysqlManager.addWarp(sb.toString().trim(), sb1.trim(), PointType.valueOf(args[0].toUpperCase()));
                             Variables.navigationPoints.clear();
                             MysqlManager.getWarps();
                             ChatUtils.sendMsgTag(p, "CreateWarp", "Warp aangemaakt!");

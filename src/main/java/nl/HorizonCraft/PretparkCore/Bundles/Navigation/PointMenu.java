@@ -103,7 +103,6 @@ public class PointMenu implements Listener {
         if(ChatColor.stripColor(event.getInventory().getName()).contains("Warp Menu")){
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
-            NavigationPoint navPoint = PointUtils.getById(Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(2)).replace("ID: ", " ").trim()));
             Material m = event.getCurrentItem().getType();
             switch (m){
                 case ENDER_PEARL:
@@ -125,7 +124,7 @@ public class PointMenu implements Listener {
                     open(p);
                     break;
                 case STAINED_CLAY:
-
+                    NavigationPoint navPoint = PointUtils.getById(Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(3)).replace("ID: ", " ").trim()));
                     if (navPoint != null) {
                         p.teleport(navPoint.getLocation());
                     }
