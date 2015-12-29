@@ -33,14 +33,14 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.zaxxer.hikari.HikariDataSource;
-import nl.HorizonCraft.PretparkCore.Bundles.Rides.Ride;
-import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideState;
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointState;
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
-import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -409,18 +409,18 @@ public class MysqlManager {
         }
     }
 
-    public static void getRides(){
+    public static void getWarps(){
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String load = "SELECT * FROM rides;";
+        String load = "SELECT * FROM warps;";
 
         try {
             c = hikari.getConnection();
             ps = c.prepareStatement(load);
             rs = ps.executeQuery();
 
-            setRides(rs);
+            setWarp(rs);
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -449,14 +449,14 @@ public class MysqlManager {
         }
     }
 
-    private static void setRides(ResultSet rs) {
+    private static void setWarp(ResultSet rs) {
         try {
             while(rs.next()){
                 String[] locList = rs.getString("location").split(",");
                 Location loc = new Location(Bukkit.getWorld(Variables.WORLD_NAME), Double.parseDouble(locList[0]), Double.parseDouble(locList[1]), Double.parseDouble(locList[2]));
                 loc.setYaw(Float.parseFloat(locList[3]));
                 loc.setPitch(Float.parseFloat(locList[4]));
-                Ride ride = new Ride(rs.getInt("id"), loc, rs.getString("name"), RideState.valueOf(rs.getString("state")));
+                new NavigationPoint(rs.getInt("id"), rs.getString("name"), loc, PointType.valueOf(rs.getString("point_type").toUpperCase()), PointState.valueOf(rs.getString("point_state").toUpperCase()));
 //                Main.sendDebug(MiscUtils.color("&7&o[Server: " + "&7&oRide created: " + ride.getId() + "," + ride.getName() + "," + ride.getLocation() + "," + ride.getRideState() + "]"));
             }
         } catch (SQLException e) {
@@ -464,7 +464,7 @@ public class MysqlManager {
         }
     }
 
-    public static void saveRide(Ride ride) {
+    public static void saveWarp(NavigationPoint point) {
         Connection c = null;
         PreparedStatement ps = null;
         String updateData = "UPDATE rides SET state=? WHERE id=?";
@@ -473,8 +473,8 @@ public class MysqlManager {
             c = hikari.getConnection();
             ps = c.prepareStatement(updateData);
 
-            ps.setString(1, ride.getRideState().toString());
-            ps.setInt(2, ride.getId());
+            ps.setString(1, point.getPointState().toString());
+            ps.setInt(2, point.getId());
 
             ps.execute();
         } catch (SQLException e) {
@@ -497,11 +497,11 @@ public class MysqlManager {
         }
     }
 
-    public static void addRide(String name, String location){
-        Main.getPlugin().getLogger().info("Creating new ride: " + name);
+    public static void addWarp(String name, String location, PointType pt){
+        Main.getPlugin().getLogger().info("Creating new warp: " + name);
         Connection c = null;
         PreparedStatement ps = null;
-        String create = "INSERT INTO rides VALUES(null,?,?,?)";
+        String create = "INSERT INTO warps VALUES(null,?,?,?,?)";
 
         try {
             c = hikari.getConnection();
@@ -509,7 +509,8 @@ public class MysqlManager {
 
             ps.setString(1, name);
             ps.setString(2, location);
-            ps.setString(3, RideState.CLOSED.toString());
+            ps.setString(3, PointState.CLOSED.toString());
+            ps.setString(4, pt.toString());
 
             ps.execute();
         } catch (SQLException e) {

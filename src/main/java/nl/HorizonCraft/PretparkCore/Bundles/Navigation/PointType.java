@@ -30,44 +30,26 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities;
-
-import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
-import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+package nl.HorizonCraft.PretparkCore.Bundles.Navigation;
 
 /**
- * This class has been created on 09/10/2015 at 18:47 by Cooltimmetje.
+ * Created by Cooltimmetje on 12/28/2015 at 6:47 PM.
  */
-public class Variables {
+public enum PointType {
 
-    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
-    public static String SERVER_NAME_SHORT = MiscUtils.color("&3&lH&6&lC");
-    public static String SERVER_PING_MESSAGE = MiscUtils.color("In aanbouw.");
-    public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");
-    public static String WORLD_NAME = "world";
+    SHOP("Shop"),
+    WARP("Warp"),
+    RIDE("Attractie"),
+    MAZE("Doolhof"),
+    PARKOUR("Parkour");
 
-    public static int COIN_TIME = 60;
-    public static int COIN_GAIN = 20;
-    public static int DOUBLE_CHANCE = 10;
+    private String friendlyName;
 
-    public static int CHEST_TIME = 120;
-    public static int CHEST_GAIN = 1;
-    public static int CHEST_DOUBLE = 5;
+    PointType(String s){
+        this.friendlyName = s;
+    }
 
-    public static int EXPERIENCE_TIME = 30;
-    public static int EXPERIENCE_GAIN = 100;
-    public static int EXPERIENCE_DOUBLE = 10;
-    public static int EXP_BASE_LEVEL = 4500;
-    public static double EXP_MODIFIER = 1.1;
-
-    public static HashMap<String, CorePlayer> profile = new HashMap<>();
-    public static ArrayList<Hologram> holograms = new ArrayList<>();
-    public static ArrayList<Voucher> vouchers = new ArrayList<>();
-    public static ArrayList<NavigationPoint> navigationPoints = new ArrayList<>();
-
+    public String getFriendlyName() {
+        return friendlyName;
+    }
 }

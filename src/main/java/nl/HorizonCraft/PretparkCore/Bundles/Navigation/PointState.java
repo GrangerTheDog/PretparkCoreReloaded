@@ -30,53 +30,37 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Rides;
-
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
-import org.bukkit.Location;
+package nl.HorizonCraft.PretparkCore.Bundles.Navigation;
 
 /**
- * This class has been created on 10/09/2015 at 6:39 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 12/28/2015 at 6:54 PM.
  */
-public class Ride {
+public enum PointState {
 
-    private int id;
-    private Location location;
-    private String name;
-    private RideState rideState;
+    OPEN("2", 13, "Geopend"),
+    CLOSED("c", 14, "Gesloten"),
+    MAINTENANCE("6", 1, "Onderhoud"),
+    BROKEN("7", 8, "Storing");
 
-    public Ride(int id, Location loc, String name, RideState rideState) {
-        this.id = id;
-        this.location = loc;
-        this.name = name;
-        this.rideState = rideState;
+    private String colorCode;
+    private int colorData;
+    private String friendlyName;
 
-        RideVars.rides.put(id, this);
+    PointState(String s, int i, String s1){
+        this.colorCode = s;
+        this.colorData = i;
+        this.friendlyName = s1;
     }
 
-    public int getId() {
-        return id;
+    public String getColorCode() {
+        return colorCode;
     }
 
-    public Location getLocation() {
-        return location;
+    public int getColorData() {
+        return colorData;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public RideState getRideState() {
-        return rideState;
-    }
-
-    public void setRideState(RideState rideState) {
-        this.rideState = rideState;
-
-        saveToDb();
-    }
-
-    private void saveToDb(){
-        MysqlManager.saveRide(this);
+    public String getFriendlyName() {
+        return friendlyName;
     }
 }

@@ -30,15 +30,58 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Rides;
+package nl.HorizonCraft.PretparkCore.Bundles.Navigation;
 
-import java.util.HashMap;
+import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import org.bukkit.Location;
 
 /**
- * This class has been created on 10/09/2015 at 6:39 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 12/28/2015 at 6:44 PM at 7:07 PM.
  */
-public class RideVars {
+public class NavigationPoint {
 
-    public static HashMap<Integer,Ride> rides = new HashMap<>();
+    private int id;
+    private String name;
+    private Location location;
+    private PointType pointType;
+    private PointState pointState;
 
+    public NavigationPoint(int i, String s, Location l, PointType pt, PointState ps){
+        this.id = i;
+        this.name = s;
+        this.location = l;
+        this.pointType = pt;
+        this.pointState = ps;
+
+        Variables.navigationPoints.add(this);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public PointType getPointType() {
+        return pointType;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public PointState getPointState() {
+        return pointState;
+    }
+
+    public void setPointState(PointState pointState) {
+        this.pointState = pointState;
+    }
+
+    public void save(){
+        MysqlManager.saveWarp(this);
+    }
 }

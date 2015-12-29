@@ -36,13 +36,12 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.ChangePointStateCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.CreatePointCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Ping.ServerPingListener;
-import nl.HorizonCraft.PretparkCore.Bundles.Rides.AddRide;
-import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideAchievementCommand;
-import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideMenu;
-import nl.HorizonCraft.PretparkCore.Bundles.Rides.RideStateCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.ShopTrigger;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
@@ -50,6 +49,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
 import nl.HorizonCraft.PretparkCore.Commands.*;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
+import nl.HorizonCraft.PretparkCore.Commands.Admin.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Listeners.*;
@@ -73,6 +73,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.awt.*;
 
 /**
  * This class has been created on 9/7/2015 at 21:27 by Cooltimmetje.
@@ -98,7 +100,7 @@ public class Main extends JavaPlugin {
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
-                /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new RideMenu()
+                /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new PointMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
                 , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop(), new PetShop(), new MonsterEggBlockPlaceListener()
         );
@@ -109,8 +111,8 @@ public class Main extends JavaPlugin {
         registerCommand("rejoin", new ResetInventoryCommand());
         registerCommand("cc", new ClearChatCommand());
         registerCommand("maze", new MazeCommand());
-        registerCommand("addride", new AddRide());
-        registerCommand("setride", new RideStateCommand());
+        registerCommand("createwarp", new CreatePointCommand());
+        registerCommand("warpstate", new ChangePointStateCommand());
         registerCommand("achievementride", new RideAchievementCommand());
         registerCommand("unlockall", new UnlockAllCommand());
         registerCommand("createvoucher", new CreateVoucherCommand());
@@ -129,7 +131,7 @@ public class Main extends JavaPlugin {
 
             PlayerUtils.configPlayer(p, false);
         }
-        MysqlManager.getRides();
+        MysqlManager.getWarps();
         MysqlManager.getVouchers();
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
@@ -157,6 +159,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Disabling plugin... Please wait.");
         HologramUtils.removeHolos();
         MiscUtils.updateVouchers();
+        PointUtils.saveAll();
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);

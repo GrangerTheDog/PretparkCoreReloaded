@@ -30,45 +30,55 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Rides;
+package nl.HorizonCraft.PretparkCore.Commands.Admin;
 
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 10/09/2015 at 6:38 PM by Cooltimmetje.
+ * This class has been created on 10/12/2015 at 7:44 PM by Cooltimmetje.
  */
-public class AddRide implements CommandExecutor {
-
+public class RideAchievementCommand implements CommandExecutor{
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-        if(sender instanceof Player){
-            if(cmd.getLabel().equalsIgnoreCase("addride")){
-                Player p = (Player) sender;
-                if(p.hasPermission("pc.addride")){
-                    if(args.length >= 1){
-                        ChatUtils.sendMsgTag(p, "AddRide", "Attractie aanmaken... &oEven geduld...");
-                        StringBuilder sbName = new StringBuilder();
-                        for(String s : args){
-                            sbName.append(s).append(" ");
+        if(cmd.getName().equalsIgnoreCase("achievementride")){
+            if(!(sender instanceof Player)){
+                switch (args[0]){
+                    default:
+                        break;
+                    case "fe":
+                        for(Player p : Bukkit.getOnlinePlayers()){
+                            CorePlayer cp = PlayerUtils.getProfile(p);
+                            Location pLoc = p.getLocation();
+                            if(pLoc.getX() <= -43 && pLoc.getX() >= -53){
+                                if(pLoc.getY() <= 70 && pLoc.getY() >= 65){
+                                    if(pLoc.getZ() <= -597 && pLoc.getZ() >= -599) {
+                                        if (p.isInsideVehicle()) {
+                                            cp.awardAchievement(p, AchievementsEnum.FE_RIDE);
+                                            cp.addExp(p, MiscUtils.randomInt(10, 50), "Farm Expediton ritje", true, true);
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        MysqlManager.addRide(sbName.toString().trim(), String.valueOf(p.getLocation().getX()) + "," + p.getLocation().getY() + "," + p.getLocation().getZ() + "," + p.getLocation().getYaw() + "," + p.getLocation().getPitch());
-                        RideVars.rides.clear();
-                        MysqlManager.getRides();
-                        ChatUtils.sendMsgTag(p, "AddRide", "Attractie aangemaakt!");
-                    } else {
-                        ChatUtils.sendMsgTag(p, "AddRide", "Geef deze attractie een naam.");
-                    }
-                } else {
-                    ChatUtils.sendNoPremTag(p, "AddRide");
+                        break;
                 }
+            } else {
+                ChatUtils.sendNoPremTag((Player) sender, "SetRide");
             }
         }
-        return false;
+        return true;
     }
+
 }

@@ -30,30 +30,30 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Rides;
+package nl.HorizonCraft.PretparkCore.Utilities;
+
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
 
 /**
- * This class has been created on 10/09/2015 at 6:40 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 12/28/2015 at 7:50 PM.
  */
-public enum RideState {
+public class PointUtils {
 
-    OPEN(5,"&2OPEN"),
-    CLOSED(14,"&CGESLOTEN"),
-    MAINTENANCE(1,"&6ONDERHOUD");
+    public static NavigationPoint getById(int id){
 
-    private int data;
-    private String stateString;
+        for(NavigationPoint navPoint : Variables.navigationPoints){
+            if(navPoint.getId() == id){
+                return navPoint;
+            }
+        }
 
-    RideState(int i, String s) {
-        this.data = i;
-        this.stateString = s;
+        return null;
     }
 
-    public int getClayColor() {
-        return data;
+    public static void saveAll(){
+        for(NavigationPoint navPoint : Variables.navigationPoints){
+            navPoint.save();
+        }
     }
 
-    public String getStateString() {
-        return stateString;
-    }
 }
