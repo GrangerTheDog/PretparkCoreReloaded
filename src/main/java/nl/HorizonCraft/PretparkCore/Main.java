@@ -87,7 +87,7 @@ public class Main extends JavaPlugin {
     public void onEnable(){
         startTime = System.currentTimeMillis(); //Registers the plugin startTime to measure loading time afterwards...
         getLogger().info("Enabling plugin... Please wait.");
-        sendDebug("&9Debug> &aStarting plugin load... &oPlease wait.");
+        sendDebug("&3Pretpark&6Core&9> &aStarting plugin load... &oPlease wait...");
 
         plugin = this; //Registering the plugin variable to allow other classes to access it.
         this.saveDefaultConfig(); //Saves the config to be used.
@@ -152,7 +152,7 @@ public class Main extends JavaPlugin {
         }
 
         getLogger().info("Plugin ready! (Loadtime: " + getLoad() + "ms)");
-        sendDebug("&9Debug> &aPlugin load finished! &c(" + getLoad() + "ms) &3&oYou can take a look in the console for more load information.");
+        sendDebug("&3Pretpark&6Core&9> &aPlugin load finished! &c(" + getLoad() + "ms) &3&oYou can take a look in the console for more load information.");
     }
 
     public void onDisable() {

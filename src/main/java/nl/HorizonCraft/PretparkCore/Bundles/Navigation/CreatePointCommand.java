@@ -58,7 +58,7 @@ public class CreatePointCommand implements CommandExecutor {
 
                             StringBuilder sb = new StringBuilder();
                             for (int i=1; i < args.length; i++){
-                                sb.append(args[i]);
+                                sb.append(args[i]).append(" ");
                             }
 
                             String sb1 = String.valueOf(p.getLocation().getX()) + "," +

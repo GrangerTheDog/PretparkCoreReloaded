@@ -467,7 +467,7 @@ public class MysqlManager {
     public static void saveWarp(NavigationPoint point) {
         Connection c = null;
         PreparedStatement ps = null;
-        String updateData = "UPDATE warps SET state=? WHERE id=?";
+        String updateData = "UPDATE warps SET point_state=? WHERE id=?";
 
         try {
             c = hikari.getConnection();

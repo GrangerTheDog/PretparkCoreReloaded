@@ -56,7 +56,7 @@ public class PointMenu implements Listener {
 
         int slot = 1;
         for(NavigationPoint navPoint : Variables.navigationPoints){
-            ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName(),
+            ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName().replace("Het", " ").replace("De ", " ").trim(),
                     "&bStatus: &" + navPoint.getPointState().getColorCode() + navPoint.getPointState().getFriendlyName(),
                     "&bSoort: &a" + navPoint.getPointType().getFriendlyName(),
                     "&bKlik om te teleporteren.", "&8ID: " + navPoint.getId());
@@ -79,13 +79,12 @@ public class PointMenu implements Listener {
         int slot = 1;
         for(NavigationPoint navPoint : Variables.navigationPoints){
             if(navPoint.getPointType() == pt) {
-                ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName(),
+                ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName().replace("Het", " ").replace("De ", " ").trim(),
                         "&bStatus: &" + navPoint.getPointState().getColorCode() + navPoint.getPointState().getFriendlyName(),
                         "&bSoort: &a" + navPoint.getPointType().getFriendlyName(),
                         "&bKlik om te teleporteren.", "&8ID: " + navPoint.getId());
-
+                slot++;
             }
-            slot++;
         }
 
         ItemUtils.createDisplay(inv, 49, Material.BARRIER, 1, 0, "&cWis filter.");
@@ -114,7 +113,7 @@ public class PointMenu implements Listener {
                 case MINECART:
                     open(p, PointType.RIDE);
                     break;
-                case LEASH:
+                case LEAVES:
                     open(p, PointType.MAZE);
                     break;
                 case FEATHER:

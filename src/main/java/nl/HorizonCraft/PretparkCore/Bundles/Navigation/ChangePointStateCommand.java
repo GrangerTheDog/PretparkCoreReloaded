@@ -56,7 +56,7 @@ public class ChangePointStateCommand implements CommandExecutor {
                         PointState ps = PointState.valueOf(args[1].toUpperCase());
                         if(ps != null){
                             navPoint.setPointState(ps);
-                            ChatUtils.bcMsgTag("Omroep", "De " + navPoint.getName() + " is nu &" + ps.getColorCode() + ps.getFriendlyName() + "&a!");
+                            ChatUtils.bcMsgTag("Omroep", navPoint.getName() + " is nu &" + ps.getColorCode() + ps.getFriendlyName() + "&a!");
                         } else {
                             if(sender instanceof Player){
                                 Player p = (Player) sender;
