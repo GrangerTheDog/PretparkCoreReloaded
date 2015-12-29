@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Managers;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointMenu;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
@@ -85,7 +86,7 @@ public class InventoryManager implements Listener {
                             }
                             break;
                         case MINECART:
-                            RideMenu.openRide(p);
+                            PointMenu.open(p);
                             break;
                         case FLINT:
                             if (!p.isSneaking()) {

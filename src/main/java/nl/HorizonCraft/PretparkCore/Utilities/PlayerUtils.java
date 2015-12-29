@@ -81,7 +81,7 @@ public class PlayerUtils {
             is.setItemMeta(sm);
             ItemUtils.createDisplay(p, is, 1);
 
-            ItemUtils.createDisplay(p, 2, Material.MINECART, 1, 0, "&aAttracties " + Variables.RIGHT_CLICK, "&7Bekijk alle attracties en hun status.");
+            ItemUtils.createDisplay(p, 2, Material.MINECART, 1, 0, "&aWarps " + Variables.RIGHT_CLICK, "&7Bekijk alle warps en hun status.");
             ItemUtils.createDisplay(p, 9, Material.CHEST, 1, 0, "&aSwag Menu " + Variables.RIGHT_CLICK, "&7Wil je wat swag? Kijk hier!");
 
             if(p.isOp()) {
