@@ -59,6 +59,7 @@ public class ServerPingListener implements Listener {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
+        cal.add(Calendar.HOUR, 1);
 
         switch(date) {
             case "21/10":
@@ -100,7 +101,8 @@ public class ServerPingListener implements Listener {
                 thatDay.set(Calendar.YEAR, 2016);
 
                 Calendar today = Calendar.getInstance();
-                long diff =  thatDay.getTimeInMillis() - (today.getTimeInMillis() + 3600000);
+                today.add(Calendar.HOUR, 1);
+                long diff =  thatDay.getTimeInMillis() - today.getTimeInMillis();
                 long diffSec = diff / 1000;
 
                 long days = diffSec / SECONDS_IN_A_DAY;
