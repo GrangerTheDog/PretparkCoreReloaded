@@ -42,6 +42,7 @@ import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.core.Filter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -50,6 +51,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * This class has been created on 09/9/11/2015/2015 at 9:02 PM by Cooltimmetje.
@@ -120,7 +122,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?)";
 
         try {
             c = hikari.getConnection();
@@ -135,6 +137,7 @@ public class MysqlManager {
             ps.setString(7, StringUtils.repeat("f", 100));
             ps.setInt(8, Variables.EXPERIENCE_TIME);
             ps.setString(9, StringUtils.repeat("f", 100));
+            ps.setString(10, StringUtils.repeat("f", 100));
 
             ps.execute();
         } catch (SQLException e) {
@@ -164,9 +167,10 @@ public class MysqlManager {
     private static void setData(ResultSet rs, Player p) {
         CorePlayer cp = PlayerUtils.getProfile(p);
         try {
+            cp.setAchievements(rs.getString("achievements").toCharArray());
+            cp.setProgressiveAchievements(rs.getString("progressive_achievements").toCharArray());
             cp.setCoins(rs.getInt("coins"));
             cp.setCoinTime(rs.getInt("coin_time"));
-            cp.setAchievements(rs.getString("achievements").toCharArray());
             cp.setPieces(rs.getString("wardrobe").toCharArray());
             cp.setKeys(rs.getInt("mkeys"));
             cp.setGadgets(rs.getString("gadgets").toCharArray());
@@ -176,6 +180,7 @@ public class MysqlManager {
             cp.setExperience(rs.getInt("exp"));
             cp.setExperienceTime(rs.getInt("exp_time"));
             cp.setId(rs.getInt("id"));
+
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -185,7 +190,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?,wardrobe=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?,wardrobe=?,progressive_achievements=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -204,7 +209,8 @@ public class MysqlManager {
             ps.setInt(10, cp.getExperience());
             ps.setInt(11, cp.getExperienceTime());
             ps.setString(12, new String(cp.getPieces()));
-            ps.setString(13, uuid);
+            ps.setString(13, new String(cp.getProgressiveAchievements()));
+            ps.setString(14, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -658,5 +664,90 @@ public class MysqlManager {
         }
     }
 
+    public static void revokeAchievement(int id){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM playerdata;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                if (Bukkit.getPlayer(rs.getString("name")) == null) {
+                    revokeAchievementInDatabase(rs, id);
+                } else {
+                    revokeAchievementInCache(Bukkit.getPlayer(rs.getString("name")), id);
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void revokeAchievementInDatabase(ResultSet rs, int id) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        String updateData = "UPDATE playerdata SET achievements=? WHERE uuid=?";
+
+        try {
+            String uuid = rs.getString("uuid");
+            char[] achievements = rs.getString("achievements").toCharArray();
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+            achievements[id] = 'f';
+
+            ps.setString(1, new String(achievements));
+            ps.setString(2, uuid);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void revokeAchievementInCache(Player p, int id) {
+        CorePlayer cp = PlayerUtils.getProfile(p);
+        cp.revokeAchievement(id);
+    }
 
 }

@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RevokeAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
@@ -118,6 +119,7 @@ public class Main extends JavaPlugin {
         registerCommand("createvoucher", new CreateVoucherCommand());
         registerCommand("redeem", new RedeemVoucherCommand());
         registerCommand("awardachievement", new AchievementCommand());
+        registerCommand("revokeachievement", new RevokeAchievementCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
@@ -149,6 +151,8 @@ public class Main extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()){
             CorePlayer cp = PlayerUtils.getProfile(p);
             cp.awardAchievement(p, AchievementsEnum.FIRST_TIME_JOIN);
+
+            cp.awardProgressive();
         }
 
         getLogger().info("Plugin ready! (Loadtime: " + getLoad() + "ms)");

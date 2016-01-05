@@ -35,6 +35,7 @@ package nl.HorizonCraft.PretparkCore.Bundles.Navigation;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PointUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -56,7 +57,8 @@ public class ChangePointStateCommand implements CommandExecutor {
                         PointState ps = PointState.valueOf(args[1].toUpperCase());
                         if(ps != null){
                             navPoint.setPointState(ps);
-                            ChatUtils.bcMsgTag("Omroep", navPoint.getName() + " is nu &" + ps.getColorCode() + ps.getFriendlyName() + "&a!");
+//                            ChatUtils.bcMsgTag("Omroep", navPoint.getName() + " is nu &" + ps.getColorCode() + ps.getFriendlyName() + "&a!");
+                            Bukkit.broadcastMessage(MiscUtils.color("&9&lOmroep&9&l> &a" + navPoint.getName() + " is nu &" + ps.getColorCode() + ps.getFriendlyName() + "&a!"));
                         } else {
                             if(sender instanceof Player){
                                 Player p = (Player) sender;

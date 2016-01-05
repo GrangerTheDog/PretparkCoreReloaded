@@ -33,12 +33,14 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.ProgressiveAchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import nl.HorizonCraft.PretparkCore.Utilities.Packets.TitleUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -64,6 +66,7 @@ public class CorePlayer {
     private int level;
 
     private char[] achievements;
+    private char[] progressiveAchievements;
     private char[] gadgets;
     private char[] pets;
     private char[] pieces;
@@ -89,6 +92,7 @@ public class CorePlayer {
     public void setId(int id) {
         this.id = id;
     }
+
 
     /* --START COINS-- */
 
@@ -120,6 +124,7 @@ public class CorePlayer {
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         }
         ScoreboardUtils.updateScoreboard(p, false);
+        awardProgressive();
     }
 
     public void removeCoins(Player p, int remove, String reason, boolean playSound) {
@@ -141,8 +146,6 @@ public class CorePlayer {
         }
         ScoreboardUtils.updateScoreboard(p, false);
     }
-
-
 
     /* --END COINS-- */
 
@@ -228,6 +231,87 @@ public class CorePlayer {
             addCoins(p, achievement.getCoinReward(), "Achievement: " + achievement.getName(), false, false);
             addKeys(p, achievement.getKeyReward(), "Achievement: " + achievement.getName(), false, false);
             addExp(p, achievement.getExpReward(), "Achievement: " + achievement.getName(), false, false);
+        }
+    }
+
+    public void revokeAchievement(int id){
+        achievements[id] = 'f';
+    }
+
+    public char[] getProgressiveAchievements() {
+        return progressiveAchievements;
+    }
+
+    public void setProgressiveAchievements(char[] progressiveAchievements) {
+        this.progressiveAchievements = progressiveAchievements;
+    }
+
+    public void awardProgressiveAchievement(Player p, ProgressiveAchievementsEnum achievement, int level){
+        if(progressiveAchievements[achievement.getId()[level-1]] == 'f') {
+            progressiveAchievements[achievement.getId()[level-1]] = 't';
+
+            p.playSound(p.getLocation(), Sound.NOTE_PLING, 100, 1);
+            MiscUtils.shootFirework(p.getLocation(), p.getWorld().getName(), true);
+
+            ChatUtils.sendMsg(p, "&8-------- &a&lACHIEVEMENT GET! &8--------");
+            ChatUtils.sendMsg(p, "&3Naam: &a" + achievement.getName() + " " + levelString(level));
+            ChatUtils.sendMsg(p, "&3Beschrijving: &a" + achievement.getDescription().replace("%v", "" + achievement.getLevels()[level-1]));
+            ChatUtils.sendMsg(p, "&3Rewards:");
+            addCoins(p, achievement.getBoxes()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
+            addKeys(p, achievement.getKeys()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
+            addExp(p, achievement.getExp()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
+            addBoxes(p, achievement.getBoxes()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
+        }
+    }
+
+    private String levelString(int level){
+        switch (level){
+            case 1:
+                return "I";
+            case 2:
+                return "II";
+            case 3:
+                return "III";
+            case 4:
+                return "IV";
+            case 5:
+                return "V";
+        }
+        return "null";
+    }
+
+    public void awardProgressive(){
+        Player p = Bukkit.getPlayer(uuid);
+        if(level >= 200) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.EXP, 5);
+        }
+        if (level >= 100) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.EXP, 4);
+        }
+        if (level >= 50) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.EXP, 3);
+        }
+        if (level >= 15) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.EXP, 2);
+        }
+        if (level >= 5) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.EXP, 1);
+        }
+
+        if(coins >= 100000) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.COINS, 5);
+        }
+        if (coins >= 20000) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.COINS, 4);
+        }
+        if (coins >= 10000) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.COINS, 3);
+        }
+        if (coins >= 5000) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.COINS, 2);
+        }
+        if (coins >= 500) {
+            awardProgressiveAchievement(p, ProgressiveAchievementsEnum.COINS, 1);
         }
     }
 
@@ -358,10 +442,6 @@ public class CorePlayer {
         p.setLevel(level);
         p.setExp((float) ((double) exp / (double) needed));
 
-        if (level >= 5) {
-            awardAchievement(p, AchievementsEnum.LEVEL_UP);
-        }
-
         if (join) {
             setLevel(level);
         } else {
@@ -383,6 +463,8 @@ public class CorePlayer {
                 });
             }
         }
+
+        awardProgressive();
     }
 
     public String calculateExpString(Player p) {
@@ -432,9 +514,8 @@ public class CorePlayer {
         calculateExp(p, false);
     }
 
-
-
     /* --END EXPERIENCE-- */
+
 
     /* --START WARDROBE-- */
 

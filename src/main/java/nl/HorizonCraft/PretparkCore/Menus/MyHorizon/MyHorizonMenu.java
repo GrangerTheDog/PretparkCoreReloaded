@@ -32,25 +32,20 @@
 
 package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
 
-import com.darkblade12.particleeffect.ParticleEffect;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementTypes;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.*;
-import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.util.Vector;
 
 /**
  * This class has been created on 09/13/2015 at 12:39 PM by Cooltimmetje.
@@ -102,7 +97,7 @@ public class MyHorizonMenu implements Listener{
 //                    PreferencesMenu.openPrefs(p);
                     break;
                 case DIAMOND:
-                    AchievementMenu.open(p, target);
+                    AchievementMenu.open(p, target, AchievementTypes.NORMAL);
                     break;
                 default:
                     break;

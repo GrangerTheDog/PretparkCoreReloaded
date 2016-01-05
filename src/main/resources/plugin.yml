@@ -31,3 +31,5 @@ commands:
         description: redeem
     awardachievement:
         description: awardachievement
+    revokeachievement:
+        description: revokeachievement
