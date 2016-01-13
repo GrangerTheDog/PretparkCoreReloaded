@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015 HorizonCraft
+ * Copyright (c) 2015-2016 HorizonCraft
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -105,9 +105,9 @@ public class PlayerUtils {
         cp.calculateExp(p, true);
 
         switch (p.getName()) {
-//            case "xBrandy":
-//                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
-//                break;
+            case "xBrandy":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
+                break;
             case "78wesley":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
                 break;
