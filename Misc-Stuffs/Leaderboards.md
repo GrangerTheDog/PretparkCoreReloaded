@@ -6,7 +6,7 @@
 |:-:|:--------------:|:---------:|:----------------:|:----------------------:|:---------------:|:--------------------------------------------------------------:|
 | 1 |    Jordyvz01   | 17 points | +3 streak points |   :arrow_up: 5 points  |   :arrow_up: 1  | :star: 2e opeenvolgende week gestegen! :star: nieuwe nummer 1! |
 | 2 |   roobein123   | 11 points |                  |  :arrow_down: 1 point  | :arrow_right: 0 |                                                                |
-| 3 | BekertjeZuivel | 11 points |  -1 streak point | :arrow_right: 3 points |  :arrow_down: 2 |                                                                |
+| 3 | BekertjeZuivel | 11 points |  -1 streak point | :arrow_down: 3 points |  :arrow_down: 2 |                                                                |
 | 4 |  Cooltimmetje  | 10 points |                  | :arrow_right: 0 points | :arrow_right: 0 |                                                                |
 | 5 |   Jordy010NL   |  5 points |                  | :arrow_right: 0 points | :arrow_right: 0 |                                                                |
 | 6 |     xBrandy    |  4 points |                  | :arrow_right: 0 points | :arrow_right: 0 |                                                                |
