@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.zaxxer.hikari.HikariDataSource;
+import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointState;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointType;
@@ -42,7 +43,6 @@ import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.core.Filter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -51,7 +51,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * This class has been created on 09/9/11/2015/2015 at 9:02 PM by Cooltimmetje.
@@ -748,6 +747,238 @@ public class MysqlManager {
     private static void revokeAchievementInCache(Player p, int id) {
         CorePlayer cp = PlayerUtils.getProfile(p);
         cp.revokeAchievement(id);
+    }
+
+    public static void loadRecords(Player p){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String uuid = p.getUniqueId().toString();
+        String load = "SELECT * FROM player_records WHERE uuid = '" + uuid + "';";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                setRecords(rs, p);
+            } else {
+                createRecords(p);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void createRecords(Player p){
+        Main.getPlugin().getLogger().info("Creating records for: " + p.getName());
+        Connection c = null;
+        PreparedStatement ps = null;
+        String uuid = p.getUniqueId().toString();
+        String create = "INSERT INTO player_records VALUES(?,?,0,0)";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(create);
+
+            ps.setString(1, uuid);
+            ps.setString(2, p.getName());
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void setRecords(ResultSet rs, Player p){
+        CorePlayer cp = PlayerUtils.getProfile(p);
+        try{
+
+            cp.setMaze_1_record(rs.getInt("maze_1"));
+            cp.setMaze_2_record(rs.getInt("maze_2"));
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveRecords(Player p){
+        Connection c = null;
+        PreparedStatement ps = null;
+        String uuid = p.getUniqueId().toString();
+        String updateData = "UPDATE player_records SET name=?,maze_1=?,maze_2=? WHERE uuid=?";
+        CorePlayer cp = PlayerUtils.getProfile(p);
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setString(1, p.getName());
+            ps.setInt(2, cp.getMaze_1_record());
+            ps.setInt(3, cp.getMaze_2_record());
+            ps.setString(4, uuid);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public static void loadLeadMaze1(){
+        Main.getPlugin().getLogger().info("Loading maze 1");
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM player_records ORDER BY maze_1 ASC;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            int i = 0;
+            while(rs.next()) {
+                if(rs.getInt("maze_1") != 0){
+                    if(i > 2){
+                        break;
+                    }
+
+                    MazeLeaderboards.maze1Name[i] = rs.getString("name");
+                    MazeLeaderboards.maze1Time[i] = rs.getInt("maze_1");
+                    i++;
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void loadLeadMaze2(){
+        Main.getPlugin().getLogger().info("Loading maze 2");
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM player_records ORDER BY maze_2 ASC;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            int i = 0;
+            while(rs.next()) {
+                if(rs.getInt("maze_2") != 0){
+                    if(i > 2){
+                        break;
+                    }
+
+                    MazeLeaderboards.maze2Name[i] = rs.getString("name");
+                    MazeLeaderboards.maze2Time[i] = rs.getInt("maze_2");
+                    i++;
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }

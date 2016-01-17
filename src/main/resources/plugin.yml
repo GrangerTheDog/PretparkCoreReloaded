@@ -33,3 +33,5 @@ commands:
         description: awardachievement
     revokeachievement:
         description: revokeachievement
+    updateleaderboards:
+            description: updateleaderboards

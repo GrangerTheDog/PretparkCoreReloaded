@@ -78,6 +78,7 @@ public class GadgetTriggers implements Listener {
                         case FIREWORK_CHARGE:
                             event.setCancelled(true);
                             shootFirework(p);
+                            PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.FIREWORK);
                             break;
                         case COOKED_CHICKEN:
                             event.setCancelled(true);
@@ -137,33 +138,45 @@ public class GadgetTriggers implements Listener {
                             if (target.hasPermission("pretparkcore.staffbepunch") || target.isOp()) {
                                 if (!cdPunch.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdPunch.get(p.getName()), cdPunchSec)) {
                                     if (!cdPunchStaff.containsKey(target.getName()) || MiscUtils.cooldownCheck(cdPunchStaff.get(target.getName()), cdPunchSec)) {
-                                        ParticleEffect.EXPLOSION_LARGE.display(5, 5, 5, 1, 47, target.getLocation(), 16);
-                                        Bukkit.getWorld(target.getWorld().getName()).playSound(target.getLocation(), Sound.EXPLODE, 20, 1);
-                                        target.setFlying(false);
-                                        target.setVelocity(new Vector(0, 3, 0));
-                                        cdPunch.put(p.getName(), System.currentTimeMillis());
-                                        cdPunchStaff.put(target.getName(), System.currentTimeMillis());
+                                        if(p.getName().equals("78wesley") && target.getName().equals("Cooltimmetje")){
+                                            p.kickPlayer("PAYBACK BITCH");
+                                            ChatUtils.bcMsgTag("Rekt", "Wesley tried, but failed. gg");
+                                        } else {
+                                            ParticleEffect.EXPLOSION_LARGE.display(5, 5, 5, 1, 47, target.getLocation(), 16);
+                                            Bukkit.getWorld(target.getWorld().getName()).playSound(target.getLocation(), Sound.EXPLODE, 20, 1);
+                                            target.setFlying(false);
+                                            target.setVelocity(new Vector(0, 3, 0));
+                                            cdPunch.put(p.getName(), System.currentTimeMillis());
+                                            cdPunchStaff.put(target.getName(), System.currentTimeMillis());
 
-                                        switch (target.getName()) {
-                                            case "xBrandy":
-                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
-                                                break;
-                                            case "78wesley":
-                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
-                                                break;
-                                            case "BekertjeZuivel":
-                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
-                                                break;
-                                            case "Cooltimmetje":
-                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
-                                                break;
-                                            case "SVENBEER":
-                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
-                                                break;
-                                            case "roobein123":
-                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.ROO_SLAP);
-                                            default:
-                                                break;
+                                            switch (target.getName()) {
+                                                case "xBrandy":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
+                                                    break;
+                                                case "78wesley":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
+                                                    break;
+                                                case "BekertjeZuivel":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
+                                                    break;
+                                                case "Cooltimmetje":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
+                                                    break;
+                                                case "SVENBEER":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
+                                                    break;
+                                                case "roobein123":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.ROO_SLAP);
+                                                    break;
+                                                case "Jordy010NL":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY_SLAP);
+                                                    break;
+                                                case "jordyvz01":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY2_SLAP);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                         }
 
                                     } else {

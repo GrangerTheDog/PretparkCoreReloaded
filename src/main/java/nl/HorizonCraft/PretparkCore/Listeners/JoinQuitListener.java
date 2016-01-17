@@ -61,6 +61,7 @@ public class JoinQuitListener implements Listener {
 
         MysqlManager.loadProfile(p);
         MysqlManager.loadPrefs(p);
+        MysqlManager.loadRecords(p);
 
         ScheduleUtils.scheduleTask(20, new Runnable() {
             @Override
@@ -96,6 +97,7 @@ public class JoinQuitListener implements Listener {
 
         MysqlManager.saveData(p);
         MysqlManager.savePrefs(p);
+        MysqlManager.saveRecords(p);
 
         Variables.profile.remove(p.getName());
 

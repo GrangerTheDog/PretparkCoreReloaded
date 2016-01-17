@@ -30,36 +30,39 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Timers;
+package nl.HorizonCraft.PretparkCore.Commands.Admin;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/17/2016 at 8:00 PM.
  */
-public class DataSaver {
+public class UpdateLeaderboardsCommand implements CommandExecutor{
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p);
-                    MysqlManager.savePrefs(p);
-                    MysqlManager.saveRecords(p);
-
-                    PlayerUtils.configPlayer(p, false);
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        if (cmd.getLabel().equals("updateleaderboards")) {
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                if (p.getName().equals("Jordy010NL") || p.getName().equals("Cooltimmetje")) {
+                    ChatUtils.sendMsgTag(p, "Leaderboards", "Leaderboards updaten...");
+                    for(Player pl : Bukkit.getOnlinePlayers()){
+                        MysqlManager.saveRecords(pl);
+                    }
+                    MazeLeaderboards.load();
+                    ChatUtils.sendMsgTag(p, "Leaderboards", "&2&lGeslaagd! &aLeaderboards geupdated!");
+                } else {
+                    ChatUtils.sendNoPremTag(p, "Leaderboards");
                 }
-
-                MiscUtils.updateVouchers();
             }
-        });
+        }
+        return false;
     }
 
 }

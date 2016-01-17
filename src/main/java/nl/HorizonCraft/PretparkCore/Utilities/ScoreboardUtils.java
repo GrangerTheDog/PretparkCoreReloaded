@@ -172,19 +172,10 @@ public class ScoreboardUtils {
 
     private static String progress(int exp, int needed) {
         double d = (double) exp / (double) needed;
-        double d1 = d * 10;
+        double d1 = d * 100;
         double d2 = Math.round(d1);
         int i = (int) d2;
 
-        StringBuilder sb = new StringBuilder();
-        for (int i2 = 1; i2 < 11; i2++) {
-            if (i2 <= i) {
-                sb.append("&a|");
-            } else {
-                sb.append("&8|");
-            }
-        }
-
-        return sb.toString().trim();
+        return "&8[&a" + i + "%&8]";
     }
 }

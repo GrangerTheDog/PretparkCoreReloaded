@@ -35,9 +35,13 @@ package nl.HorizonCraft.PretparkCore.Bundles.Pets;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.Weight;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -114,6 +118,10 @@ public class PetMenu implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getInventory().getName().equals("Pets")) {
             event.setCancelled(true);
+            if(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).equals("Chicken")){
+                Entity entity = ((Player)event.getWhoClicked()).getWorld().spawnEntity(((Player)event.getWhoClicked()).getLocation(), EntityType.CHICKEN);
+                entity.setCustomName(MiscUtils.color("&a" + ((Player)event.getWhoClicked()).getName() + "'s Chicken"));
+            }
         }
     }
 

@@ -36,6 +36,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointMenu;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
@@ -46,7 +47,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * This class has been created on 09/12/2015 at 10:20 AM by Cooltimmetje.
@@ -75,15 +75,15 @@ public class InventoryManager implements Listener {
         if(event.getAction().toString().contains("RIGHT")){
             if(event.getItem() != null){
                 if(event.getItem().hasItemMeta() && !event.getItem().getType().toString().contains("BANNER")){
+                    if(event.getItem().getType() == Material.SKULL_ITEM && !ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()).contains("MyHorizon")){
+                        return;
+                    }
                     event.setCancelled(true);
                     Material m = event.getMaterial();
                     ItemStack is = event.getItem();
                     switch (m){
                         case SKULL_ITEM:
-                            SkullMeta sm = (SkullMeta) is.getItemMeta();
-                            if(sm.getOwner().equals(p.getName())) {
-                                MyHorizonMenu.openMyHorizon(p, p, false);
-                            }
+                            MyHorizonMenu.openMyHorizon(p, p, false);
                             break;
                         case MINECART:
                             PointMenu.open(p);

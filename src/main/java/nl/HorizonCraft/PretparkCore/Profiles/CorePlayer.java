@@ -33,9 +33,9 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.ProgressiveAchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
@@ -75,6 +75,9 @@ public class CorePlayer {
     private PiecesEnum chest;
     private PiecesEnum legs;
     private PiecesEnum boots;
+
+    private int maze_1_record;
+    private int maze_2_record;
 
     private boolean speed;
 
@@ -257,7 +260,7 @@ public class CorePlayer {
             ChatUtils.sendMsg(p, "&3Naam: &a" + achievement.getName() + " " + levelString(level));
             ChatUtils.sendMsg(p, "&3Beschrijving: &a" + achievement.getDescription().replace("%v", "" + achievement.getLevels()[level-1]));
             ChatUtils.sendMsg(p, "&3Rewards:");
-            addCoins(p, achievement.getBoxes()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
+            addCoins(p, achievement.getCoins()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
             addKeys(p, achievement.getKeys()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
             addExp(p, achievement.getExp()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
             addBoxes(p, achievement.getBoxes()*level, "Achievement: " + achievement.getName() + " " + levelString(level), false, false);
@@ -578,5 +581,27 @@ public class CorePlayer {
     }
 
     /* --END WARDROBE-- */
+
+
+    /* --START RECORDS-- */
+
+    public int getMaze_1_record() {
+        return maze_1_record;
+    }
+
+    public void setMaze_1_record(int maze_1_record) {
+        this.maze_1_record = maze_1_record;
+    }
+
+    public int getMaze_2_record() {
+        return maze_2_record;
+    }
+
+    public void setMaze_2_record(int maze_2_record) {
+        this.maze_2_record = maze_2_record;
+    }
+
+    /* --END RECORDS-- */
+
 
 }

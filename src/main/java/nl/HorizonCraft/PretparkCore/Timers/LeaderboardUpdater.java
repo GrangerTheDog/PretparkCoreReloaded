@@ -32,34 +32,24 @@
 
 package nl.HorizonCraft.PretparkCore.Timers;
 
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
 import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/17/2016 at 7:58 PM.
  */
-public class DataSaver {
+public class LeaderboardUpdater {
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 12000, 12000, new Runnable() {
+    public static void start(Plugin plugin){
+
+        ScheduleUtils.repeatTask(plugin, 36000, 36000, new Runnable() {
             @Override
             public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p);
-                    MysqlManager.savePrefs(p);
-                    MysqlManager.saveRecords(p);
-
-                    PlayerUtils.configPlayer(p, false);
-                }
-
-                MiscUtils.updateVouchers();
+                MazeLeaderboards.load();
             }
         });
+
     }
 
 }

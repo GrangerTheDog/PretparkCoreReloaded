@@ -36,6 +36,8 @@ import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +52,7 @@ public class Variables {
     public static String SERVER_PING_MESSAGE = MiscUtils.color("In aanbouw.");
     public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");
     public static String WORLD_NAME = "world";
+    public static World WORLD = Bukkit.getWorld(WORLD_NAME);
 
     public static int COIN_TIME = 60;
     public static int COIN_GAIN = 20;

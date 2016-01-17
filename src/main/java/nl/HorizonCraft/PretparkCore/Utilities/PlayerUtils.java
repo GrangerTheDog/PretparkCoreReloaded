@@ -122,6 +122,13 @@ public class PlayerUtils {
                 break;
             case "roobein123":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.ROO_SLAP);
+                break;
+            case "Jordy010NL":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY_SLAP);
+                break;
+            case "jordyvz01":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY2_SLAP);
+                break;
             default:
                 break;
         }

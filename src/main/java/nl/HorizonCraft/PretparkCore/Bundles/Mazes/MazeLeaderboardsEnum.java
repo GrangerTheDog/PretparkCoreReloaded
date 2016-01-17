@@ -30,36 +30,30 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Timers;
+package nl.HorizonCraft.PretparkCore.Bundles.Mazes;
 
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import org.bukkit.block.Sign;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/17/2016 at 6:00 PM.
  */
-public class DataSaver {
+public enum MazeLeaderboardsEnum {
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p);
-                    MysqlManager.savePrefs(p);
-                    MysqlManager.saveRecords(p);
+    MAZE_1_SHOW_1(new int[]{-75,68,-371}),
+    MAZE_1_SHOW_2(new int[]{-75,67,-371}),
+    MAZE_1_SHOW_3(new int[]{-75,66,-371}),
+    MAZE_2_1(new int[]{-283,82,-273}),
+    MAZE_2_2(new int[]{-283,81,-273}),
+    MAZE_2_3(new int[]{-283,80,-273});
 
-                    PlayerUtils.configPlayer(p, false);
-                }
+    private int[] xyz;
 
-                MiscUtils.updateVouchers();
-            }
-        });
+    MazeLeaderboardsEnum(int[] ints) {
+        this.xyz = ints;
     }
 
+    public Sign getSign(){
+        return (Sign)Variables.WORLD.getBlockAt(xyz[0],xyz[1],xyz[2]).getState();
+    }
 }

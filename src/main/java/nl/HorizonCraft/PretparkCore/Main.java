@@ -33,9 +33,14 @@
 package nl.HorizonCraft.PretparkCore;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RevokeAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
+import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.ChangePointStateCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.CreatePointCommand;
@@ -43,22 +48,23 @@ import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Ping.ServerPingListener;
-import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.ShopTrigger;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
-import nl.HorizonCraft.PretparkCore.Commands.*;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Commands.Admin.UpdateLeaderboardsCommand;
+import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
+import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
+import nl.HorizonCraft.PretparkCore.Commands.RedeemVoucherCommand;
+import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Listeners.*;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.TimeAdmin;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.PreferencesMenu;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
@@ -67,6 +73,7 @@ import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Timers.CurrencyGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Timers.HologramMaintainer;
+import nl.HorizonCraft.PretparkCore.Timers.LeaderboardUpdater;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -74,8 +81,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.awt.*;
 
 /**
  * This class has been created on 9/7/2015 at 21:27 by Cooltimmetje.
@@ -120,6 +125,7 @@ public class Main extends JavaPlugin {
         registerCommand("redeem", new RedeemVoucherCommand());
         registerCommand("awardachievement", new AchievementCommand());
         registerCommand("revokeachievement", new RevokeAchievementCommand());
+        registerCommand("updateleaderboards", new UpdateLeaderboardsCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
@@ -130,16 +136,19 @@ public class Main extends JavaPlugin {
 
             MysqlManager.loadProfile(p);
             MysqlManager.loadPrefs(p);
+            MysqlManager.loadRecords(p);
 
             PlayerUtils.configPlayer(p, false);
         }
         MysqlManager.getWarps();
         MysqlManager.getVouchers();
+        MazeLeaderboards.load();
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
         CurrencyGiver.start(this);
         HologramMaintainer.start(this);
+        LeaderboardUpdater.start(this);
 
         getLogger().info("Starting post-setup"); //For frontend stuff, like scoreboards.
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -156,10 +165,12 @@ public class Main extends JavaPlugin {
         }
 
         getLogger().info("Plugin ready! (Loadtime: " + getLoad() + "ms)");
-        sendDebug("&3Pretpark&6Core&9> &aPlugin load finished! &c(" + getLoad() + "ms) &3&oYou can take a look in the console for more load information.");
+        sendDebug("&3Pretpark&6Core&9> &aPlugin load finished! &c(" + getLoad() + "ms)");
     }
 
     public void onDisable() {
+        startTime = System.currentTimeMillis();
+        sendDebug("&3Pretpark&6Core&9> &aStarting plugin unload... &oPlease wait...");
         getLogger().info("Disabling plugin... Please wait.");
         HologramUtils.removeHolos();
         MiscUtils.updateVouchers();
@@ -170,10 +181,12 @@ public class Main extends JavaPlugin {
 
             MysqlManager.saveData(p);
             MysqlManager.savePrefs(p);
+            MysqlManager.saveRecords(p);
 
             Variables.profile.remove(p.getName());
         }
 
+        sendDebug("&3Pretpark&6Core&9> &aPlugin unload finished! &c(" + getLoad() + "ms)");
         plugin = null; //To prevent memory leaks
     }
 

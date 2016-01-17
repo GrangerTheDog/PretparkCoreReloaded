@@ -40,17 +40,20 @@ public enum AchievementsEnum {
     FIRST_TIME_JOIN(0, "To the Horizon and Beyond!", "Join de server voor de eerste keer!", 50, 1, 100, AchievementType.GENERAL),
     KOALA_SLAP(1, "I don't like koala's!", "Launch xBrandy!", 10, 1, 200, AchievementType.STAFFPUNCH),
     PEDOBEAR_SLAP(2, "PEDOBEAR!", "Launch 78wesley!", 10, 1, 200, AchievementType.STAFFPUNCH),
-    MAZE_COMPLETE_1(3, "Into the maze!", "Haal het einde van doolhof 1!", 25, 2, 500, AchievementType.MAZES_PARKOUR),
+    MAZE_COMPLETE_1(3, "Into The Maze!", "Haal het einde van Cooltimmetje's Maze of Evil!", 25, 2, 500, AchievementType.MAZES_PARKOUR),
     FE_RIDE(4, "Boer Harms op de Trekker!", "Maak een ritje op de Farm Expedition!", 25, 1, 600, AchievementType.RIDES),
     MELK_SLAP(5, "Maar ik lus geen melk :(", "Launch BekertjeZuivel!", 10, 1, 200, AchievementType.STAFFPUNCH),
-//    LEVEL_UP(6, "Leveling Up...", "Haal level 5.", 100, 3, 750, AchievementType.GENERAL),
-    COOL_SLAP(7, "Not so cool anymore, I guess!", "Launch Cooltimmetje", 100, 5, 1000, AchievementType.STAFFPUNCH),
+    MAZE_COMPLETE_2(6, "Haunted Maze!", "Haal het einde van de Haunted Mansion!", 25, 2, 500, AchievementType.MAZES_PARKOUR),
+    COOL_SLAP(7, "Not so cool anymore, I guess!", "Launch Cooltimmetje", 25, 2, 500, AchievementType.STAFFPUNCH),
     SVEN_SLAP(8, "BEERTJE!", "Launch SVENBEER!", 10, 1, 200, AchievementType.STAFFPUNCH),
     UNLOCK_GADGET(9, "FANCY TECHNOLOGY!", "Unlock je eerste gadget!", 25, 1, 500, AchievementType.UNLOCKABLES),
     UNLOCK_CLOTHING(10, "WEARING THE SWAG", "Unlock je eerste kledingstuk!", 25, 1, 500, AchievementType.UNLOCKABLES),
     UNLOCK_PET(11, "EEN VRIENDJE!", "Unlock je eerste pet!", 25, 1, 500, AchievementType.UNLOCKABLES),
     ROO_SLAP(12, "3..2..1.. LIFT OFF!", "Launch Roobein123", 10, 1, 200, AchievementType.STAFFPUNCH),
-    GROT_FIND(13, "Het geheime kamertje...", "Vind het geheime kamertje in de berg.", 50, 1, 250, AchievementType.GENERAL);
+    GROT_FIND(13, "Het geheime kamertje...", "Vind het geheime kamertje in de berg.", 50, 1, 250, AchievementType.GENERAL),
+    JORDY_SLAP(14, "Directeurtje pesten!", "Launch Jordy010NL!", 25, 2, 500, AchievementType.STAFFPUNCH),
+    JORDY2_SLAP(15, "2 JORDY'S?!", "Launch jordyvz01", 10, 1, 200, AchievementType.STAFFPUNCH),
+    FIREWORK(16, "YES YES YES!", "Steek een vuurwerkje af!", 10, 0, 100, AchievementType.GENERAL);
 
     private int id;
     private String name;
