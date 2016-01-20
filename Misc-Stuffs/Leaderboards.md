@@ -4,7 +4,7 @@
 | # |      Naam      |   Points  |   Bonus Points  | Verschil Vorige Week |  Verschil Plek  |                                           Opmerkingen                                           |
 |:-:|:--------------:|:---------:|:---------------:|:--------------------:|:---------------:|:-----------------------------------------------------------------------------------------------:|
 | 1 |  Cooltimmetje  | 20 points |  +1 bonus point | :arrow_up: 10 points |   :arrow_up: 3  |                                     :star: Nieuwe nummer 1!                                     |
-| 2 |    Jordyvz01   | 18 points | +2 bonus points |  :arrow_up: 1 point  |  :arrow_down: 1 |                       :x: Nummer 1 positie veloren! **[Aantal weken: 1]**                       |
+| 2 |    jordyvz01   | 18 points | +2 bonus points |  :arrow_up: 1 point  |  :arrow_down: 1 |                       :x: Nummer 1 positie veloren! **[Aantal weken: 1]**                       |
 | 3 | BekertjeZuivel | 17 points |                 |  :arrow_up: 6 points | :arrow_right: 0 |                                                                                                 |
 | 4 |     xBrandy    | 13 points |                 |  :arrow_up: 9 points |   :arrow_up: 2  |                                                                                                 |
 | 5 |   SvenTijger   | 12 points |                 |  :arrow_up: 8 points |   :arrow_up: 1  | :star: 2e opeenvolgende week gestegen! :exclamation: Naam veranderd: **SVENBEER -> SvenTijger** |
