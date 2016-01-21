@@ -108,13 +108,15 @@ public class MazeCommand implements CommandExecutor {
                                 break;
 
                             case "start":
-
+                                Location loc;
                                     switch (args[2]) {
                                         case "1":
-                                            p.teleport(new Location(p.getWorld(), -76, 66, -384).add(0.5, 0, 0.5));
+                                            loc = new Location(p.getWorld(), -76, 66, -384).add(0.5, 0, 0.5);
+                                            loc.setYaw(180);
+                                            p.teleport(loc);
                                             break;
                                         case "2":
-                                            Location loc = new Location(p.getWorld(), -283, 80, -280).add(0.5, 0, 0.5);
+                                            loc = new Location(p.getWorld(), -283, 80, -280).add(0.5, 0, 0.5);
                                             loc.setYaw(90);
                                             p.teleport(loc);
                                             break;

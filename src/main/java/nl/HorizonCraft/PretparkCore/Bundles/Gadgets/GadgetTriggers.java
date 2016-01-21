@@ -162,11 +162,11 @@ public class GadgetTriggers implements Listener {
                                                 case "Cooltimmetje":
                                                     PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
                                                     break;
-                                                case "SVENBEER":
+                                                case "SvenTijger":
                                                     PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
                                                     break;
-                                                case "roobein123":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.ROO_SLAP);
+                                                case "Destiny_VG":
+                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.DESTINY_SLAP);
                                                     break;
                                                 case "Jordy010NL":
                                                     PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY_SLAP);

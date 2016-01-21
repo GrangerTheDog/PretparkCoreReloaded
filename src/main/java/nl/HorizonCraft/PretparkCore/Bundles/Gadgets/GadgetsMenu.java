@@ -130,7 +130,7 @@ public class GadgetsMenu implements Listener {
         String[] lore = constuctLore(gadget.getLore(), true, cooldown);
         Material m = gadget.getMaterial();
         int data = gadget.getDmg();
-
+        cp.setGadget(gadget);
 
         ItemUtils.createDisplay(p, 8, m, 1, data, name, lore);
     }

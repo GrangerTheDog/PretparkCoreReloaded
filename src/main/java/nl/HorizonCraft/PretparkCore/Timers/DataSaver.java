@@ -34,7 +34,6 @@ package nl.HorizonCraft.PretparkCore.Timers;
 
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -54,7 +53,7 @@ public class DataSaver {
                     MysqlManager.savePrefs(p);
                     MysqlManager.saveRecords(p);
 
-                    PlayerUtils.configPlayer(p, false);
+//                    PlayerUtils.configPlayer(p, false);
                 }
 
                 MiscUtils.updateVouchers();

@@ -32,9 +32,9 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.Navigation;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementType;
-import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PointUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
@@ -56,10 +56,36 @@ public class PointMenu implements Listener {
 
         int slot = 1;
         for(NavigationPoint navPoint : Variables.navigationPoints){
-            ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName().replace("Het", " ").replace("De ", " ").trim(),
-                    "&bStatus: &" + navPoint.getPointState().getColorCode() + navPoint.getPointState().getFriendlyName(),
-                    "&bSoort: &a" + navPoint.getPointType().getFriendlyName(),
-                    "&bKlik om te teleporteren.", "&8ID: " + navPoint.getId());
+            if(navPoint.getId() == 16){
+                ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName().replace("Het", " ").replace("De ", " ").trim(),
+                        "&bStatus: &" + navPoint.getPointState().getColorCode() + navPoint.getPointState().getFriendlyName(),
+                        "&bSoort: &a" + navPoint.getPointType().getFriendlyName(),
+                        "&bKlik om te teleporteren.", "&8ID: " + navPoint.getId(),
+                        " ",
+                        "&6&lLEADERBOARDS:",
+                        "&a1. &b" + MazeLeaderboards.maze1Name[0] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze1Time[0]),
+                        "&a2. &b" + MazeLeaderboards.maze1Name[1] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze1Time[1]),
+                        "&a3. &b" + MazeLeaderboards.maze1Name[2] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze1Time[2]),
+                        "&a4. &b" + MazeLeaderboards.maze1Name[3] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze1Time[3]),
+                        "&a5. &b" + MazeLeaderboards.maze1Name[4] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze1Time[4]));
+            } else if(navPoint.getId() == 26){
+                ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName().replace("Het", " ").replace("De ", " ").trim(),
+                        "&bStatus: &" + navPoint.getPointState().getColorCode() + navPoint.getPointState().getFriendlyName(),
+                        "&bSoort: &a" + navPoint.getPointType().getFriendlyName(),
+                        "&bKlik om te teleporteren.", "&8ID: " + navPoint.getId(),
+                        " ",
+                        "&6&lLEADERBOARDS:",
+                        "&a1. &b" + MazeLeaderboards.maze2Name[0] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze2Time[0]),
+                        "&a2. &b" + MazeLeaderboards.maze2Name[1] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze2Time[1]),
+                        "&a3. &b" + MazeLeaderboards.maze2Name[2] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze2Time[2]),
+                        "&a4. &b" + MazeLeaderboards.maze2Name[3] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze2Time[3]),
+                        "&a5. &b" + MazeLeaderboards.maze2Name[4] + " &4&l" + MiscUtils.formatTime(MazeLeaderboards.maze2Time[4]));
+            } else {
+                ItemUtils.createDisplay(inv, slot, Material.STAINED_CLAY, 1, navPoint.getPointState().getColorData(), "&a" + navPoint.getName().replace("Het", " ").replace("De ", " ").trim(),
+                        "&bStatus: &" + navPoint.getPointState().getColorCode() + navPoint.getPointState().getFriendlyName(),
+                        "&bSoort: &a" + navPoint.getPointType().getFriendlyName(),
+                        "&bKlik om te teleporteren.", "&8ID: " + navPoint.getId());
+            }
 
             slot++;
         }

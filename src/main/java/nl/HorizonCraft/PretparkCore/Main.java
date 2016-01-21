@@ -72,7 +72,6 @@ import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Timers.CurrencyGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
-import nl.HorizonCraft.PretparkCore.Timers.HologramMaintainer;
 import nl.HorizonCraft.PretparkCore.Timers.LeaderboardUpdater;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
@@ -142,12 +141,13 @@ public class Main extends JavaPlugin {
         }
         MysqlManager.getWarps();
         MysqlManager.getVouchers();
-        MazeLeaderboards.load();
+        MysqlManager.amountUnique();
+        MazeLeaderboards.load(false);
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
         CurrencyGiver.start(this);
-        HologramMaintainer.start(this);
+//        HologramMaintainer.start(this);
         LeaderboardUpdater.start(this);
 
         getLogger().info("Starting post-setup"); //For frontend stuff, like scoreboards.

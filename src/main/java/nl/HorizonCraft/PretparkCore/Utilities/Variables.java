@@ -47,7 +47,7 @@ import java.util.HashMap;
  */
 public class Variables {
 
-    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft");
+    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft &c&lALPHA");
     public static String SERVER_NAME_SHORT = MiscUtils.color("&3&lH&6&lC");
     public static String SERVER_PING_MESSAGE = MiscUtils.color("In aanbouw.");
     public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");
@@ -73,4 +73,5 @@ public class Variables {
     public static ArrayList<Voucher> vouchers = new ArrayList<>();
     public static ArrayList<NavigationPoint> navigationPoints = new ArrayList<>();
 
+    public static int uniquePlayers = 0;
 }

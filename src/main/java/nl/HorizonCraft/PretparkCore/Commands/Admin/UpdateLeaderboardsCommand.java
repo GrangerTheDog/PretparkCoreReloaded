@@ -55,7 +55,7 @@ public class UpdateLeaderboardsCommand implements CommandExecutor{
                     for(Player pl : Bukkit.getOnlinePlayers()){
                         MysqlManager.saveRecords(pl);
                     }
-                    MazeLeaderboards.load();
+                    MazeLeaderboards.load(true);
                     ChatUtils.sendMsgTag(p, "Leaderboards", "&2&lGeslaagd! &aLeaderboards geupdated!");
                 } else {
                     ChatUtils.sendNoPremTag(p, "Leaderboards");

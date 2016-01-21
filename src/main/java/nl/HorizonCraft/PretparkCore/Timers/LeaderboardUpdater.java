@@ -46,7 +46,7 @@ public class LeaderboardUpdater {
         ScheduleUtils.repeatTask(plugin, 36000, 36000, new Runnable() {
             @Override
             public void run() {
-                MazeLeaderboards.load();
+                MazeLeaderboards.load(false);
             }
         });
 

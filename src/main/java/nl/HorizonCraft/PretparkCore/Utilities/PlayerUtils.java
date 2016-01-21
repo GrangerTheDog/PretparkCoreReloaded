@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Utilities;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.SuitType;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
@@ -87,6 +88,7 @@ public class PlayerUtils {
             if(p.isOp()) {
                 ItemUtils.createDisplay(p, 7, Material.FLINT, 1, 0, "&aAdmin Menu " + Variables.RIGHT_CLICK, "&7Beheer de server, aleen voor OP's!");
             }
+            setGadget(cp.getGadget(),p);
         }
 
         setPiece(cp.getHead(),p);
@@ -117,11 +119,11 @@ public class PlayerUtils {
             case "Cooltimmetje":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
                 break;
-            case "SVENBEER":
+            case "SvenTijger":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
                 break;
-            case "roobein123":
-                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.ROO_SLAP);
+            case "Destiny_VG":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.DESTINY_SLAP);
                 break;
             case "Jordy010NL":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY_SLAP);
@@ -194,5 +196,36 @@ public class PlayerUtils {
         sb.append("&bFull Suit Ability:\n&3").append(piece.getSuit().getAbility());
 
         return sb.toString().trim().split("\n");
+    }
+
+    private static void setGadget(GadgetsEnum gadget, Player p){
+        if(gadget != null){
+            int id = gadget.getId();
+            int cooldown = gadget.getCooldown();
+            String name = "&" + gadget.getWeight().getColor() + gadget.getName();
+            String[] lore = constuctLore(gadget.getLore(), true, cooldown);
+            Material m = gadget.getMaterial();
+            int data = gadget.getDmg();
+
+            ItemUtils.createDisplay(p, 8, m, 1, data, name, lore);
+        }
+    }
+
+    private static String[] constuctLore(String lore, boolean unlocked, int cooldown) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("&3COOLDOWN: &b").append(MiscUtils.formatTime(cooldown));
+        sb.append("\n \n");
+        String[] loreArray = lore.split("\n");
+        for(String loreS : loreArray) {
+            sb.append("&3").append(loreS).append("\n");
+        }
+        if(!unlocked){
+            sb.append(" \n");
+            sb.append("&cLOCKED").append("\n");
+            sb.append("&aKoop dit item in de shop!");
+        }
+
+        return sb.toString().split("\n");
     }
 }

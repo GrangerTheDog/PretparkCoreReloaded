@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.zaxxer.hikari.HikariDataSource;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointState;
@@ -116,6 +117,48 @@ public class MysqlManager {
         }
     }
 
+    public static void amountUnique(){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT COUNT(*) FROM playerdata;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                Variables.uniquePlayers = rs.getInt(1);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private static void createProfile(Player p) {
         Main.getPlugin().getLogger().info("Creating profile for: " + p.getName());
         Connection c = null;
@@ -160,7 +203,7 @@ public class MysqlManager {
 
         loadProfile(p);
 
-        //TODO: Make unique players system.
+        Variables.uniquePlayers++;
     }
 
     private static void setData(ResultSet rs, Player p) {
@@ -282,7 +325,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerprefs VALUES(?,?,0,?,?,?,?)";
+        String create = "INSERT INTO playerprefs VALUES(?,?,0,?,?,?,?,?)";
 
         try {
             c = hikari.getConnection();
@@ -294,6 +337,7 @@ public class MysqlManager {
             ps.setString(4, "NOTHING");
             ps.setString(5, "NOTHING");
             ps.setString(6, "NOTHING");
+            ps.setString(7, "NOTHING");
 
             ps.execute();
         } catch (SQLException e) {
@@ -345,6 +389,11 @@ public class MysqlManager {
             } else {
                 cp.setBoots(PiecesEnum.valueOf(rs.getString("boots")));
             }
+            if(rs.getString("gadget").equals("NOTHING")){
+                cp.setGadget(null);
+            } else {
+                cp.setGadget(GadgetsEnum.valueOf(rs.getString("gadget")));
+            }
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -355,7 +404,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerprefs SET name=?,speed=?,head=?,chest=?,legs=?,boots=? WHERE uuid=?";
+        String updateData = "UPDATE playerprefs SET name=?,speed=?,head=?,chest=?,legs=?,boots=?,gadget=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -390,8 +439,13 @@ public class MysqlManager {
             } else {
                 ps.setString(6, cp.getBoots().toString());
             }
+            if(cp.getGadget() == null){
+                ps.setString(7, "NOTHING");
+            } else {
+                ps.setString(7, cp.getGadget().toString());
+            }
 
-            ps.setString(7, uuid);
+            ps.setString(8, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -894,7 +948,7 @@ public class MysqlManager {
             int i = 0;
             while(rs.next()) {
                 if(rs.getInt("maze_1") != 0){
-                    if(i > 2){
+                    if(i > 4){
                         break;
                     }
 
@@ -945,7 +999,7 @@ public class MysqlManager {
             int i = 0;
             while(rs.next()) {
                 if(rs.getInt("maze_2") != 0){
-                    if(i > 2){
+                    if(i > 4){
                         break;
                     }
 

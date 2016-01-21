@@ -40,7 +40,6 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -83,9 +82,11 @@ public class ServerPingListener implements Listener {
             case "08/02":
                 saying = "Gefeliciteerd jecontior!";
                 break;
-            case "1/12":
+            case "01/12":
                 saying = "Gefeliciteerd TheSwagDJ!";
                 break;
+            case "03/05":
+                saying = "Gefeliciteerd Destiny_VG!";
             case "01/01":
                 saying = "Gelukkig nieuwjaar!";
                 break;

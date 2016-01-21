@@ -75,13 +75,13 @@ public class CorePlayer {
     private PiecesEnum chest;
     private PiecesEnum legs;
     private PiecesEnum boots;
+    private GadgetsEnum gadget;
 
     private int maze_1_record;
     private int maze_2_record;
 
     private boolean speed;
 
-    private GadgetsEnum gadget;
 
     public CorePlayer(Player p){
         this.uuid = p.getUniqueId();
@@ -347,6 +347,14 @@ public class CorePlayer {
             }
         }
         awardAchievement(p, AchievementsEnum.UNLOCK_GADGET);
+    }
+
+    public GadgetsEnum getGadget() {
+        return gadget;
+    }
+
+    public void setGadget(GadgetsEnum gadget) {
+        this.gadget = gadget;
     }
 
     /* --END GADGETS-- */
