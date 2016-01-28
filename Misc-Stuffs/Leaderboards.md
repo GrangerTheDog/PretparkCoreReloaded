@@ -1,16 +1,16 @@
 #HorizonCraft Leaderboards
 
 ##General Leaderboard
-| # |      Naam      |   Points  |   Bonus Points  | Verschil Vorige Week |  Verschil Plek  |                                           Opmerkingen                                           |
-|:-:|:--------------:|:---------:|:---------------:|:--------------------:|:---------------:|:-----------------------------------------------------------------------------------------------:|
-| 1 |  Cooltimmetje  | 20 points |  +1 bonus point | :arrow_up: 10 points |   :arrow_up: 3  |                                     :star: Nieuwe nummer 1!                                     |
-| 2 |    jordyvz01   | 18 points | +2 bonus points |  :arrow_up: 1 point  |  :arrow_down: 1 |                       :x: Nummer 1 positie veloren! **[Aantal weken: 1]**                       |
-| 3 | BekertjeZuivel | 17 points |                 |  :arrow_up: 6 points | :arrow_right: 0 |                                                                                                 |
-| 4 |     xBrandy    | 13 points |                 |  :arrow_up: 9 points |   :arrow_up: 2  |                                                                                                 |
-| 5 |   SvenTijger   | 12 points |                 |  :arrow_up: 8 points |   :arrow_up: 1  | :star: 2e opeenvolgende week gestegen! :exclamation: Naam veranderd: **SVENBEER -> SvenTijger** |
-| 6 |    78wesley    | 10 points |                 |       *n.v.t.*       |     *n.v.t.*    |                                 :exclamation: Nieuwe Binnenkomer                                |
-| 7 |   Jordy010NL   |  6 points | + 1 bonus point |  :arrow_up: 1 point  |  :arrow_down: 2 |                                                                                                 |
-| 8 |   Rowen72001   |  1 point  |                 |       *n.v.t.*       |     *n.v.t.*    |                                 :exclamation: Nieuwe Binnenkomer                                |
+| # |      Naam      |   Points  |   Bonus Points  |  Verschil Vorige Week  |  Verschil Plek  |               Opmerkingen              |
+|:-:|:--------------:|:---------:|:---------------:|:----------------------:|:---------------:|:--------------------------------------:|
+| 1 |  Cooltimmetje  | 21 points | +2 bonus points |   :arrow_up: 1 point   | :arrow_right: 0 |     :star: Tweede week op nummer 1!    |
+| 2 |    jordyvz01   | 20 points | +4 bonus points |   :arrow_up: 2 points  | :arrow_right: 0 |                                        |
+| 3 | BekertjeZuivel | 17 points |                 | :arrow_right: 0 points | :arrow_right: 0 |                                        |
+| 4 |     xBrandy    | 13 points |                 | :arrow_right: 0 points | :arrow_right: 0 |                                        |
+| 5 |   SvenTijger   | 12 points |                 | :arrow_right: 0 points | :arrow_right: 0 |                                        |
+| 5 |    78wesley    | 12 points | +2 bonus points |   :arrow_up: 2 points  |   :arrow_up: 1  | :star: 2e opeenvolgende week gestegen! |
+| 6 |   Jordy010NL   |  7 points | +2 bonus points |   :arrow_up: 1 point   |   :arrow_up: 1  |                                        |
+| 7 |   Destiny_VG   |  1 point  |                 |        *n.v.t.*        |     *n.v.t.*    |    :exclamation: Nieuwe Binnenkomer    |
 
 > Dit is gebaseerd op de per currency leaderboards. 
 > Plek 1 krijgt 5 punten en plek 5 1 punt, en wat daar tussen inzit kun je zelf wel invullen.
@@ -19,55 +19,55 @@
 ##Per Currency
 
 ###Coins
-| # |      Naam      |    Coins    |  Verschil Vorige Week  |  Verschil Plek  |                Opmerkingen               |
-|:-:|:--------------:|:-----------:|:----------------------:|:---------------:|:----------------------------------------:|
-| 1 |    jordyvz01   | 8 229 coins | :arrow_up: 1 540 coins | :arrow_right: 0 | :star: Tweede week op nummer 1! **[+1]** |
-| 2 | BekertjeZuivel | 3 180 coins |  :arrow_up: 580 coins  |   :arrow_up: 1  |                                          |
-| 3 |  Cooltimmetje  | 2 537 coins |  :arrow_up: 870 coins  |   :arrow_up: 1  |                                          |
-| 4 |     xBrandy    | 1 267 coins |  :arrow_up: 296 coins  |   :arrow_up: 1  |                                          |
-| 5 |   Rowen72001   |  887 coins  |        *n.v.t.*        |     *n.v.t.*    |     :exclamation: Nieuwe Binnenkomer     |
+| # |      Naam      |    Coins    | Verschil Vorige Week |  Verschil Plek  |               Opmerkingen               |
+|:-:|:--------------:|:-----------:|:--------------------:|:---------------:|:---------------------------------------:|
+| 1 |    jordyvz01   | 8 689 coins | :arrow_up: 460 coins | :arrow_right: 0 | :star: Derde week op nummer 1! **[+2]** |
+| 2 | BekertjeZuivel | 3 530 coins | :arrow_up: 350 coins | :arrow_right: 0 |                                         |
+| 3 |  Cooltimmetje  | 2 867 coins | :arrow_up: 330 coins | :arrow_right: 0 |                                         |
+| 4 |     xBrandy    | 1 367 coins | :arrow_up: 100 coins | :arrow_right: 0 |                                         |
+| 5 |   Destiny_VG   | 1 060 coins |       *n.v.t.*       |     *n.v.t.*    |     :exclamation: Nieuwe Binnenkomer    |
 
 ###EXP
-| # |      Naam      |     EXP     | Level en Progress | Verschil Vorige Week |  Verschil Plek  |                        Opmerkingen                       |
-|:-:|:--------------:|:-----------:|:-----------------:|:--------------------:|:---------------:|:--------------------------------------------------------:|
-| 1 |   Jordy010NL   | 116 294 exp |   Level 13 [70%]  | :arrow_up: 1 250 exp | :arrow_right: 0 |         :star: Tweede week op nummer 1! **[+1]**         |
-| 2 |    jordyvz01   |  45 891 exp |   Level 7 [93%]   | :arrow_up: 8 009 exp | :arrow_right: 0 |                                                          |
-| 3 | BekertjeZuivel |  31 084 exp |   Level 6 [16%]   | :arrow_up: 3 218 exp |   :arrow_up: 2  |                                                          |
-| 4 |   SvenTijger   |  30 303 exp |    Level 6 [6%]   | :arrow_up: 1 759 exp | :arrow_right: 0 | :exclamation: Naam veranderd: **SVENBEER -> SvenTijger** |
-| 5 |  Cooltimmetje  |  27 406 exp |   Level 5 [67%]   |       *n.v.t.*       |     *n.v.t.*    |             :exclamation: Nieuwe Binnenkomer             |
+| # |      Naam      |     EXP     | Level en Progress | Verschil Vorige Week |  Verschil Plek  |               Opmerkingen               |
+|:-:|:--------------:|:-----------:|:-----------------:|:--------------------:|:---------------:|:---------------------------------------:|
+| 1 |   Jordy010NL   | 116 394 exp |   Level 13 [71%]  |  :arrow_up: 100 exp  | :arrow_right: 0 | :star: Derde week op nummer 1! **[+2]** |
+| 2 |    jordyvz01   |  48 291 exp |   Level 8 [18%]   | :arrow_up: 2 400 exp | :arrow_right: 0 |                                         |
+| 3 | BekertjeZuivel |  33 084 exp |   Level 6 [42%]   | :arrow_up: 2 000 exp | :arrow_right: 0 |                                         |
+| 4 |   SvenTijger   |  32 321 exp |   Level 6 [32%]   | :arrow_up: 2 018 exp | :arrow_right: 0 |                                         |
+| 5 |  Cooltimmetje  |  29 006 exp |   Level 5 [89%]   | :arrow_up: 1 600 exp | :arrow_right: 0 |                                         |
 
 ###Mystery Boxes
-| # |      Naam      |   Boxes   | Verschil Vorige Week |  Verschil Plek  |                        Opmerkingen                       |
-|:-:|:--------------:|:---------:|:--------------------:|:---------------:|:--------------------------------------------------------:|
-| 1 |    jordyvz01   | 116 boxes |  :arrow_up: 16 boxes | :arrow_right: 0 |         :star: Tweede week op nummer 1! **[+1]**         |
-| 2 | BekertjeZuivel |  89 boxes |  :arrow_up: 6 boxes  | :arrow_right: 0 |                                                          |
-| 3 |  Cooltimmetje  |  84 boxes |  :arrow_up: 11 boxes | :arrow_right: 0 |                                                          |
-| 4 |   SvenTijger   |  73 boxes |  :arrow_up: 2 boxes  |   :arrow_up: 1  | :exclamation: Naam veranderd: **SVENBEER -> SvenTijger** |
-| 5 |     xBrandy    |  43 boxes |       *n.v.t.*       |     *n.v.t.*    |             :exclamation: Nieuwe Binnenkomer             |
+| # |      Naam      |   Boxes   |  Verschil Vorige Week |  Verschil Plek  |               Opmerkingen               |
+|:-:|:--------------:|:---------:|:---------------------:|:---------------:|:---------------------------------------:|
+| 1 |    jordyvz01   | 120 boxes |   :arrow_up: 4 boxes  | :arrow_right: 0 | :star: Derde week op nummer 1! **[+2]** |
+| 2 | BekertjeZuivel |  92 boxes |   :arrow_up: 3 boxes  | :arrow_right: 0 |                                         |
+| 3 |  Cooltimmetje  |  88 boxes |   :arrow_up: 4 boxes  | :arrow_right: 0 |                                         |
+| 4 |   SvenTijger   |  77 boxes |   :arrow_up: 4 boxes  | :arrow_right: 0 |                                         |
+| 5 |     xBrandy    |  43 boxes | :arrow_right: 0 boxes | :arrow_right: 0 |                                         |
 
 ###Mystery Keys
-| # |      Naam      |   Keys  | Verschil Vorige Week |  Verschil Plek  |                        Opmerkingen                       |
-|:-:|:--------------:|:-------:|:--------------------:|:---------------:|:--------------------------------------------------------:|
-| 1 |  Cooltimmetje  | 52 keys |   :arrow_up: 7 keys  | :arrow_right: 0 |         :star: Tweede week op nummer 1! **[+1]**         |
-| 2 |     xBrandy    | 42 keys |   :arrow_up: 9 keys  |   :arrow_up: 1  |                                                          |
-| 3 | BekertjeZuivel | 37 keys |   :arrow_up: 4 keys  |  :arrow_down: 1 |                                                          |
-| 4 |   SvenTijger   | 33 keys |   :arrow_up: 5 keys  |   :arrow_up: 1  | :exclamation: Naam veranderd: **SVENBEER -> SvenTijger** |
-| 5 |   jordyyvz01   | 29 keys |       *n.v.t.*       |     *n.v.t.*    |             :exclamation: Nieuwe Binnenkomer             |
+| # |      Naam      |   Keys  | Verschil Vorige Week |  Verschil Plek  |               Opmerkingen               |
+|:-:|:--------------:|:-------:|:--------------------:|:---------------:|:---------------------------------------:|
+| 1 |  Cooltimmetje  | 53 keys |   :arrow_up: 1 key   | :arrow_right: 0 | :star: Derde week op nummer 1! **[+2]** |
+| 2 |     xBrandy    | 43 keys |   :arrow_up: 1 key   | :arrow_right: 0 |                                         |
+| 3 | BekertjeZuivel | 39 keys |   :arrow_up: 2 keys  | :arrow_right: 0 |                                         |
+| 4 |   SvenTijger   | 35 keys |   :arrow_up: 2 keys  | :arrow_right: 0 |                                         |
+| 5 |   jordyyvz01   | 31 keys |   :arrow_up: 2 keys  | :arrow_right: 0 |                                         |
 
 ###Cooltimmetje's Maze of Evil
-| # |      Naam      |  Tijd |
-|:-:|:--------------:|:-----:|
-| 1 |    78wesley    |  40s  |
-| 2 |  Cooltimmetje  | 1m17s |
-| 3 | BekertjeZuivel | 3m27s |
-| 4 |       ???      |   -   |
-| 5 |       ???      |   -   |
+| # |      Naam      |  Tijd | Verschil Vorige Week |  Verschil Plek  |                Opmerkingen               |
+|:-:|:--------------:|:-----:|:--------------------:|:---------------:|:----------------------------------------:|
+| 1 |    78wesley    |  40s  |   :arrow_right: 0s   | :arrow_right: 0 | :star: Tweede week op nummer 1! **[+1]** |
+| 2 |  Cooltimmetje  | 1m17s |   :arrow_right: 0s   | :arrow_right: 0 |                                          |
+| 3 | BekertjeZuivel | 3m27s |   :arrow_right: 0s   | :arrow_right: 0 |                                          |
+| 4 |       ???      |   -   |           -          |        -        |                     -                    |
+| 5 |       ???      |   -   |           -          |        -        |                     -                    |
 
 ###Haunted Mansion
-| # |     Naam     | Tijd |
-|:-:|:------------:|:----:|
-| 1 |   78wesley   |  11s |
-| 2 | Cooltimmetje |  13s |
-| 3 |   jordyvz01  |  17s |
-| 4 |      ???     |   -  |
-| 5 |      ???     |   -  |
+| # |     Naam     | Tijd | Verschil Vorige Week |  Verschil Plek  |                Opmerkingen               |
+|:-:|:------------:|:----:|:--------------------:|:---------------:|:----------------------------------------:|
+| 1 |   78wesley   |  11s |   :arrow_right: 0s   | :arrow_right: 0 | :star: Tweede week op nummer 1! **[+1]** |
+| 2 | Cooltimmetje |  13s |   :arrow_right: 0s   | :arrow_right: 0 |                                          |
+| 3 |   jordyvz01  |  17s |   :arrow_right: 0s   | :arrow_right: 0 |                                          |
+| 4 |      ???     |   -  |           -          |        -        |                     -                    |
+| 5 |      ???     |   -  |           -          |        -        |                     -                    |
