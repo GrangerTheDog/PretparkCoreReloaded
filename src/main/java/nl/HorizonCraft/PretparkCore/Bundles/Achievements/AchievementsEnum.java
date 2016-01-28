@@ -53,7 +53,8 @@ public enum AchievementsEnum {
     GROT_FIND(13, "Het geheime kamertje...", "Vind het geheime kamertje in de berg.", 50, 1, 250, AchievementType.GENERAL),
     JORDY_SLAP(14, "Directeurtje pesten!", "Launch Jordy010NL!", 25, 2, 500, AchievementType.STAFFPUNCH),
     JORDY2_SLAP(15, "2 JORDY'S?!", "Launch jordyvz01", 10, 1, 200, AchievementType.STAFFPUNCH),
-    FIREWORK(16, "YES YES YES!", "Steek een vuurwerkje af!", 10, 0, 100, AchievementType.GENERAL);
+    FIREWORK(16, "YES YES YES!", "Steek een vuurwerkje af!", 10, 0, 100, AchievementType.GENERAL),
+    DOUBLE(17, "Doubling it up!", "Krijg 2x coins, exp of boxes!", 100, 2, 400, AchievementType.GENERAL);
 
     private int id;
     private String name;

@@ -147,7 +147,7 @@ public class ScoreboardUtils {
                 e1.setScore(3);
                 Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + onlineAmount));
                 online.setScore(2);
-                Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
+                Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &a" + Variables.uniquePlayers));
                 unique.setScore(1);
             } else {
                 Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
@@ -160,7 +160,7 @@ public class ScoreboardUtils {
                 e1.setScore(3);
                 Score online = objective.getScore(MiscUtils.color("&bNu Online: &a" + onlineAmount));
                 online.setScore(2);
-                Score unique = objective.getScore(MiscUtils.color("&b&oUnieke Spelers: &cN/A"));
+                Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &a" + Variables.uniquePlayers));
                 unique.setScore(1);
             }
 

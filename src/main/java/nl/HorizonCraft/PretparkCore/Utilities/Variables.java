@@ -56,7 +56,7 @@ public class Variables {
 
     public static int COIN_TIME = 60;
     public static int COIN_GAIN = 20;
-    public static int DOUBLE_CHANCE = 10;
+    public static int DOUBLE_CHANCE = 5;
 
     public static int CHEST_TIME = 120;
     public static int CHEST_GAIN = 1;
@@ -64,7 +64,7 @@ public class Variables {
 
     public static int EXPERIENCE_TIME = 30;
     public static int EXPERIENCE_GAIN = 100;
-    public static int EXPERIENCE_DOUBLE = 10;
+    public static int EXPERIENCE_DOUBLE = 5;
     public static int EXP_BASE_LEVEL = 4500;
     public static double EXP_MODIFIER = 1.1;
 
