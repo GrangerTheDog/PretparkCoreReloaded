@@ -36,35 +36,40 @@ import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 /**
  * This class has been created on 09/24/2015 at 8:31 PM by Cooltimmetje.
  */
-public class BoxListener implements Listener {
+public class BoxMenu implements Listener {
 
-//    @EventHandler
+    public static boolean inUse = false;
+
+    @EventHandler
     public void onBoxClick(PlayerInteractEvent event){
         if(event.getClickedBlock() != null){
             if (event.getClickedBlock().getType() == Material.ENDER_CHEST) {
-                if (event.getClickedBlock().getLocation() == new Location(Bukkit.getWorld(Variables.WORLD_NAME), 98, 60, -313)) {
-                    event.setCancelled(true);
-                    ChatUtils.sendSoonTag(event.getPlayer(), "MysteryBox");
-                    //                openBox(event.getPlayer());
+                if (event.getClickedBlock().getLocation().getBlockX() == 98) {
+                    if(event.getClickedBlock().getLocation().getBlockY() == 60) {
+                        if (event.getClickedBlock().getLocation().getBlockZ() == -313) {
+                            event.setCancelled(true);
+                            openBoxMenu(event.getPlayer());
+                        }
+                    }
                 }
             }
         }
     }
 
-    private void openBox(Player p){
+    private void openBoxMenu(Player p){
         CorePlayer cp = PlayerUtils.getProfile(p);
         Inventory inv = Bukkit.createInventory(null, 54, "Mystery Vault");
         int boxes = cp.getBoxes();
@@ -73,9 +78,48 @@ public class BoxListener implements Listener {
             ItemUtils.createDisplay(inv, 23, Material.STAINED_GLASS_PANE, 1, 15, "&cERROR!", "&7Je hebt geen Mystery Boxes!");
         } else {
             for(int i = 0; i < boxes; i++){
+                if(i == 45){
+                    break;
+                }
                 ItemUtils.createDisplay(inv, i+1, Material.ENDER_CHEST, 1, 0, "&aMystery Box", "&7Klik om te openen!", "&aDit kost: &d1 Mystery Key");
+            }
+
+            ItemUtils.createDisplay(inv, 50, Material.WORKBENCH, 1, 0, "&aCrafting &3(Binnenkort)",
+                    "&3Wanneer je een item al hebt, ontvang je Mystery Dust!",
+                    "&3Hiermee kun je exclusive boxes craften",
+                    "&3en daaruit exclusieve items ontvangen!",
+                    "&3Of craft een normale box.",
+                    " ",
+                    "&3&bMystery Dust: &a" + PlayerUtils.getProfile(p).getDust());
+        }
+
+        p.openInventory(inv);
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent event){
+        if(ChatColor.stripColor(event.getInventory().getName()).contains("Mystery Vault")){
+            event.setCancelled(true);
+            Player p = (Player) event.getWhoClicked();
+            Material m = event.getCurrentItem().getType();
+            switch (m){
+                case ENDER_CHEST:
+                    if(!inUse){
+                        if(PlayerUtils.getProfile((Player)event.getWhoClicked()).getKeys() > 0){
+                            p.closeInventory();
+                            BoxAnimation.openBox((Player)event.getWhoClicked());
+                        } else {
+                            ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Je hebt niet genoeg keys!");
+                        }
+                    } else {
+                        ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Maar een persoon kan de MysteryVault teglijk gebruiken!");
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
+
 
 }

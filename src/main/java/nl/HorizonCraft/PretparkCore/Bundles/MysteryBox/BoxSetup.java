@@ -32,7 +32,11 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
 
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -42,9 +46,11 @@ import org.bukkit.Location;
 public class BoxSetup {
 
     public static void setup(){
-        Hologram hologram = new Hologram(new Location(Bukkit.getWorlds().get(0), 98.5,61,-312.5), "&aMystery Vault");
-        hologram.appendLine("&9&lRECHTER KLIK!");
-        hologram.spawn();
+        Hologram hologram = HologramsAPI.createHologram(Main.getPlugin(), new Location(Bukkit.getWorlds().get(0), 98.5,61.5,-312.5));
+        hologram.appendTextLine(MiscUtils.color("&aMystery Vault"));
+        hologram.appendTextLine(MiscUtils.color("&3&lRECHTER KLIK!"));
+
+        Variables.holograms.add(hologram);
     }
 
 }

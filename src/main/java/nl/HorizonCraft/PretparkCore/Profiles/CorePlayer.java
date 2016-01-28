@@ -64,6 +64,7 @@ public class CorePlayer {
     private int experience;
     private int experienceTime;
     private int level;
+    private int dust;
 
     private char[] achievements;
     private char[] progressiveAchievements;
@@ -193,6 +194,16 @@ public class CorePlayer {
         ScoreboardUtils.updateScoreboard(p, false);
     }
 
+    public void removeKeys(Player p, int add, String reason, boolean playSound){
+        setKeys(getKeys() - add);
+
+        ChatUtils.sendMsg(p, "&d-" + add + " Mystery Keys! (" + reason + ")");
+        if(playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
     public void addBoxes(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
         if(p.hasPermission("pc.boxmultiplier.2") && allowMultiplier) {
             add = add * 2;
@@ -201,6 +212,38 @@ public class CorePlayer {
         setBoxes(getBoxes() + add);
 
         ChatUtils.sendMsg(p, "&3+" + add + " MysteryBoxes! (" + reason + ")");
+        if(playSound){
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public void removeBoxes(Player p, int add, String reason, boolean playSound){
+        setBoxes(getBoxes() - add);
+
+        ChatUtils.sendMsg(p, "&3-" + add + " MysteryBoxes! (" + reason + ")");
+        if(playSound){
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public int getDust() {
+        return dust;
+    }
+
+    public void setDust(int dust) {
+        this.dust = dust;
+    }
+
+    public void addDust(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
+        if(p.hasPermission("pc.dustmultiplier.2") && allowMultiplier) {
+            add = add * 2;
+        }
+
+        setDust(getDust() + add);
+
+        ChatUtils.sendMsg(p, "&b+" + add + " MysteryDust! (" + reason + ")");
         if(playSound){
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         }

@@ -32,32 +32,17 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-
-import java.util.HashMap;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 
 /**
- * This class has been created on 09/24/2015 at 08:28 by Cooltimmetje.
+ * Created by Cooltimmetje on 1/28/2016 at 5:21 PM.
  */
 public class HologramUtils {
 
-    public static boolean isHologram(ArmorStand as) {
-        for (Hologram hologram : Variables.holograms) {
-            HashMap<Integer, Entity> allArmorStands = hologram.getAllArmorStands();
-            for (int i : allArmorStands.keySet()) {
-                if (allArmorStands.get(i) == as) {
-                    return true;
-                }
-            }
+    public static void removeAll(){
+        for (Hologram holo : Variables.holograms) {
+            holo.delete();
         }
-        return false;
     }
 
-    public static void removeHolos() {
-        for(Hologram hologram : Variables.holograms){
-            hologram.despawn();
-        }
-    }
 }

@@ -41,6 +41,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
+import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.ChangePointStateCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.CreatePointCommand;
@@ -62,6 +63,7 @@ import nl.HorizonCraft.PretparkCore.Commands.RedeemVoucherCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
 import nl.HorizonCraft.PretparkCore.Listeners.*;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
+import nl.HorizonCraft.PretparkCore.Managers.SpawnManager;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.TimeAdmin;
@@ -104,8 +106,8 @@ public class Main extends JavaPlugin {
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
-                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new ArmorStandListener()
-                /*, new BoxListener()*/, new ServerPingListener(), new ChatListener(), new PointMenu()
+                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu()/*, new ArmorStandListener()*/
+                , new BoxMenu(), new ServerPingListener(), new ChatListener(), new PointMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
                 , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop(), new PetShop(), new MonsterEggBlockPlaceListener()
         );
@@ -144,6 +146,9 @@ public class Main extends JavaPlugin {
         MysqlManager.amountUnique();
         MazeLeaderboards.load(false);
 
+        getLogger().info("Opening API hooks..."); //Checking if the API's that we need are running.
+        hookApi("HolographicDisplays");
+
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
         CurrencyGiver.start(this);
@@ -155,6 +160,7 @@ public class Main extends JavaPlugin {
             ScoreboardUtils.constructScoreboard(p);
         }
         BoxSetup.setup();
+        SpawnManager.setup();
 
         getLogger().info("Finishing up..."); //For stuff that needs to be done after everything.
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -172,9 +178,9 @@ public class Main extends JavaPlugin {
         startTime = System.currentTimeMillis();
         sendDebug("&3Pretpark&6Core&9> &aStarting plugin unload... &oPlease wait...");
         getLogger().info("Disabling plugin... Please wait.");
-        HologramUtils.removeHolos();
         MiscUtils.updateVouchers();
         PointUtils.saveAll();
+        HologramUtils.removeAll();
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);
@@ -206,10 +212,12 @@ public class Main extends JavaPlugin {
 
     //Used to hook API's
     private void hookApi(String api){
-        if (getServer().getPluginManager().getPlugin(api) != null && getServer().getPluginManager().getPlugin(api).isEnabled())
+        if (getServer().getPluginManager().getPlugin(api) != null && getServer().getPluginManager().getPlugin(api).isEnabled()) {
             getLogger().info("Successfully hooked into " + api + "!");
-        else {
+            sendDebug(MiscUtils.color("&9HookAPI> &8[&a" + api + "&8] \u00BB &2&lHooking success!"));
+        } else {
             getLogger().warning("Failed to hook into " + api + ", disabling plugin!");
+            sendDebug(MiscUtils.color("&9HookAPI> &8[&a" + api + "&8] \u00BB &c&lHooking failed!"));
             getPluginLoader().disablePlugin(this);
         }
     }

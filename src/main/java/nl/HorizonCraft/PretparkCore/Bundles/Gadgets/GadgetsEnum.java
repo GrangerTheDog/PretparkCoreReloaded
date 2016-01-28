@@ -35,6 +35,11 @@ package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.Weight;
 import org.bukkit.Material;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 /**
  * This class has been created on 09/18/2015 at 6:41 PM by Cooltimmetje.
  */
@@ -42,7 +47,8 @@ public enum GadgetsEnum {
 
     FIREWORK(0, 100, "Vuurwerkje", "Gewoon een vuurwerkje, niet veel bijzonder.", Material.FIREWORK_CHARGE, 0, 15, Weight.COMMON),
     STAFF_LAUNCHER(1, 500, "Staff Launcher", "The sky is the limit, letterlijk... \nStuur de staff naar de lucht en weer terug!", Material.SLIME_BLOCK, 0, 60, Weight.LEGENDARY),
-    BOEM_CHICKEN(2, 750, "Exploderende Kip", "Uuh... Kip *boem* Geen kip :D", Material.COOKED_CHICKEN, 0, 45, Weight.EPIC);
+    BOEM_CHICKEN(2, 750, "Exploderende Kip", "Uuh... Kip *boem* Geen kip :D", Material.COOKED_CHICKEN, 0, 45, Weight.EPIC),
+    SNOWBALL_GUN(3, 600, "Snowball Gun", "Pew pew pew...", Material.IRON_BARDING, 0, 2, Weight.RARE);
 
     private int id;
     private int cost;
@@ -103,5 +109,14 @@ public enum GadgetsEnum {
             }
         }
         return null;
+    }
+
+    private static final List<GadgetsEnum> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+
+    public static GadgetsEnum random()  {
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

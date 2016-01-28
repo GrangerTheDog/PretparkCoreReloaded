@@ -61,9 +61,11 @@ public class GadgetTriggers implements Listener {
     private HashMap<String,Long> cdPunchStaff = new HashMap<>();
     private HashMap<String,Long> cdFirework = new HashMap<>();
     private HashMap<String,Long> cdChicken = new HashMap<>();
+    private HashMap<String,Long> cdSnowball = new HashMap<>();
     private int cdPunchSec = GadgetsEnum.STAFF_LAUNCHER.getCooldown();
     private int cdFireworkSec = GadgetsEnum.FIREWORK.getCooldown();
     private int cdChickenSec = GadgetsEnum.BOEM_CHICKEN.getCooldown();
+    private int cdSnowballSec = GadgetsEnum.SNOWBALL_GUN.getCooldown();
 
     @EventHandler
     public void onClick(PlayerInteractEvent event){
@@ -84,6 +86,9 @@ public class GadgetTriggers implements Listener {
                             event.setCancelled(true);
                             shootChicken(p);
                             break;
+                        case IRON_BARDING:
+                            event.setCancelled(true);
+                            shootSnowball(p);
                     }
                 }
             }
@@ -218,6 +223,20 @@ public class GadgetTriggers implements Listener {
 //            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "playsound custom.Vuurwerk " + p.getName() + " " + p.getLocation().getBlockX() + " " + p.getLocation().getBlockY() + " " + p.getLocation().getBlockZ());
         } else {
             ChatUtils.sendMsgTag(p, "Firework", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFirework.get(p.getName()), cdFireworkSec)) +
+                    " &awachten voordat je dit weer mag gebruiken.");
+        }
+    }
+
+    private void shootSnowball(Player p) {
+        if(!cdSnowball.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdSnowball.get(p.getName()), cdSnowballSec)) {
+            Snowball sb = p.launchProjectile(Snowball.class);
+            sb.setShooter(p);
+            sb.setVelocity(p.getLocation().getDirection().multiply(1.7));
+            p.playSound(p.getLocation(), Sound.IRONGOLEM_THROW, 100, 1);
+            ChatUtils.sendMsgTag(p, "SnowballGun", "Pew pew!");
+            cdSnowball.put(p.getName(), System.currentTimeMillis());
+        } else {
+            ChatUtils.sendMsgTag(p, "SnowballGun", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdSnowball.get(p.getName()), cdSnowballSec)) +
                     " &awachten voordat je dit weer mag gebruiken.");
         }
     }

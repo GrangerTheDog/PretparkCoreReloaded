@@ -32,9 +32,9 @@
 
 package nl.HorizonCraft.PretparkCore.Utilities;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -67,6 +67,10 @@ public class Variables {
     public static int EXPERIENCE_DOUBLE = 5;
     public static int EXP_BASE_LEVEL = 4500;
     public static double EXP_MODIFIER = 1.1;
+
+    public static int RARE_CHANCE = 15;
+    public static int EPIC_CHANCE = 5;
+    public static int LEGENDARY_CHANCE = 1;
 
     public static HashMap<String, CorePlayer> profile = new HashMap<>();
     public static ArrayList<Hologram> holograms = new ArrayList<>();

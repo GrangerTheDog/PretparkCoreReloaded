@@ -30,29 +30,30 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Timers;
+package nl.HorizonCraft.PretparkCore.Managers;
 
-import nl.HorizonCraft.PretparkCore.Utilities.Objects.Hologram;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.Location;
 
 /**
- * This class has been created on 10/08/2015 at 7:10 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/28/2016 at 5:20 PM.
  */
-public class HologramMaintainer {
+public class SpawnManager {
 
-    public static void start(Plugin plugin){
+    public static void setup(){
+        Hologram holoTwitter = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD,62.5,68.5,-18.5));
+        Hologram holoInsta = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD,66.5,68.5,-18.5));
 
-        ScheduleUtils.repeatTask(plugin, 36000, 36000, new Runnable() {
-            @Override
-            public void run() {
-                for(Hologram hologram : Variables.holograms){
-                    hologram.updateHologram();
-                }
-            }
-        });
+        holoTwitter.appendTextLine(MiscUtils.color("&b&lVolg ons op Twitter:"));
+        holoTwitter.appendTextLine(MiscUtils.color("&b@Horizon_Craft"));
+        Variables.holograms.add(holoTwitter);
 
+        holoInsta.appendTextLine(MiscUtils.color("&7&lVolg ons op Instagram:"));
+        holoInsta.appendTextLine(MiscUtils.color("&7@horizoncraft"));
+        Variables.holograms.add(holoInsta);
     }
-
 }

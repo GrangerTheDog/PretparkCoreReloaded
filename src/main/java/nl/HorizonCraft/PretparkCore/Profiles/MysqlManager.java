@@ -164,7 +164,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0)";
 
         try {
             c = hikari.getConnection();
@@ -222,7 +222,7 @@ public class MysqlManager {
             cp.setExperience(rs.getInt("exp"));
             cp.setExperienceTime(rs.getInt("exp_time"));
             cp.setId(rs.getInt("id"));
-
+            cp.setDust(rs.getInt("dust"));
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -232,7 +232,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?,wardrobe=?,progressive_achievements=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?,wardrobe=?,progressive_achievements=?,dust=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -252,7 +252,8 @@ public class MysqlManager {
             ps.setInt(11, cp.getExperienceTime());
             ps.setString(12, new String(cp.getPieces()));
             ps.setString(13, new String(cp.getProgressiveAchievements()));
-            ps.setString(14, uuid);
+            ps.setInt(14, cp.getDust());
+            ps.setString(15, uuid);
 
             ps.execute();
         } catch (SQLException e) {

@@ -37,18 +37,36 @@ package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
  */
 public enum Weight {
 
-    COMMON('e'),
-    RARE('9'),
-    EPIC('5'),
-    LEGENDARY('6');
+    COMMON('e',4,1,5),
+    RARE('9',11,10,20),
+    EPIC('5',10,50,100),
+    LEGENDARY('6',1,100,200);
 
     private char color;
+    private int data;
+    private int min;
+    private int max;
 
-    Weight(char c) {
+    Weight(char c, int i, int i2, int i3) {
         this.color = c;
+        this.data = i;
+        this.min = i2;
+        this.max = i3;
     }
 
     public char getColor() {
         return color;
+    }
+
+    public int getData() {
+        return data;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
     }
 }

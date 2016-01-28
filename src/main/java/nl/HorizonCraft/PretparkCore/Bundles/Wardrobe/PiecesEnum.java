@@ -35,6 +35,14 @@ package nl.HorizonCraft.PretparkCore.Bundles.Wardrobe;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.Weight;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This class has been created on 10/27/2015 at 10:32 by Cooltimmetje.
@@ -125,5 +133,29 @@ public enum PiecesEnum {
 
     public int getCost() {
         return cost;
+    }
+
+    public ItemStack getItemStack(){
+        ItemStack itemStack = new ItemStack(getMaterial());
+        if(material == Material.SKULL_ITEM){
+            SkullMeta sm = (SkullMeta) itemStack.getItemMeta();
+            sm.setOwner(getSkullUUID());
+            itemStack.setItemMeta(sm);
+        } else {
+            LeatherArmorMeta lm = (LeatherArmorMeta) itemStack.getItemMeta();
+            lm.setColor(getColor());
+            itemStack.setItemMeta(lm);
+        }
+
+        return itemStack;
+    }
+
+    private static final List<PiecesEnum> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+
+    public static PiecesEnum random(){
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

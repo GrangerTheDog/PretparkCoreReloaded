@@ -30,37 +30,46 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Listeners;
+package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
 
-import nl.HorizonCraft.PretparkCore.Utilities.HologramUtils;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
+import org.bukkit.Material;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
- * This class has been created on 09/23/2015 at 8:26 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/28/2016 at 7:46 PM.
  */
-public class ArmorStandListener implements Listener {
+public enum RewardType {
 
-    @EventHandler
-    public void onEntityDamage(EntityDamageEvent event){
-        if(event.getEntity().getType() == EntityType.ARMOR_STAND){
-            ArmorStand as = (ArmorStand) event.getEntity();
-            if (HologramUtils.isHologram(as)) {
-                event.setCancelled(true);
-            }
-        }
+    GAGDET(Material.PISTON_BASE, "Gadget"),
+    PET(Material.BONE, "Pet"),
+    CLOTHING(Material.IRON_CHESTPLATE, "Kleding");
+
+    private Material material;
+    private String name;
+
+    RewardType(Material m, String s){
+        this.material = m;
+        this.name = s;
     }
 
-    @EventHandler
-    public void onArmorStandChange(PlayerArmorStandManipulateEvent event) {
-        ArmorStand as = event.getRightClicked();
-        if (HologramUtils.isHologram(as)) {
-            event.setCancelled(true);
-        }
+    public Material getMaterial() {
+        return material;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    private static final List<RewardType> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+
+    public static RewardType random()  {
+        return VALUES.get(RANDOM.nextInt(SIZE));
+    }
 }

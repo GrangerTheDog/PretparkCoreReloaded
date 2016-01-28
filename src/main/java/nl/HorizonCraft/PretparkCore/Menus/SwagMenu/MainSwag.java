@@ -36,20 +36,16 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * This class has been created on 09/18/2015 at 5:48 PM by Cooltimmetje.
@@ -61,11 +57,7 @@ public class MainSwag implements Listener {
 
         ItemUtils.createDisplay(inv, 14, Material.PISTON_BASE, 1, 0, "&aGadgets", "&7TODO"); //TODO: lore
         ItemUtils.createDisplay(inv, 13, Material.IRON_CHESTPLATE, 1, 0, "&aKledingkast", "&7TODO"); //TODO: lore
-        ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&aPets", "&7TODO"); //TODO: Lore
-        SkullMeta sm = (SkullMeta) is.getItemMeta();
-        sm.setOwner("MHF_Ocelot");
-        is.setItemMeta(sm);
-        ItemUtils.createDisplay(is, inv, 15);
+        ItemUtils.createDisplay(inv, 15, Material.BONE, 1, 0, "&aPets", "&7TODO"); //TODO: Lore
 
         p.openInventory(inv);
     }
@@ -81,7 +73,7 @@ public class MainSwag implements Listener {
             switch (m){
                 default:
                     break;
-                case SKULL_ITEM:
+                case BONE:
                     PetMenu.open(p);
                     break;
                 case IRON_CHESTPLATE:
