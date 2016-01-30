@@ -48,7 +48,8 @@ public enum GadgetsEnum {
     FIREWORK(0, 100, "Vuurwerkje", "Gewoon een vuurwerkje, niet veel bijzonder.", Material.FIREWORK_CHARGE, 0, 15, Weight.COMMON),
     STAFF_LAUNCHER(1, 500, "Staff Launcher", "The sky is the limit, letterlijk... \nStuur de staff naar de lucht en weer terug!", Material.SLIME_BLOCK, 0, 60, Weight.LEGENDARY),
     BOEM_CHICKEN(2, 750, "Exploderende Kip", "Uuh... Kip *boem* Geen kip :D", Material.COOKED_CHICKEN, 0, 45, Weight.EPIC),
-    SNOWBALL_GUN(3, 600, "Snowball Gun", "Pew pew pew...", Material.IRON_BARDING, 0, 2, Weight.RARE);
+    SNOWBALL_GUN(3, 600, "Snowball Gun", "Pew pew pew...", Material.IRON_BARDING, 0, 2, Weight.RARE),
+    CLUSTER_CHICKEN(4, 0, "Cluster Chicken", "Een kip met kippen? O.o", Material.EGG, 0, 60, Weight.LEGENDARY);
 
     private int id;
     private int cost;

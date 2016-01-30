@@ -68,7 +68,7 @@ public class Variables {
     public static int EXP_BASE_LEVEL = 4500;
     public static double EXP_MODIFIER = 1.1;
 
-    public static int RARE_CHANCE = 15;
+    public static int RARE_CHANCE = 20;
     public static int EPIC_CHANCE = 5;
     public static int LEGENDARY_CHANCE = 1;
 

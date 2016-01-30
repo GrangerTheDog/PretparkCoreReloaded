@@ -33,7 +33,6 @@
 package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
-import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
@@ -70,6 +69,11 @@ public class GadgetsShop implements Listener{
            if(unlocked){
                m = Material.INK_SACK;
                data = 10;
+           } else {
+               if(cost == 0){
+                   m = Material.ENDER_CHEST;
+                   data = 0;
+               }
            }
 
            ItemUtils.createDisplay(inv, slot, m, 1, data, name, lore);
@@ -91,7 +95,11 @@ public class GadgetsShop implements Listener{
         sb.append(" \n");
         if(!unlocked){
             sb.append("&cLOCKED").append("\n");
-            sb.append("&aPrijs: &6" + cost + " coins");
+            if(cost != 0) {
+                sb.append("&aPrijs: &6" + cost + " coins");
+            } else {
+                sb.append("&6&lMYSTERYBOX EXCLUSIVE!");
+            }
         } else {
             sb.append("&aUNLOCKED &8\u00BB &9Open je Swag Menu om te gebruiken!").append("\n")
                     .append("&8&mPrijs: " + cost + " coins");

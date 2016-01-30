@@ -35,10 +35,12 @@ package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
 import com.darkblade12.particleeffect.ParticleEffect;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
@@ -58,9 +60,11 @@ public class BoxAnimation {
     public static void openBox(final Player p){
         BoxMenu.inUse = true;
         p.teleport(new Location(Variables.WORLD, 94.5, 59, -312.5, -90, 0));
+        final CorePlayer cp = PlayerUtils.getProfile(p);
 
         PlayerUtils.getProfile(p).removeBoxes(p, 1, "MysteryBox geopend", true);
         PlayerUtils.getProfile(p).removeKeys(p, 1, "MysteryBox geopend", true);
+        cp.awardAchievement(p, AchievementsEnum.MYSTERYBOX_OPEN);
 
         Variables.WORLD.getBlockAt(96, 61, -315).setType(Material.BARRIER);
         Variables.WORLD.getBlockAt(96, 61, -313).setType(Material.BARRIER);
@@ -72,8 +76,9 @@ public class BoxAnimation {
         final Hologram itemHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 96.5, 61, -312.5));
         final Hologram weightHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 96.5, 61, -310.5));
         final Hologram typeHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 96.5, 61, -314.5));
+        final Hologram costHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 95.5, 59.75, -312.5));
 
-        final Weight weight;
+        Weight weight;
         final RewardType rewardType = RewardType.random();
 
         GadgetsEnum gadget = null;
@@ -156,6 +161,22 @@ public class BoxAnimation {
                 weightHolo.appendTextLine(MiscUtils.color("&" + weightf.getColor() + "&l" + weightf.toString()));
                 weightHolo.appendItemLine(new ItemStack(Material.STAINED_CLAY,1, (short) weightf.getData()));
                 Variables.WORLD.playSound(new Location(Variables.WORLD, 96.5, 60.5, -310.5), Sound.CHICKEN_EGG_POP, 50, 1);
+                switch (weightf){
+                    default:
+                        break;
+                    case COMMON:
+                        cp.awardAchievement(p, AchievementsEnum.COMMON);
+                        break;
+                    case RARE:
+                        cp.awardAchievement(p, AchievementsEnum.RARE);
+                        break;
+                    case EPIC:
+                        cp.awardAchievement(p, AchievementsEnum.EPIC);
+                        break;
+                    case LEGENDARY:
+                        cp.awardAchievement(p, AchievementsEnum.LEGENDARY);
+                        break;
+                }
             }
         });
 
@@ -187,21 +208,45 @@ public class BoxAnimation {
             public void run() {
                 switch (rewardType) {
                     case GAGDET:
+                        if(gadgetf.getCost() == 0){
+                            cp.awardAchievement(p, AchievementsEnum.EXCLUSIVE);
+                            costHolo.appendTextLine(MiscUtils.color("&aDIT IS EEN"));
+                            costHolo.appendTextLine(MiscUtils.color("&6&lMYSTERYBOX EXCLUSIVE!"));
+                        } else {
+                            costHolo.appendTextLine(MiscUtils.color("&aDit item kost in de shop:"));
+                            costHolo.appendTextLine(MiscUtils.color("&6" + gadgetf.getCost() + " coins"));
+                        }
                         itemHolo.appendTextLine(MiscUtils.color("&" + weightf.getColor() + "&l" + gadgetf.getName()));
                         itemHolo.appendItemLine(new ItemStack(gadgetf.getMaterial()));
                         break;
                     case CLOTHING:
+                        if(piecef.getCost() == 0){
+                            cp.awardAchievement(p, AchievementsEnum.EXCLUSIVE);
+                            costHolo.appendTextLine(MiscUtils.color("&aDIT IS EEN"));
+                            costHolo.appendTextLine(MiscUtils.color("&6&lMYSTERYBOX EXCLUSIVE!"));
+                        } else {
+                            costHolo.appendTextLine(MiscUtils.color("&aDit item kost in de shop:"));
+                            costHolo.appendTextLine(MiscUtils.color("&6" + piecef.getCost() + " coins"));
+                        }
                         itemHolo.appendTextLine(MiscUtils.color("&" + weightf.getColor() + "&l" + piecef.getSuit().getName() + " " + piecef.getSuitType().getName()));
                         itemHolo.appendItemLine(piecef.getItemStack());
                         break;
                     case PET:
                         if (petf != null) {
+                            if(petf.getCost() == 0){
+                                cp.awardAchievement(p, AchievementsEnum.EXCLUSIVE);
+                                costHolo.appendTextLine(MiscUtils.color("&aDIT IS EEN"));
+                                costHolo.appendTextLine(MiscUtils.color("&6&lMYSTERYBOX EXCLUSIVE!"));
+                            } else {
+                                costHolo.appendTextLine(MiscUtils.color("&aDit item kost in de shop:"));
+                                costHolo.appendTextLine(MiscUtils.color("&6" + petf.getCost() + " coins"));
+                            }
                             itemHolo.appendTextLine(MiscUtils.color("&" + weightf.getColor() + "&l" + petf.getName()));
                             itemHolo.appendItemLine(petf.getItemStack());
                         }
                         break;
                 }
-                Variables.WORLD.playSound(new Location(Variables.WORLD, 96.5, 60.5, -312.5), Sound.LEVEL_UP, 50, 1);
+                MiscUtils.shootFirework(itemHolo.getLocation(), Variables.WORLD_NAME, true);
             }
         });
 
@@ -241,6 +286,7 @@ public class BoxAnimation {
                 itemHolo.delete();
                 weightHolo.delete();
                 typeHolo.delete();
+                costHolo.delete();
 
                 Variables.WORLD.getBlockAt(96, 61, -315).setType(Material.AIR);
                 Variables.WORLD.getBlockAt(96, 61, -313).setType(Material.AIR);

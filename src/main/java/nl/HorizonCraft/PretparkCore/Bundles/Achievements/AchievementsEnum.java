@@ -54,7 +54,15 @@ public enum AchievementsEnum {
     JORDY_SLAP(14, "Directeurtje pesten!", "Launch Jordy010NL!", 25, 2, 500, AchievementType.STAFFPUNCH),
     JORDY2_SLAP(15, "2 JORDY'S?!", "Launch jordyvz01", 10, 1, 200, AchievementType.STAFFPUNCH),
     FIREWORK(16, "YES YES YES!", "Steek een vuurwerkje af!", 10, 0, 100, AchievementType.GENERAL),
-    DOUBLE(17, "Doubling it up!", "Krijg 2x coins, exp of boxes!", 100, 2, 400, AchievementType.GENERAL);
+    DOUBLE(17, "Doubling it up!", "Krijg 2x coins, exp of boxes!", 100, 2, 400, AchievementType.GENERAL),
+    COMMON(18, "Saaaaaaaiii...", "Vind een COMMON item in de MysteryBox!", 25, 1, 150, AchievementType.UNLOCKABLES),
+    RARE(19, "RARE?!", "Vind een RARE item in de MysteryBox!", 50, 2, 300, AchievementType.UNLOCKABLES),
+    EPIC(20, "IT'S SO EPIC!", "Vind een EPIC item in de MysteryBox!", 100, 4, 600, AchievementType.UNLOCKABLES),
+    LEGENDARY(21, "I'M THE LIVING LEGEND!", "Vind een LEGENDARY item in de MysteryBox!", 200, 8, 1200, AchievementType.UNLOCKABLES),
+    EXCLUSIVE(22, "THE EXCLUSIVE CLUB", "Vind een MysteryBox Exclusive item in de MysteryBox!", 200, 2, 300, AchievementType.UNLOCKABLES),
+    MYSTERYBOX_OPEN(23, "It won't me a Mystery anymore!", "Open een MysteryBox", 100, 1, 200, AchievementType.GENERAL),
+    DC_RIDE(24, "The dive to the Horizon.", "Maak een ritje op de DiveCoaster", 25, 1, 600, AchievementType.RIDES);
+
 
     private int id;
     private String name;
@@ -100,5 +108,14 @@ public enum AchievementsEnum {
 
     public int getExpReward() {
         return expReward;
+    }
+
+    public static AchievementsEnum getById(int id){
+        for(AchievementsEnum achievement : AchievementsEnum.values()){
+            if(achievement.getId() == id){
+                return achievement;
+            }
+        }
+        return null;
     }
 }

@@ -89,10 +89,19 @@ public class GadgetTriggers implements Listener {
                         case IRON_BARDING:
                             event.setCancelled(true);
                             shootSnowball(p);
+                            break;
+                        case EGG:
+                            event.setCancelled(true);
+                            shootClusterChicken(p);
                     }
                 }
             }
         }
+    }
+
+    private void shootClusterChicken(Player p) {
+        p.sendMessage("Soon...");
+        //TODO: MAKE THIS GADGET
     }
 
     private void shootChicken(Player p) {

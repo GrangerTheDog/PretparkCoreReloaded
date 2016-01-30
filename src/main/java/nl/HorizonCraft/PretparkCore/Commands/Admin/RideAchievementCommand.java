@@ -33,7 +33,6 @@
 package nl.HorizonCraft.PretparkCore.Commands.Admin;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
-import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
@@ -67,6 +66,22 @@ public class RideAchievementCommand implements CommandExecutor{
                                         if (p.isInsideVehicle()) {
                                             cp.awardAchievement(p, AchievementsEnum.FE_RIDE);
                                             cp.addExp(p, MiscUtils.randomInt(10, 50), "Farm Expediton ritje", true, true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "dc":
+                        for(Player p : Bukkit.getOnlinePlayers()){
+                            CorePlayer cp = PlayerUtils.getProfile(p);
+                            Location pLoc = p.getLocation();
+                            if(pLoc.getX() <= -166 && pLoc.getX() >= -176){
+                                if(pLoc.getY() <= 69 && pLoc.getY() >= 74){
+                                    if(pLoc.getZ() <= -616 && pLoc.getZ() >= -618) {
+                                        if (p.isInsideVehicle()) {
+                                            cp.awardAchievement(p, AchievementsEnum.DC_RIDE);
+                                            cp.addExp(p, MiscUtils.randomInt(10, 50), "Dive Coaster ritje", true, true);
                                         }
                                     }
                                 }
