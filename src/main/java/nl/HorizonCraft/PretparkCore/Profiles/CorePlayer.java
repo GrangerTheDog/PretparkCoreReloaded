@@ -33,6 +33,9 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import io.puharesource.mc.titlemanager.api.animations.AnimationFrame;
+import io.puharesource.mc.titlemanager.api.animations.FrameSequence;
+import io.puharesource.mc.titlemanager.api.animations.TitleAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.ProgressiveAchievementsEnum;
@@ -40,11 +43,13 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
-import nl.HorizonCraft.PretparkCore.Utilities.Packets.TitleUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.TitleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -514,20 +519,8 @@ public class CorePlayer {
         } else {
             if (level != getLevel()) {
                 setLevel(level);
-                final Player pfinal = p;
-                ScheduleUtils.scheduleTask(20, new Runnable() {
-                    @Override
-                    public void run() {
-                        TitleUtils.sendTitle(pfinal, "&e&lLEVEL UP!", PacketPlayOutTitle.EnumTitleAction.TITLE, 20, 60, 20);
-                    }
-                });
 
-                ScheduleUtils.scheduleTask(40, new Runnable() {
-                    @Override
-                    public void run() {
-                        TitleUtils.sendTitle(pfinal, "&eJe bent nu level &9" + getLevel() + "&e!", PacketPlayOutTitle.EnumTitleAction.SUBTITLE, 20, 60, 20);
-                    }
-                });
+                TitleUtils.sendTitle(p, "&e&lLEVEL UP!", "&eJe bent nu &9level " + getLevel() + "&a!", 20, 80, 20);
             }
         }
 

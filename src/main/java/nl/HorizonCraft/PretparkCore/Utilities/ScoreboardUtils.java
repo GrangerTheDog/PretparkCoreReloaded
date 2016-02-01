@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
@@ -103,6 +104,7 @@ public class ScoreboardUtils {
             unique.setScore(1);
         }
 
+        defaultTab(p, false);
         p.setScoreboard(board);
         scoreboards.put(p.getName(), board);
     }
@@ -173,10 +175,32 @@ public class ScoreboardUtils {
                 unique.setScore(1);
             }
 
+            defaultTab(p, leave);
             scoreboards.put(p.getName(), board);
         } else {
             constructScoreboard(p);
         }
+    }
+
+    public static void defaultTab(Player p, boolean leave){
+        CorePlayer cp = PlayerUtils.getProfile(p);
+
+        String[] exp = cp.calculateExpString(p).split(",");
+        int levelI, neededI, expI;
+        levelI = Integer.parseInt(exp[2]);
+        expI = Integer.parseInt(exp[1]);
+        neededI = Integer.parseInt(exp[0]);
+        String levelProgress = progress(expI, neededI);
+
+        int online = Bukkit.getOnlinePlayers().size();
+        p.setPlayerListName(p.getDisplayName());
+        if(leave){
+            online = online - 1;
+        }
+
+        TitleUtils.setTab(p, Variables.SERVER_NAME + "\n&aWelkom,\n" + p.getDisplayName().trim() + "\n \n&6Nu online &b- &8(&e" + online + "&8/&e" + Bukkit.getMaxPlayers() + "&8)",
+                "\n&eMy&3Horizon \n&6" + cp.getCoins() + " coins &8- &9Level " + cp.getLevel() + " " + levelProgress + "\n&3" + cp.getBoxes() + " Mystery Boxes &8- &d" + cp.getKeys() + " Mystery Keys\n&b"
+        + cp.getDust() + " Mystery Dust\n&8------\n&awww.horizoncraft.nl");
     }
 
     private static String progress(int exp, int needed) {

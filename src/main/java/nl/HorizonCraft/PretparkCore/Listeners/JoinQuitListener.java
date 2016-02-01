@@ -32,19 +32,25 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
+import io.puharesource.mc.titlemanager.api.animations.AnimationFrame;
+import io.puharesource.mc.titlemanager.api.animations.FrameSequence;
+import io.puharesource.mc.titlemanager.api.animations.TitleAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import nl.HorizonCraft.PretparkCore.Utilities.Packets.SpawnHologram;
-import nl.HorizonCraft.PretparkCore.Utilities.Packets.TitleUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.TitleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class has been created on 09/9/11/2015/2015 at 7:18 PM by Cooltimmetje.
@@ -69,17 +75,9 @@ public class JoinQuitListener implements Listener {
             public void run() {
                 PlayerUtils.configPlayer(pfinal, false);
 
-                TitleUtils.sendTitle(pfinal, "&eWelkom op " + Variables.SERVER_NAME, PacketPlayOutTitle.EnumTitleAction.TITLE, 20, 60, 20);
+                TitleUtils.sendTitle(pfinal, "&aWelkom op " + Variables.SERVER_NAME, Variables.SERVER_NAME_SHORT + " &8\u00BB &a" + Variables.SERVER_PING_MESSAGE, 20, 80, 20);
             }
         });
-
-        ScheduleUtils.scheduleTask(40, new Runnable() {
-            @Override
-            public void run() {
-                TitleUtils.sendTitle(pfinal, Variables.SERVER_NAME_SHORT  + " &8\u00BB &e" + Variables.SERVER_PING_MESSAGE, PacketPlayOutTitle.EnumTitleAction.SUBTITLE, 20, 60, 20);
-            }
-        });
-
 
         for(Player pl : Bukkit.getOnlinePlayers()){
             if(pl != p){

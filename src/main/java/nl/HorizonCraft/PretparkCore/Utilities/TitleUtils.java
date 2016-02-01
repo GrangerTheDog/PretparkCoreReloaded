@@ -30,13 +30,16 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Utilities.Packets;
+package nl.HorizonCraft.PretparkCore.Utilities;
 
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import io.puharesource.mc.titlemanager.api.ActionbarTitleObject;
+import io.puharesource.mc.titlemanager.api.TabTitleObject;
+import io.puharesource.mc.titlemanager.api.TitleObject;
+
+import io.puharesource.mc.titlemanager.api.animations.FrameSequence;
+import io.puharesource.mc.titlemanager.api.animations.TitleAnimation;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -44,18 +47,27 @@ import org.bukkit.entity.Player;
  */
 public class TitleUtils {
 
-    public static void sendTitle(Player p, String message, PacketPlayOutTitle.EnumTitleAction titlePos, int fadeIn, int stay, int fadeOut){
-        CraftPlayer craftPlayer = (CraftPlayer) p;
-        PacketPlayOutTitle title = new PacketPlayOutTitle(titlePos, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + MiscUtils.color(message) + "\"}"), fadeIn, stay, fadeOut);
+    public static void sendTitle(Player p, String title, String subTitle, int fadeIn, int stay, int fadeOut){
+        new TitleObject(MiscUtils.color(title), MiscUtils.color(subTitle)).setFadeIn(fadeIn).setStay(stay).setFadeOut(fadeOut).send(p);
+    }
 
-        craftPlayer.getHandle().playerConnection.sendPacket(title);
+    public static void sendTitle(Player p, String title, TitleObject.TitleType titleType, int fadeIn, int stay, int fadeOut){
+        new TitleObject(MiscUtils.color(title), titleType).setFadeIn(fadeIn).setStay(stay).setFadeOut(fadeOut).send(p);
+    }
+
+    public static void setTab(Player p, String header, String footer){
+        new TabTitleObject(MiscUtils.color(header), MiscUtils.color(footer)).send(p);
     }
 
     public static void sendAction(Player p, String message){
-        CraftPlayer craftPlayer = (CraftPlayer) p;
-        PacketPlayOutChat action = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + MiscUtils.color(message) + "\"}"), (byte) 2);
-
-        craftPlayer.getHandle().playerConnection.sendPacket(action);
+        new ActionbarTitleObject(MiscUtils.color(message)).send(p);
     }
+
+    public static void sendTitle(Player p, FrameSequence title, FrameSequence subTitle){
+        new TitleAnimation(title, subTitle).send(p);
+    }
+
+
+
 
 }

@@ -45,6 +45,10 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+      <id>puha-repo</id>
+      <url>http://repo.puha.io/nexus/content/repositories/releases/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -81,6 +85,11 @@
       <artifactId>holographicdisplays</artifactId>
       <version>1.0.0</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.puharesource.mc</groupId>
+      <artifactId>TitleManager</artifactId>
+      <version>1.5.11</version>
     </dependency>
   </dependencies>
 

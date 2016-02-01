@@ -156,6 +156,7 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Opening API hooks..."); //Checking if the API's that we need are running.
         hookApi("HolographicDisplays");
+        hookApi("TitleManager");
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
