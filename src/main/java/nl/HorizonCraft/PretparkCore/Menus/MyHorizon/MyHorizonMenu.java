@@ -80,7 +80,8 @@ public class MyHorizonMenu implements Listener{
         int needed = Integer.parseInt(expInfo[0]);
         int exp = Integer.parseInt(expInfo[1]);
 
-        ItemUtils.createDisplay(inv, 32, Material.EXP_BOTTLE, 1, 0, "&9Experience:", "&3Level: &a" + cp.getLevel(), "&3Totaal EXP: &a" + cp.getExperience(), "&3Nodig tot volgend level: &a" + (needed - exp), "&3Progress: " + progress(exp, needed));
+        ItemUtils.createDisplay(inv, 31, Material.EXP_BOTTLE, 1, 0, "&9Experience:", "&3Level: &a" + cp.getLevel(), "&3Totaal EXP: &a" + cp.getExperience(), "&3Nodig tot volgend level: &a" + (needed - exp), "&3Progress: " + progress(exp, needed));
+        ItemUtils.createDisplay(inv, 33, Material.SUGAR, 1, 0, "&bMystery Dust: &c" + cp.getDust());
 
         p.openInventory(inv);
     }

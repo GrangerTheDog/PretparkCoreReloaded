@@ -41,10 +41,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -57,14 +54,16 @@ import org.bukkit.inventory.ItemStack;
  */
 public class BoxAnimation {
 
-    public static void openBox(final Player p){
+    public static void openBox(final Player p, Weight forcedWeight){
         BoxMenu.inUse = true;
         p.teleport(new Location(Variables.WORLD, 94.5, 59, -312.5, -90, 0));
         final CorePlayer cp = PlayerUtils.getProfile(p);
 
-        PlayerUtils.getProfile(p).removeBoxes(p, 1, "MysteryBox geopend", true);
-        PlayerUtils.getProfile(p).removeKeys(p, 1, "MysteryBox geopend", true);
-        cp.awardAchievement(p, AchievementsEnum.MYSTERYBOX_OPEN);
+        if(forcedWeight == null) {
+            PlayerUtils.getProfile(p).removeBoxes(p, 1, "MysteryBox geopend", true);
+            PlayerUtils.getProfile(p).removeKeys(p, 1, "MysteryBox geopend", true);
+            cp.awardAchievement(p, AchievementsEnum.MYSTERYBOX_OPEN);
+        }
 
         Variables.WORLD.getBlockAt(96, 61, -315).setType(Material.BARRIER);
         Variables.WORLD.getBlockAt(96, 61, -313).setType(Material.BARRIER);
@@ -76,24 +75,28 @@ public class BoxAnimation {
         final Hologram itemHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 96.5, 61, -312.5));
         final Hologram weightHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 96.5, 61, -310.5));
         final Hologram typeHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 96.5, 61, -314.5));
-        final Hologram costHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 95.5, 59.75, -312.5));
+        final Hologram costHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 95.5, 59.9, -312.5));
 
-        Weight weight;
+        final Weight weight;
         final RewardType rewardType = RewardType.random();
 
         GadgetsEnum gadget = null;
         PetType pet = null;
         PiecesEnum piece = null;
 
-        int weightChooser = MiscUtils.randomInt(0, 100);
-        if(weightChooser < Variables.LEGENDARY_CHANCE){
-            weight = Weight.LEGENDARY;
-        } else if(weightChooser < Variables.EPIC_CHANCE) {
-            weight = Weight.EPIC;
-        } else if(weightChooser < Variables.RARE_CHANCE) {
-            weight = Weight.RARE;
+        if(forcedWeight == null) {
+            int weightChooser = MiscUtils.randomInt(0, 100);
+            if (weightChooser < Variables.LEGENDARY_CHANCE) {
+                weight = Weight.LEGENDARY;
+            } else if (weightChooser < Variables.EPIC_CHANCE) {
+                weight = Weight.EPIC;
+            } else if (weightChooser < Variables.RARE_CHANCE) {
+                weight = Weight.RARE;
+            } else {
+                weight = Weight.COMMON;
+            }
         } else {
-            weight = Weight.COMMON;
+            weight = forcedWeight;
         }
 
         final Weight weightf = weight;
@@ -134,6 +137,27 @@ public class BoxAnimation {
                 Variables.WORLD.getBlockAt(96, 59, -313).setType(Material.QUARTZ_BLOCK);
                 Variables.WORLD.getBlockAt(96, 59, -313).setData((byte)2);
                 Variables.WORLD.getBlockAt(96, 59, -313).getWorld().playEffect(Variables.WORLD.getBlockAt(96, 59, -313).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(96, 59, -313).getTypeId());
+
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-313).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-313).setData((byte)8);
+                    Variables.WORLD.getBlockAt(i,58,-313).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-313).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-313).getTypeId());
+                }
+            }
+        });
+        ScheduleUtils.scheduleTask(40, new Runnable() {
+            @Override
+            public void run() {
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-312).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-312).setData((byte)8);
+                    Variables.WORLD.getBlockAt(i,58,-312).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-312).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-312).getTypeId());
+                }
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-314).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-314).setData((byte)8);
+                    Variables.WORLD.getBlockAt(i,58,-314).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-314).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-314).getTypeId());
+                }
             }
         });
         ScheduleUtils.scheduleTask(60, new Runnable() {
@@ -145,6 +169,17 @@ public class BoxAnimation {
                 Variables.WORLD.getBlockAt(96, 59, -311).setType(Material.QUARTZ_BLOCK);
                 Variables.WORLD.getBlockAt(96, 59, -311).setData((byte)2);
                 Variables.WORLD.getBlockAt(96, 59, -311).getWorld().playEffect(Variables.WORLD.getBlockAt(96, 59, -311).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(96, 59, -311).getTypeId());
+
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-311).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-311).setData((byte)8);
+                    Variables.WORLD.getBlockAt(i,58,-311).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-311).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-311).getTypeId());
+                }
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-315).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-315).setData((byte)8);
+                    Variables.WORLD.getBlockAt(i,58,-315).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-315).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-315).getTypeId());
+                }
             }
         });
 
@@ -176,6 +211,42 @@ public class BoxAnimation {
                     case LEGENDARY:
                         cp.awardAchievement(p, AchievementsEnum.LEGENDARY);
                         break;
+                }
+
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-313).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-313).setData((byte)weightf.getData());
+                    Variables.WORLD.getBlockAt(i,58,-313).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-313).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-313).getTypeId());
+                }
+            }
+        });
+        ScheduleUtils.scheduleTask(125, new Runnable() {
+            @Override
+            public void run() {
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-312).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-312).setData((byte)weightf.getData());
+                    Variables.WORLD.getBlockAt(i,58,-312).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-312).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-312).getTypeId());
+                }
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-314).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-314).setData((byte)weightf.getData());
+                    Variables.WORLD.getBlockAt(i,58,-314).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-314).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-314).getTypeId());
+                }
+            }
+        });
+        ScheduleUtils.scheduleTask(130, new Runnable() {
+            @Override
+            public void run() {
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-311).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-311).setData((byte)weightf.getData());
+                    Variables.WORLD.getBlockAt(i,58,-311).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-311).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-311).getTypeId());
+                }
+                for(int i=93;i<96;i++){
+                    Variables.WORLD.getBlockAt(i,58,-315).setType(Material.STAINED_CLAY);
+                    Variables.WORLD.getBlockAt(i,58,-315).setData((byte)weightf.getData());
+                    Variables.WORLD.getBlockAt(i,58,-315).getWorld().playEffect(Variables.WORLD.getBlockAt(i,58,-315).getLocation(), Effect.STEP_SOUND, Variables.WORLD.getBlockAt(i,58,-315).getTypeId());
                 }
             }
         });
@@ -260,6 +331,15 @@ public class BoxAnimation {
                         } else {
                             PlayerUtils.getProfile(p).unlockGadget(gadgetf,p,true,true,true);
                         }
+                        
+                        if(weightf == Weight.EPIC){
+                            ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + gadgetf.getName() + " &agevonden!");
+                            Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);
+                        } else if (weightf == Weight.LEGENDARY) {
+                            ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + gadgetf.getName() + " &agevonden!");
+                            Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_DEATH, 100, 1);
+                        }
+                        
                         break;
                     case CLOTHING:
                         if(PlayerUtils.getProfile(p).getPieces()[piecef.getId()] == 't'){
@@ -267,6 +347,15 @@ public class BoxAnimation {
                         } else {
                             PlayerUtils.getProfile(p).unlockClothing(piecef,p,true,true,true);
                         }
+
+                        if(weightf == Weight.EPIC){
+                            ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + piecef.getSuit().getName() + " " + piecef.getSuitType().getName() + " &agevonden!");
+                            Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);
+                        } else if (weightf == Weight.LEGENDARY) {
+                            ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + piecef.getSuit().getName() + " " + piecef.getSuitType().getName() + " &agevonden!");
+                            Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_DEATH, 100, 1);
+                        }
+
                         break;
                     case PET:
                         if (petf != null && PlayerUtils.getProfile(p).getPets()[petf.getId()] == 't') {
@@ -274,13 +363,26 @@ public class BoxAnimation {
                         } else {
                             PlayerUtils.getProfile(p).unlockPet(petf,p,true,true,true);
                         }
+
+                        if(weightf == Weight.EPIC){
+                            if (petf != null) {
+                                ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + petf.getName() + " &agevonden!");
+                            }
+                            Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);
+                        } else if (weightf == Weight.LEGENDARY) {
+                            if (petf != null) {
+                                ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + petf.getName() + " &agevonden!");
+                            }
+                            Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_DEATH, 100, 1);
+                        }
+
                         break;
                 }
 
             }
         });
 
-        ScheduleUtils.scheduleTask(300, new Runnable() {
+        ScheduleUtils.scheduleTask(330, new Runnable() {
             @Override
             public void run() {
                 itemHolo.delete();
@@ -294,6 +396,13 @@ public class BoxAnimation {
                 Variables.WORLD.getBlockAt(96, 59, -315).setType(Material.AIR);
                 Variables.WORLD.getBlockAt(96, 59, -313).setType(Material.AIR);
                 Variables.WORLD.getBlockAt(96, 59, -311).setType(Material.AIR);
+
+                for(int i=93;i<96;i++){
+                    for(int i2=-315;i2<-310;i2++){
+                        Variables.WORLD.getBlockAt(i,58,i2).setType(Material.QUARTZ_BLOCK);
+                        Variables.WORLD.getBlockAt(i,58,-311).setData((byte)0);
+                    }
+                }
 
                 BoxMenu.inUse = false;
             }

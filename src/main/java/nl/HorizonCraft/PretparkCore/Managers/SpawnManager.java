@@ -45,8 +45,8 @@ import org.bukkit.Location;
 public class SpawnManager {
 
     public static void setup(){
-        Hologram holoTwitter = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD,62.5,68.5,-18.5));
-        Hologram holoInsta = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD,66.5,68.5,-18.5));
+        Hologram holoTwitter = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD,60.5,68.5,-17.5));
+        Hologram holoInsta = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD,68.5,68.5,-17.5));
 
         holoTwitter.appendTextLine(MiscUtils.color("&b&lVolg ons op Twitter:"));
         holoTwitter.appendTextLine(MiscUtils.color("&b@Horizon_Craft"));

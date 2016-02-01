@@ -35,3 +35,7 @@ commands:
         description: revokeachievement
     updateleaderboards:
             description: updateleaderboards
+    powerup:
+            description: powerup
+    openbox:
+            description: openbox

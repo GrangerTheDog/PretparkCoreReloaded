@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Profiles;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.ProgressiveAchievementsEnum;
@@ -83,6 +84,7 @@ public class CorePlayer {
 
     private boolean speed;
 
+    private Hologram spawnHologram;
 
     public CorePlayer(Player p){
         this.uuid = p.getUniqueId();
@@ -244,6 +246,17 @@ public class CorePlayer {
         setDust(getDust() + add);
 
         ChatUtils.sendMsg(p, "&b+" + add + " MysteryDust! (" + reason + ")");
+        if(playSound){
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public void removeDust(Player p, int add, String reason, boolean playSound){
+
+        setDust(getDust() - add);
+
+        ChatUtils.sendMsg(p, "&b-" + add + " MysteryDust! (" + reason + ")");
         if(playSound){
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         }
@@ -653,6 +666,19 @@ public class CorePlayer {
     }
 
     /* --END RECORDS-- */
+
+
+    /* --START HOLOGRAMS-- */
+
+    public Hologram getSpawnHologram() {
+        return spawnHologram;
+    }
+
+    public void setSpawnHologram(Hologram spawnHologram) {
+        this.spawnHologram = spawnHologram;
+    }
+
+    /* --END HOLOGRAMS-- */
 
 
 }

@@ -80,5 +80,6 @@ public class ChatUtils {
 
 
     public static String error = "&c&lERROR! &a";
+    public static String success = "&2&lGELUKT! &a";
 
 }

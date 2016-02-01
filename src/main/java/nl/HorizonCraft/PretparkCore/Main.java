@@ -41,14 +41,18 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
+import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxCrafting;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.BoxSetup;
+import nl.HorizonCraft.PretparkCore.Bundles.MysteryBox.OpenBoxCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.ChangePointStateCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.CreatePointCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Ping.ServerPingListener;
+import nl.HorizonCraft.PretparkCore.Bundles.Powerups.Commands.PowerupCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Powerups.PowerupViewMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.ShopTrigger;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
@@ -76,6 +80,7 @@ import nl.HorizonCraft.PretparkCore.Timers.CurrencyGiver;
 import nl.HorizonCraft.PretparkCore.Timers.DataSaver;
 import nl.HorizonCraft.PretparkCore.Timers.LeaderboardUpdater;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
+import nl.HorizonCraft.PretparkCore.Utilities.Packets.SpawnHologram;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -106,8 +111,8 @@ public class Main extends JavaPlugin {
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
-                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu()/*, new ArmorStandListener()*/
-                , new BoxMenu(), new ServerPingListener(), new ChatListener(), new PointMenu()
+                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new BoxCrafting()
+                , new BoxMenu(), new ServerPingListener(), new ChatListener(), new PointMenu(), new PowerupViewMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
                 , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop(), new PetShop(), new MonsterEggBlockPlaceListener()
         );
@@ -127,6 +132,8 @@ public class Main extends JavaPlugin {
         registerCommand("awardachievement", new AchievementCommand());
         registerCommand("revokeachievement", new RevokeAchievementCommand());
         registerCommand("updateleaderboards", new UpdateLeaderboardsCommand());
+        registerCommand("powerup", new PowerupCommand());
+        registerCommand("openbox", new OpenBoxCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
@@ -144,6 +151,7 @@ public class Main extends JavaPlugin {
         MysqlManager.getWarps();
         MysqlManager.getVouchers();
         MysqlManager.amountUnique();
+        MysqlManager.loadPowerupLocations();
         MazeLeaderboards.load(false);
 
         getLogger().info("Opening API hooks..."); //Checking if the API's that we need are running.
@@ -152,7 +160,6 @@ public class Main extends JavaPlugin {
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
         CurrencyGiver.start(this);
-//        HologramMaintainer.start(this);
         LeaderboardUpdater.start(this);
 
         getLogger().info("Starting post-setup"); //For frontend stuff, like scoreboards.
@@ -168,6 +175,8 @@ public class Main extends JavaPlugin {
             cp.awardAchievement(p, AchievementsEnum.FIRST_TIME_JOIN);
 
             cp.awardProgressive();
+
+            SpawnHologram.spawn(p);
         }
 
         getLogger().info("Plugin ready! (Loadtime: " + getLoad() + "ms)");
@@ -184,6 +193,7 @@ public class Main extends JavaPlugin {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);
+            SpawnHologram.despawn(p);
 
             MysqlManager.saveData(p);
             MysqlManager.savePrefs(p);

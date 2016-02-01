@@ -61,7 +61,9 @@ public enum AchievementsEnum {
     LEGENDARY(21, "I'M THE LIVING LEGEND!", "Vind een LEGENDARY item in de MysteryBox!", 200, 8, 1200, AchievementType.UNLOCKABLES),
     EXCLUSIVE(22, "THE EXCLUSIVE CLUB", "Vind een MysteryBox Exclusive item in de MysteryBox!", 200, 2, 300, AchievementType.UNLOCKABLES),
     MYSTERYBOX_OPEN(23, "It won't me a Mystery anymore!", "Open een MysteryBox", 100, 1, 200, AchievementType.GENERAL),
-    DC_RIDE(24, "The dive to the Horizon.", "Maak een ritje op de DiveCoaster", 25, 1, 600, AchievementType.RIDES);
+    DC_RIDE(24, "The dive to the Horizon.", "Maak een ritje op de DiveCoaster", 25, 1, 600, AchievementType.RIDES),
+    MAE_SLAP(25, "MAWHEEEE!", "Launch MAETJE!", 10, 1, 200, AchievementType.STAFFPUNCH),
+    TIM_SLAP(26, "Tim on top of the world!", "Launch Toptim24!", 10, 1, 200, AchievementType.STAFFPUNCH);
 
 
     private int id;

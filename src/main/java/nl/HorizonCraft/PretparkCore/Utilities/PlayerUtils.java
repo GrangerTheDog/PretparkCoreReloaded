@@ -96,13 +96,13 @@ public class PlayerUtils {
         setPiece(cp.getBoots(),p);
         setPiece(cp.getChest(),p);
 
-        if (cp.hasSpeed()) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0, false, false));
-        } else {
-            if(p.hasPotionEffect(PotionEffectType.SPEED)){
-                p.removePotionEffect(PotionEffectType.SPEED);
-            }
-        }
+//        if (cp.hasSpeed()) {
+//            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0, false, false));
+//        } else {
+//            if(p.hasPotionEffect(PotionEffectType.SPEED)){
+//                p.removePotionEffect(PotionEffectType.SPEED);
+//            }
+//        }
 
         cp.calculateExp(p, true);
 
@@ -130,6 +130,12 @@ public class PlayerUtils {
                 break;
             case "jordyvz01":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY2_SLAP);
+                break;
+            case "MAETJE":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MAE_SLAP);
+                break;
+            case "Toptim24":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.TIM_SLAP);
                 break;
             default:
                 break;

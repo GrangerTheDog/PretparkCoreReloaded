@@ -29,38 +29,50 @@
  * You are free to use the code anywhere you like, but we will not provide ANY support
  * unless you are on our server using this plugin.
  */
+package nl.HorizonCraft.PretparkCore.Bundles.Powerups;
 
-package nl.HorizonCraft.PretparkCore.Timers;
-
-import nl.HorizonCraft.PretparkCore.Bundles.Powerups.PowerupSpawner;
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/31/2016 at 2:23 PM.
  */
-public class DataSaver {
+public class PowerupViewMenu implements Listener {
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p);
-                    MysqlManager.savePrefs(p);
-                    MysqlManager.saveRecords(p);
+    public static void open(Player p){
+        Inventory inv = Bukkit.createInventory(null, 54, "Powerup Locations");
 
-//                    PlayerUtils.configPlayer(p, false);
-                }
+        int slot = 1;
+        for(int id : Variables.powerupLocations.keySet()){
 
-                MiscUtils.updateVouchers();
-                PowerupSpawner.spawn();
+            ItemUtils.createDisplay(inv, slot, Material.FIREWORK_CHARGE, 1, 0, "&aPowerup: " + id, "&3Locatie: &b&l(" + MiscUtils.locationToString(Variables.powerupLocations.get(id), false, true) + ")",
+                    "&9> Klik om te teleporteren");
+
+            slot++;
+        }
+
+        p.openInventory(inv);
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent event){
+        Inventory inv = event.getInventory();
+        if(ChatColor.stripColor(inv.getName()).contains("Powerup Locations")) {
+            event.setCancelled(true);
+            Player p = (Player) event.getWhoClicked();
+            if (event.getCurrentItem() != null) {
+                int id = Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).replace("Powerup: ", " ").trim());
+                p.closeInventory();
+                p.teleport(Variables.powerupLocations.get(id));
             }
-        });
+        }
     }
 
 }

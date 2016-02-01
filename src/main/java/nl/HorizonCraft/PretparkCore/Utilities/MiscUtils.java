@@ -225,4 +225,34 @@ public class MiscUtils {
         }
         return null;
     }
+
+    public static String locationToString(Location location, boolean inlcudeYawPitch, boolean round){
+        StringBuilder sb = new StringBuilder();
+        if(round){
+            sb.append((int)location.getX()).append(",").append((int)location.getY()).append(",").append((int)location.getZ());
+        } else {
+            sb.append(location.getX()).append(",").append(location.getY()).append(",").append(location.getZ());
+        }
+        if(inlcudeYawPitch){
+            if(round){
+                sb.append(",").append((int)location.getYaw()).append(",").append((int)location.getPitch());
+            } else {
+                sb.append(",").append(location.getYaw()).append(",").append(location.getPitch());
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    public static Location stringToLocation(String locationS){
+        String[] locationA = locationS.split(",");
+        if(!(locationA.length >= 3)){
+            return null;
+        }
+        Location location = new Location(Variables.WORLD, Double.parseDouble(locationA[0]), Double.parseDouble(locationA[1]), Double.parseDouble(locationA[2]));
+        if(locationA.length >= 5){
+            location.setYaw(Float.parseFloat(locationA[3]));
+            location.setPitch(Float.parseFloat(locationA[4]));
+        }
+        return location;
+    }
 }

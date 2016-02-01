@@ -37,6 +37,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.ArrayList;
@@ -76,6 +77,8 @@ public class Variables {
     public static ArrayList<Hologram> holograms = new ArrayList<>();
     public static ArrayList<Voucher> vouchers = new ArrayList<>();
     public static ArrayList<NavigationPoint> navigationPoints = new ArrayList<>();
+    public static HashMap<Integer, Location> powerupLocations = new HashMap<>();
+    public static ArrayList<Hologram> powerups = new ArrayList<>();
 
     public static int uniquePlayers = 0;
 }

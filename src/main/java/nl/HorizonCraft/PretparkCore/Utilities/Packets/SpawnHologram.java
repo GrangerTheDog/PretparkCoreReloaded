@@ -30,37 +30,43 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Timers;
+package nl.HorizonCraft.PretparkCore.Utilities.Packets;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Powerups.PowerupSpawner;
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
+import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import org.bukkit.Bukkit;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/30/2016 at 4:02 PM.
  */
-public class DataSaver {
+public class SpawnHologram {
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p);
-                    MysqlManager.savePrefs(p);
-                    MysqlManager.saveRecords(p);
+    public static void spawn(Player p){
+        CorePlayer cp = PlayerUtils.getProfile(p);
 
-//                    PlayerUtils.configPlayer(p, false);
-                }
+        Hologram hologram = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, 64.5,67.75,-19.5));
+        VisibilityManager visiblityManager = hologram.getVisibilityManager();
 
-                MiscUtils.updateVouchers();
-                PowerupSpawner.spawn();
-            }
-        });
+        visiblityManager.showTo(p);
+        visiblityManager.setVisibleByDefault(false);
+
+        hologram.appendTextLine(MiscUtils.color("&aWelkom, &e" + p.getName() + " &aop"));
+        hologram.appendTextLine(MiscUtils.color(Variables.SERVER_NAME));
+
+        cp.setSpawnHologram(hologram);
     }
 
+    public static void despawn(Player p){
+        Hologram hologram = PlayerUtils.getProfile(p).getSpawnHologram();
+        if(hologram != null) {
+            hologram.delete();
+        }
+    }
 }

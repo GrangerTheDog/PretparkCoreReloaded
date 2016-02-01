@@ -84,7 +84,7 @@ public class BoxMenu implements Listener {
                 ItemUtils.createDisplay(inv, i+1, Material.ENDER_CHEST, 1, 0, "&aMystery Box", "&7Klik om te openen!", "&aDit kost: &d1 Mystery Key");
             }
 
-            ItemUtils.createDisplay(inv, 50, Material.WORKBENCH, 1, 0, "&aCrafting &3(Binnenkort)",
+            ItemUtils.createDisplay(inv, 50, Material.WORKBENCH, 1, 0, "&aCrafting",
                     "&3Wanneer je een item al hebt, ontvang je Mystery Dust!",
                     "&3Hiermee kun je exclusive boxes craften",
                     "&3en daaruit exclusieve items ontvangen!",
@@ -107,13 +107,16 @@ public class BoxMenu implements Listener {
                     if(!inUse){
                         if(PlayerUtils.getProfile((Player)event.getWhoClicked()).getKeys() > 0){
                             p.closeInventory();
-                            BoxAnimation.openBox((Player)event.getWhoClicked());
+                            BoxAnimation.openBox((Player)event.getWhoClicked(), null);
                         } else {
                             ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Je hebt niet genoeg keys!");
                         }
                     } else {
                         ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Maar een persoon kan de MysteryVault teglijk gebruiken!");
                     }
+                    break;
+                case WORKBENCH:
+                    BoxCrafting.open(p);
                     break;
                 default:
                     break;

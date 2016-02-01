@@ -43,6 +43,9 @@ public class HologramUtils {
         for (Hologram holo : Variables.holograms) {
             holo.delete();
         }
+        for (Hologram holo : Variables.powerups) {
+            holo.delete();
+        }
     }
 
 }

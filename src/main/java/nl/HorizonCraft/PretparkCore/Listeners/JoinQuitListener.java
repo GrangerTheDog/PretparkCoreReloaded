@@ -37,6 +37,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
+import nl.HorizonCraft.PretparkCore.Utilities.Packets.SpawnHologram;
 import nl.HorizonCraft.PretparkCore.Utilities.Packets.TitleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -86,6 +87,7 @@ public class JoinQuitListener implements Listener {
             }
         }
         ScoreboardUtils.constructScoreboard(p);
+        SpawnHologram.spawn(p);
 
         cp.awardAchievement(p, AchievementsEnum.FIRST_TIME_JOIN);
     }
@@ -107,6 +109,7 @@ public class JoinQuitListener implements Listener {
             }
         }
         ScoreboardUtils.destroyScoreboard(p);
+        SpawnHologram.despawn(p);
 
         Variables.profile.remove(p.getName());
     }

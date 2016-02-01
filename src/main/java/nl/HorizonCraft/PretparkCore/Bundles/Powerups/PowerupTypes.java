@@ -30,37 +30,67 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Timers;
+package nl.HorizonCraft.PretparkCore.Bundles.Powerups;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Powerups.PowerupSpawner;
-import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
-import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
+import org.bukkit.Material;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
- * This class has been created on 09/9/11/2015/2015 at 10:14 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 1/31/2016 at 3:01 PM.
  */
-public class DataSaver {
+public enum PowerupTypes {
 
-    public static void start(Plugin plugin) {
-        ScheduleUtils.repeatTask(plugin, 12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    MysqlManager.saveData(p);
-                    MysqlManager.savePrefs(p);
-                    MysqlManager.saveRecords(p);
+    COINS("Coins", "6", 1, 150, Material.GOLD_NUGGET),
+    EXP("Experience", "9", 1, 500, Material.EXP_BOTTLE),
+    BOXES("Mystery Boxes", "3", 1, 10, Material.ENDER_CHEST),
+    KEYS("Mystery Keys", "d", 1, 5, Material.TRIPWIRE_HOOK),
+    DUST("Mystery Dust", "b", 1, 15, Material.SUGAR);
 
-//                    PlayerUtils.configPlayer(p, false);
-                }
+    private String name;
+    private String color;
+    private int min;
+    private int max;
+    private Material material;
 
-                MiscUtils.updateVouchers();
-                PowerupSpawner.spawn();
-            }
-        });
+    PowerupTypes(String s, String s1, int i, int i2, Material m) {
+        this.name = s;
+        this.color = s1;
+        this.min = i;
+        this.max = i2;
+        this.material = m;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    private static final List<PowerupTypes> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+
+    public static PowerupTypes random()  {
+        return VALUES.get(RANDOM.nextInt(SIZE));
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
 }

@@ -40,6 +40,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointState;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
@@ -1029,6 +1030,113 @@ public class MysqlManager {
             if (rs != null) {
                 try {
                     rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void createPowerupLocation(String location){
+        Connection c = null;
+        PreparedStatement ps = null;
+        String create = "INSERT INTO powerup_locations VALUES(null,?)";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(create);
+
+            ps.setString(1, location);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void loadPowerupLocations(){
+        Main.getPlugin().getLogger().info("Loading PowerUp locations...");
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM powerup_locations;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            int i = 0;
+            while(rs.next()) {
+                Variables.powerupLocations.put(rs.getInt("id"), MiscUtils.stringToLocation(rs.getString("location")));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void removePowerupLocation(int id){
+        Connection c = null;
+        PreparedStatement ps = null;
+        String updateData = "DELETE FROM powerup_locations WHERE id=?";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setInt(1, id);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
