@@ -3,7 +3,7 @@
 ##General Leaderboard
 | # |      Naam      |   Points  |   Bonus Points  |  Verschil Vorige Week |  Verschil Plek  |               Opmerkingen              |
 |:-:|:--------------:|:---------:|:---------------:|:---------------------:|:---------------:|:--------------------------------------:|
-| 1 |  Cooltimmetje  | 30 points | +3 bonus points |   :arrow_up: 1 point  | :arrow_right: 0 |     :star: Tweede week op nummer 1!    |
+| 1 |  Cooltimmetje  | 30 points | +3 bonus points |   :arrow_up: 1 point  | :arrow_right: 0 |     :star: Derde week op nummer 1!    |
 | 2 |    78wesley    | 26 points | +4 bonus points |  :arrow_up: 10 points |   :arrow_up: 3  | :star: 3e opeenvolgende week gestegen! |
 | 3 |    jordyvz01   | 19 points | +3 bonus points |  :arrow_down: 1 point |  :arrow_down: 1 |                                        |
 | 4 |   Jordy010NL   | 11 points | +3 bonus points |  :arrow_up: 4 points  |   :arrow_up: 2  | :star: 2e opeenvolgende week gestegen! |
