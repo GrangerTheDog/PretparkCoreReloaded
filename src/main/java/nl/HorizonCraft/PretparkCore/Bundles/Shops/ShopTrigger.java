@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.Shops;
 
+import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
@@ -65,6 +66,9 @@ public class ShopTrigger implements Listener {
                     break;
                 case "4ac1403a-4111-2c61-f240ba5ef55f": // FIREWORK SHOP
                     //TODO Moet nog classes shit maken hier voor !
+                    break;
+                case "c4217df2-5e51-2d49-8d98-cebe41f84ce2":
+                    DeliveryMenu.open(p);
                     break;
                 default:
                     break;

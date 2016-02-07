@@ -86,6 +86,11 @@ public class CorePlayer {
 
     private int maze_1_record;
     private int maze_2_record;
+    private int daily_streak_record;
+
+    private int current_daily_streak;
+    private long last_daily_claim;
+
 
     private boolean speed;
 
@@ -658,6 +663,14 @@ public class CorePlayer {
         this.maze_2_record = maze_2_record;
     }
 
+    public int getDaily_streak_record() {
+        return daily_streak_record;
+    }
+
+    public void setDaily_streak_record(int daily_streak_record) {
+        this.daily_streak_record = daily_streak_record;
+    }
+
     /* --END RECORDS-- */
 
 
@@ -673,5 +686,25 @@ public class CorePlayer {
 
     /* --END HOLOGRAMS-- */
 
+
+     /* --START DELIVERY-- */
+
+    public int getCurrent_daily_streak() {
+        return current_daily_streak;
+    }
+
+    public void setCurrent_daily_streak(int current_daily_streak) {
+        this.current_daily_streak = current_daily_streak;
+    }
+
+    public long getLast_daily_claim() {
+        return last_daily_claim;
+    }
+
+    public void setLast_daily_claim(long last_daily_claim) {
+        this.last_daily_claim = last_daily_claim;
+    }
+
+     /* --END DELIVERY-- */
 
 }

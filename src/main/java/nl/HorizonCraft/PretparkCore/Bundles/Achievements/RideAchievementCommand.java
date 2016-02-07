@@ -30,7 +30,7 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Commands.Admin;
+package nl.HorizonCraft.PretparkCore.Bundles.Achievements;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
@@ -77,11 +77,27 @@ public class RideAchievementCommand implements CommandExecutor{
                             CorePlayer cp = PlayerUtils.getProfile(p);
                             Location pLoc = p.getLocation();
                             if(pLoc.getX() <= -166 && pLoc.getX() >= -176){
-                                if(pLoc.getY() <= 69 && pLoc.getY() >= 74){
+                                if(pLoc.getY() <= 74 && pLoc.getY() >= 69){
                                     if(pLoc.getZ() <= -616 && pLoc.getZ() >= -618) {
                                         if (p.isInsideVehicle()) {
                                             cp.awardAchievement(p, AchievementsEnum.DC_RIDE);
                                             cp.addExp(p, MiscUtils.randomInt(10, 50), "Dive Coaster ritje", true, true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "ts": // -514,68,-552 en -500,72,-550
+                        for(Player p : Bukkit.getOnlinePlayers()){
+                            CorePlayer cp = PlayerUtils.getProfile(p);
+                            Location pLoc = p.getLocation();
+                            if(pLoc.getX() <= -500 && pLoc.getX() >= -514){
+                                if(pLoc.getY() <= 72 && pLoc.getY() >= 68){
+                                    if(pLoc.getZ() <= -550 && pLoc.getZ() >= -552) {
+                                        if (p.isInsideVehicle()) {
+                                            cp.awardAchievement(p, AchievementsEnum.TS_RIDE);
+                                            cp.addExp(p, MiscUtils.randomInt(10, 50), "The Swinger ritje", true, true);
                                         }
                                     }
                                 }

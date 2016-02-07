@@ -36,6 +36,8 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.SuitType;
+import nl.HorizonCraft.PretparkCore.Enums.StatTypes;
+import nl.HorizonCraft.PretparkCore.Enums.Stats;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -47,6 +49,8 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -234,4 +238,31 @@ public class PlayerUtils {
 
         return sb.toString().split("\n");
     }
+
+    public static void showStat(Player p){
+        Stats stat = Stats.random();
+        if(stat.getStatType() == StatTypes.DISTANCE) {
+            int distance = 0;
+            for (Stats stats : Stats.values()) {
+                if (stats.getStatType() == StatTypes.DISTANCE) {
+                    distance = distance + p.getStatistic(stats.getStatistic());
+                }
+            }
+            double distanceKm = (double) distance / (double) 100000;
+            DecimalFormat df = new DecimalFormat("#.##");
+            df.setRoundingMode(RoundingMode.HALF_UP);
+            double distanceStat = (double) p.getStatistic(stat.getStatistic()) / (double) 100000;
+
+            String title = MiscUtils.color("&e&lJe hebt op deze server &c&l" + df.format(distanceKm) + "km &e&lafgelegd, waarvan " + stat.getLine().replace("%n", "&c&l" + df.format(distanceStat) + "km&e&l"));
+
+            TitleUtils.sendAction(p, MiscUtils.color(title), 5);
+        } else if(stat.getStatType() == StatTypes.TIME) {
+            int time = p.getStatistic(stat.getStatistic()) / 20;
+            TitleUtils.sendAction(p, MiscUtils.color("&e&l" + stat.getLine().replace("%n", "&c&l" + MiscUtils.formatTime(time) + "&e&l")), 5);
+        } else {
+            TitleUtils.sendAction(p, MiscUtils.color("&e&l" + stat.getLine().replace("%n", "&c&l" + p.getStatistic(stat.getStatistic()) + "&e&l")), 5);
+        }
+    }
+
+
 }

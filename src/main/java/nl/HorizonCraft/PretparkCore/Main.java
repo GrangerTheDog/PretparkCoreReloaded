@@ -36,6 +36,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RevokeAchievementCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
@@ -58,7 +59,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
-import nl.HorizonCraft.PretparkCore.Commands.Admin.RideAchievementCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UpdateLeaderboardsCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
@@ -82,6 +83,7 @@ import nl.HorizonCraft.PretparkCore.Timers.LeaderboardUpdater;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import nl.HorizonCraft.PretparkCore.Utilities.Packets.SpawnHologram;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -111,7 +113,7 @@ public class Main extends JavaPlugin {
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
-                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new BoxCrafting()
+                , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new BoxCrafting(), new DeliveryMenu()
                 , new BoxMenu(), new ServerPingListener(), new ChatListener(), new PointMenu(), new PowerupViewMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
                 , new GadgetsShop(), new WardrobeMenu(), new WardrobeShop(), new PetShop(), new MonsterEggBlockPlaceListener()
@@ -179,6 +181,11 @@ public class Main extends JavaPlugin {
 
             SpawnHologram.spawn(p);
         }
+
+        HologramUtils.spawnAudio(this, new Location(Variables.WORLD, -132.5,68,-601.5));
+        HologramUtils.spawnAudio(this, new Location(Variables.WORLD, -137.5,73,-607.5));
+        HologramUtils.spawnAudio(this, new Location(Variables.WORLD, 121.5,28,-586.5));
+        HologramUtils.spawnAudio(this, new Location(Variables.WORLD, 106.5,70,-568.5));
 
         getLogger().info("Plugin ready! (Loadtime: " + getLoad() + "ms)");
         sendDebug("&3Pretpark&6Core&9> &aPlugin load finished! &c(" + getLoad() + "ms)");

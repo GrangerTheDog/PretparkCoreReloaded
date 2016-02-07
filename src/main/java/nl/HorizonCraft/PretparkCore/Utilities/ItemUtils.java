@@ -53,7 +53,7 @@ public class ItemUtils {
         }
         ArrayList<String> loreList = new ArrayList<>();
         for(String s : lore){
-            loreList.add(MiscUtils.color(s));
+            loreList.add(MiscUtils.color("&3" + s));
         }
         itemMeta.setLore(loreList);
         item.setItemMeta(itemMeta);
@@ -96,7 +96,7 @@ public class ItemUtils {
         }
         ArrayList<String> loreList = new ArrayList<>();
         for(String s : lore){
-            loreList.add(MiscUtils.color(s));
+            loreList.add(MiscUtils.color("&3" + s));
         }
         itemMeta.setLore(loreList);
         item.setItemMeta(itemMeta);
@@ -111,7 +111,7 @@ public class ItemUtils {
         }
         ArrayList<String> loreList = new ArrayList<>();
         for(String s : lore){
-            loreList.add(MiscUtils.color(s));
+            loreList.add(MiscUtils.color("&3" + s));
         }
         itemMeta.setLore(loreList);
         item.setItemMeta(itemMeta);

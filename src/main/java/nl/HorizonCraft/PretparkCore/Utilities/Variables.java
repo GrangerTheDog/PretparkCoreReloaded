@@ -73,6 +73,13 @@ public class Variables {
     public static int EPIC_CHANCE = 5;
     public static int LEGENDARY_CHANCE = 1;
 
+    public static int DAILY_COINS = 20;
+    public static int DAILY_EXP = 250;
+    public static int DAILY_BOXES = 0;
+    public static int DAILY_KEYS = 0;
+    public static double DAILY_MODIFIER = 1.1;
+    public static int DAILY_MODIFIER_CAP = 30;
+
     public static HashMap<String, CorePlayer> profile = new HashMap<>();
     public static ArrayList<Hologram> holograms = new ArrayList<>();
     public static ArrayList<Voucher> vouchers = new ArrayList<>();

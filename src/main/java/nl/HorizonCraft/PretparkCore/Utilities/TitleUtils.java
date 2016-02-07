@@ -63,6 +63,21 @@ public class TitleUtils {
         new ActionbarTitleObject(MiscUtils.color(message)).send(p);
     }
 
+    public static void sendAction(final Player p, final String message, int seconds){
+        for(int i=0; i < seconds; i++){
+            if(i == 0){
+                new ActionbarTitleObject(MiscUtils.color(message)).send(p);
+            } else {
+                ScheduleUtils.scheduleTask(20 * i, new Runnable() {
+                    @Override
+                    public void run() {
+                        new ActionbarTitleObject(MiscUtils.color(message)).send(p);
+                    }
+                });
+            }
+        }
+    }
+
     public static void sendTitle(Player p, FrameSequence title, FrameSequence subTitle){
         new TitleAnimation(title, subTitle).send(p);
     }

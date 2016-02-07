@@ -165,7 +165,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0,0,0)";
 
         try {
             c = hikari.getConnection();
@@ -224,6 +224,8 @@ public class MysqlManager {
             cp.setExperienceTime(rs.getInt("exp_time"));
             cp.setId(rs.getInt("id"));
             cp.setDust(rs.getInt("dust"));
+            cp.setLast_daily_claim(rs.getLong("last_daily_claim"));
+            cp.setCurrent_daily_streak(rs.getInt("current_daily_streak"));
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -233,7 +235,8 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?,wardrobe=?,progressive_achievements=?,dust=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?," +
+                "wardrobe=?,progressive_achievements=?,dust=?,last_daily_claim=?,current_daily_streak=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -254,7 +257,9 @@ public class MysqlManager {
             ps.setString(12, new String(cp.getPieces()));
             ps.setString(13, new String(cp.getProgressiveAchievements()));
             ps.setInt(14, cp.getDust());
-            ps.setString(15, uuid);
+            ps.setLong(15, cp.getLast_daily_claim());
+            ps.setInt(16, cp.getCurrent_daily_streak());
+            ps.setString(17, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -855,7 +860,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO player_records VALUES(?,?,0,0)";
+        String create = "INSERT INTO player_records VALUES(?,?,0,0,0)";
 
         try {
             c = hikari.getConnection();
@@ -891,6 +896,7 @@ public class MysqlManager {
 
             cp.setMaze_1_record(rs.getInt("maze_1"));
             cp.setMaze_2_record(rs.getInt("maze_2"));
+            cp.setDaily_streak_record(rs.getInt("daily_streak_record"));
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -901,7 +907,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE player_records SET name=?,maze_1=?,maze_2=? WHERE uuid=?";
+        String updateData = "UPDATE player_records SET name=?,maze_1=?,maze_2=?,daily_streak_record=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -911,7 +917,8 @@ public class MysqlManager {
             ps.setString(1, p.getName());
             ps.setInt(2, cp.getMaze_1_record());
             ps.setInt(3, cp.getMaze_2_record());
-            ps.setString(4, uuid);
+            ps.setInt(4, cp.getDaily_streak_record());
+            ps.setString(5, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -933,7 +940,6 @@ public class MysqlManager {
             }
         }
     }
-
 
     public static void loadLeadMaze1(){
         Main.getPlugin().getLogger().info("Loading maze 1");

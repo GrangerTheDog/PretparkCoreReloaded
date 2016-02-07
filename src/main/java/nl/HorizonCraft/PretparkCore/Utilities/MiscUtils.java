@@ -163,10 +163,12 @@ public class MiscUtils {
     }
 
     public static String formatTime(int cooldown) {
-        int sec,min,hour;
+        int sec,min,hour,day,week;
         sec = cooldown;
         min = 0;
         hour = 0;
+        day = 0;
+        week = 0;
         while (sec >= 60){
             min = min + 1;
             sec = sec - 60;
@@ -175,10 +177,24 @@ public class MiscUtils {
             hour = hour + 1;
             min = min - 60;
         }
+        while (hour >= 24){
+            day = day + 1;
+            hour = hour - 24;
+        }
+        while (day >= 7){
+            week = week + 1;
+            day = day - 7;
+        }
 
         StringBuilder sb = new StringBuilder();
+        if(week != 0){
+            sb.append(week + "w");
+        }
+        if(day != 0){
+            sb.append(day + "d");
+        }
         if(hour != 0) {
-            sb.append(hour + "h");
+            sb.append(hour + "u");
         }
         if (min != 0){
             sb.append(min + "m");

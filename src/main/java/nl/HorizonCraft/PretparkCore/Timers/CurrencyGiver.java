@@ -96,6 +96,8 @@ public class CurrencyGiver {
                     } else {
                         cp.setExperienceTime(cp.getExperienceTime() - 1);
                     }
+
+                    PlayerUtils.showStat(p);
                 }
             }
         });
