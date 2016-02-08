@@ -32,9 +32,6 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementType;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementTypes;
-import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -42,15 +39,14 @@ import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.SimpleAttachableMaterialData;
 
-import javax.lang.model.element.VariableElement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -63,12 +59,9 @@ public class DeliveryMenu implements Listener {
         Inventory inv = Bukkit.createInventory(null, 27, "Pieter Post");
         CorePlayer cp = PlayerUtils.getProfile(p);
 
-
-
-//        ItemUtils.createDisplay(inv, 13, Material.MINECART, 1, 0, "&cDagelijkse login bonus.", "Kom elke dag hier terug voor een nieuwe bonus,", "deze bonus word elke dag groter!", " ", "&7Binnenkort");
-
-        ItemUtils.createDisplay(constructDaily(cp), inv, 13);
-        ItemUtils.createDisplay(inv, 15, Material.MINECART, 1, 0, "&cVote reward.", "Vote elke dag voor onze server", "en krijg een vote token.", " ", "&7Binnenkort");
+        ItemUtils.createDisplay(constructDaily(cp), inv, 12);
+        ItemUtils.createDisplay(constructSpecial(cp), inv, 14);
+        ItemUtils.createDisplay(inv, 16, Material.MINECART, 1, 0, "&cVote reward.", "Vote elke dag voor onze server", "en krijg een vote token.", " ", "&7Binnenkort");
 
         p.openInventory(inv);
     }
@@ -81,9 +74,20 @@ public class DeliveryMenu implements Listener {
             Material m = event.getCurrentItem().getType();
             switch (m){
                 case STORAGE_MINECART:
-                    claimDaily(p);
+                    switch (event.getSlot()){
+                        case 11:
+                            claimDaily(p);
+                            break;
+                        case 13:
+                            claimSpecial(p);
+                            break;
+                        default:
+                            p.playSound(p.getLocation(), Sound.ANVIL_LAND, 100, 1);
+                            break;
+                    }
                     break;
                 default:
+                    p.playSound(p.getLocation(), Sound.ANVIL_LAND, 100, 1);
                     break;
             }
         }
@@ -96,7 +100,6 @@ public class DeliveryMenu implements Listener {
         long lastDailyClaim = cp.getLast_daily_claim();
         long curTime = System.currentTimeMillis();
         long claimBefore = lastDailyClaim + (86400000*2);
-        int lostStreak = 0;
 
         boolean streakLost = claimBefore < curTime && (lastDailyClaim != 0);
 
@@ -129,6 +132,32 @@ public class DeliveryMenu implements Listener {
         cp.setLast_daily_claim(System.currentTimeMillis());
         if(cp.getDaily_streak_record() < currentStreak){
             cp.setDaily_streak_record(currentStreak);
+        }
+
+        open(p);
+    }
+
+    private void claimSpecial(Player p){
+        CorePlayer cp = PlayerUtils.getProfile(p);
+        if(cp.getCoinDelivery() != 0){
+            cp.addCoins(p, cp.getCoinDelivery(), "Speciale bezorging", false, false);
+            cp.setCoinDelivery(0);
+        }
+        if(cp.getExpDelivery() != 0){
+            cp.addExp(p, cp.getExpDelivery(), "Speciale bezorging", false, false);
+            cp.setExpDelivery(0);
+        }
+        if(cp.getBoxDelivery() != 0){
+            cp.addBoxes(p, cp.getBoxDelivery(), "Speciale bezorging", false, false);
+            cp.setBoxDelivery(0);
+        }
+        if(cp.getKeyDelivery() != 0){
+            cp.addKeys(p, cp.getKeyDelivery(), "Speciale bezorging", false, false);
+            cp.setKeyDelivery(0);
+        }
+        if(cp.getDustDelivery() != 0){
+            cp.addDust(p, cp.getDustDelivery(), "Speciale bezorging", false, true);
+            cp.setDustDelivery(0);
         }
 
         open(p);
@@ -206,6 +235,43 @@ public class DeliveryMenu implements Listener {
             lore.append("&cJe kunt dit nog niet claimen!\nVolgende claim:\n&b").append(friendlyDate);
         }
         return ItemUtils.createItemstack(m, 1, 0, name, lore.toString().split("\n"));
+    }
+
+    private static ItemStack constructSpecial(CorePlayer cp){
+        String name;
+        StringBuilder lore = new StringBuilder();
+        String nameNoColor = "Speciale bezorging";
+        Material m;
+
+        lore.append("Als je een speciale bezorging hebt, kun je\ndeze hier claimen, deze krijg je als je\nbijvoorbeeld iets gewonnen hebt!\n \n");
+
+        if(cp.hasDelivery()){
+            name = "&a" + nameNoColor;
+            m = Material.STORAGE_MINECART;
+            lore.append("Nog te claimen: \n");
+            if(cp.getCoinDelivery() != 0){
+                lore.append("&6").append(cp.getCoinDelivery()).append(" Coins").append("\n");
+            }
+            if(cp.getExpDelivery() != 0){
+                lore.append("&9").append(cp.getExpDelivery()).append(" EXP").append("\n");
+            }
+            if(cp.getBoxDelivery() != 0){
+                lore.append("&3").append(cp.getBoxDelivery()).append(" Mystery Boxes").append("\n");
+            }
+            if(cp.getKeyDelivery() != 0){
+                lore.append("&d").append(cp.getKeyDelivery()).append(" Mystery Keys").append("\n");
+            }
+            if(cp.getDustDelivery() != 0){
+                lore.append("&b").append(cp.getDustDelivery()).append(" Mystery Dust").append("\n");
+            }
+            lore.append("\n ").append("&c> &eKlik om te claimen.");
+        } else {
+            name = "&c" + nameNoColor;
+            m = Material.MINECART;
+            lore.append("Momenteel heb je geen speciale bezorging.");
+        }
+
+        return ItemUtils.createItemstack(m,1,0,name,lore.toString().trim().split("\n"));
     }
 
 }

@@ -37,6 +37,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RevokeAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.SpecialDeliveryCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsShop;
@@ -136,6 +137,8 @@ public class Main extends JavaPlugin {
         registerCommand("updateleaderboards", new UpdateLeaderboardsCommand());
         registerCommand("powerup", new PowerupCommand());
         registerCommand("openbox", new OpenBoxCommand());
+        registerCommand("specialdelivery", new SpecialDeliveryCommand());
+        registerCommand("sd", new SpecialDeliveryCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);

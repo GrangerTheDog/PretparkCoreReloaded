@@ -69,7 +69,7 @@ public class ScoreboardUtils {
             neededI = Integer.parseInt(exp[0]);
             String levelProgress = progress(expI, neededI);
 
-            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + MiscUtils.intFormat(cp.getCoins(), " ")));
             coins.setScore(9);
             Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
             boxes.setScore(8);
@@ -88,7 +88,7 @@ public class ScoreboardUtils {
             Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &a" + Variables.uniquePlayers));
             unique.setScore(1);
         } else {
-            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+            Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + MiscUtils.intFormat(cp.getCoins(), " ")));
             coins.setScore(7);
             Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
             boxes.setScore(6);
@@ -140,7 +140,7 @@ public class ScoreboardUtils {
                 neededI = Integer.parseInt(exp[0]);
                 String levelProgress = progress(expI, neededI);
 
-                Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+                Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + MiscUtils.intFormat(cp.getCoins(), " ")));
                 coins.setScore(9);
                 Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
                 boxes.setScore(8);
@@ -159,7 +159,7 @@ public class ScoreboardUtils {
                 Score unique = objective.getScore(MiscUtils.color("&bUnieke Spelers: &a" + Variables.uniquePlayers));
                 unique.setScore(1);
             } else {
-                Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + cp.getCoins()));
+                Score coins = objective.getScore(MiscUtils.color("&bCoins: &a" + MiscUtils.intFormat(cp.getCoins(), " ")));
                 coins.setScore(7);
                 Score boxes = objective.getScore(MiscUtils.color("&bMystery Boxes: &a" + cp.getBoxes()));
                 boxes.setScore(6);
@@ -199,7 +199,7 @@ public class ScoreboardUtils {
         }
 
         TitleUtils.setTab(p, Variables.SERVER_NAME + "\n&aWelkom,\n" + p.getDisplayName().trim() + "\n \n&6Nu online &b- &8(&e" + online + "&8/&e" + Bukkit.getMaxPlayers() + "&8)",
-                "\n&eMy&3Horizon \n&6" + cp.getCoins() + " coins &8- &9Level " + cp.getLevel() + " " + levelProgress + "\n&3" + cp.getBoxes() + " Mystery Boxes &8- &d" + cp.getKeys() + " Mystery Keys\n&b"
+                "\n&eMy&3Horizon \n&6" + MiscUtils.intFormat(cp.getCoins()," ") + " coins &8- &9Level " + cp.getLevel() + " " + levelProgress + "\n&3" + cp.getBoxes() + " Mystery Boxes &8- &d" + cp.getKeys() + " Mystery Keys\n&b"
         + cp.getDust() + " Mystery Dust\n&8------\n&awww.horizoncraft.nl");
     }
 

@@ -88,6 +88,11 @@ public class CorePlayer {
     private int maze_2_record;
     private int daily_streak_record;
 
+    private int coinDelivery;
+    private int expDelivery;
+    private int boxDelivery;
+    private int keyDelivery;
+    private int dustDelivery;
     private int current_daily_streak;
     private long last_daily_claim;
 
@@ -703,6 +708,50 @@ public class CorePlayer {
 
     public void setLast_daily_claim(long last_daily_claim) {
         this.last_daily_claim = last_daily_claim;
+    }
+
+    public int getCoinDelivery() {
+        return coinDelivery;
+    }
+
+    public void setCoinDelivery(int coinDelivery) {
+        this.coinDelivery = coinDelivery;
+    }
+
+    public int getExpDelivery() {
+        return expDelivery;
+    }
+
+    public void setExpDelivery(int expDelivery) {
+        this.expDelivery = expDelivery;
+    }
+
+    public int getBoxDelivery() {
+        return boxDelivery;
+    }
+
+    public void setBoxDelivery(int boxDelivery) {
+        this.boxDelivery = boxDelivery;
+    }
+
+    public int getKeyDelivery() {
+        return keyDelivery;
+    }
+
+    public void setKeyDelivery(int keyDelivery) {
+        this.keyDelivery = keyDelivery;
+    }
+
+    public int getDustDelivery() {
+        return dustDelivery;
+    }
+
+    public void setDustDelivery(int dustDelivery) {
+        this.dustDelivery = dustDelivery;
+    }
+
+    public boolean hasDelivery(){
+        return coinDelivery != 0 || expDelivery != 0 || boxDelivery != 0 || keyDelivery != 0 || dustDelivery != 0;
     }
 
      /* --END DELIVERY-- */

@@ -68,9 +68,9 @@ public class MyHorizonMenu implements Listener{
         ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen &8\u00BB &cDISABLED", "&7Verander je instellingen.");
 
         if(!admin) {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
+            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + MiscUtils.intFormat(cp.getCoins(), " ") + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
         } else {
-            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + cp.getCoins() + " coins", "&7+30 coins in: " + cp.getCoinTime());
+            ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + MiscUtils.intFormat(cp.getCoins(), " ") + " coins", "&7+30 coins in: " + cp.getCoinTime());
         }
 
         ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&3Mystery Boxes: &c" + cp.getBoxes());
@@ -80,7 +80,7 @@ public class MyHorizonMenu implements Listener{
         int needed = Integer.parseInt(expInfo[0]);
         int exp = Integer.parseInt(expInfo[1]);
 
-        ItemUtils.createDisplay(inv, 31, Material.EXP_BOTTLE, 1, 0, "&9Experience:", "&3Level: &a" + cp.getLevel(), "&3Totaal EXP: &a" + cp.getExperience(), "&3Nodig tot volgend level: &a" + (needed - exp), "&3Progress: " + progress(exp, needed));
+        ItemUtils.createDisplay(inv, 31, Material.EXP_BOTTLE, 1, 0, "&9Experience:", "&3Level: &a" + cp.getLevel(), "&3Totaal EXP: &a" + MiscUtils.intFormat(cp.getExperience(), " "), "&3Nodig tot volgend level: &a" + MiscUtils.intFormat((needed - exp), " "), "&3Progress: " + progress(exp, needed));
         ItemUtils.createDisplay(inv, 33, Material.SUGAR, 1, 0, "&bMystery Dust: &c" + cp.getDust());
 
         p.openInventory(inv);
@@ -108,20 +108,11 @@ public class MyHorizonMenu implements Listener{
 
     private static String progress(int exp, int needed) {
         double d = (double) exp / (double) needed;
-        double d1 = d * 10;
+        double d1 = d * 100;
         double d2 = Math.round(d1);
         int i = (int) d2;
 
-        StringBuilder sb = new StringBuilder();
-        for (int i2 = 1; i2 < 11; i2++) {
-            if (i2 <= i) {
-                sb.append("&a|");
-            } else {
-                sb.append("&8|");
-            }
-        }
-
-        return sb.toString().trim();
+        return "&8[&a" + i + "%&8]";
     }
 
 }

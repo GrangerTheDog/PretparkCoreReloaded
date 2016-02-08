@@ -39,3 +39,7 @@ commands:
             description: powerup
     openbox:
             description: openbox
+    specialdelivery:
+            description: specialdelivery
+    sd:
+            description: sd

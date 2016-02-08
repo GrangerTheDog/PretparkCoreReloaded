@@ -40,6 +40,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointState;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Objects.Voucher;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -165,7 +166,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0,0,0)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0,0,0,0,0,0,0,0)";
 
         try {
             c = hikari.getConnection();
@@ -226,6 +227,11 @@ public class MysqlManager {
             cp.setDust(rs.getInt("dust"));
             cp.setLast_daily_claim(rs.getLong("last_daily_claim"));
             cp.setCurrent_daily_streak(rs.getInt("current_daily_streak"));
+            cp.setCoinDelivery(rs.getInt("del_coins"));
+            cp.setExpDelivery(rs.getInt("del_exp"));
+            cp.setBoxDelivery(rs.getInt("del_boxes"));
+            cp.setKeyDelivery(rs.getInt("del_keys"));
+            cp.setDustDelivery(rs.getInt("del_dust"));
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -236,7 +242,7 @@ public class MysqlManager {
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
         String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?," +
-                "wardrobe=?,progressive_achievements=?,dust=?,last_daily_claim=?,current_daily_streak=? WHERE uuid=?";
+                "wardrobe=?,progressive_achievements=?,dust=?,last_daily_claim=?,current_daily_streak=?,del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -259,7 +265,12 @@ public class MysqlManager {
             ps.setInt(14, cp.getDust());
             ps.setLong(15, cp.getLast_daily_claim());
             ps.setInt(16, cp.getCurrent_daily_streak());
-            ps.setString(17, uuid);
+            ps.setInt(17, cp.getCoinDelivery());
+            ps.setInt(18, cp.getExpDelivery());
+            ps.setInt(19, cp.getBoxDelivery());
+            ps.setInt(20, cp.getKeyDelivery());
+            ps.setInt(21, cp.getDustDelivery());
+            ps.setString(22, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -1150,4 +1161,85 @@ public class MysqlManager {
         }
     }
 
+    public static void loadForDelivery(Player p, String target, int[] currencies){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM playerdata WHERE name = '" + target + "';";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                uploadDelivery(p,rs,currencies);
+            } else {
+                ChatUtils.sendFaslePlayer(p, "SpecialDelivery", target);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void uploadDelivery(Player p, ResultSet rs, int[] currencies) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        String updateData = "UPDATE playerdata SET del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=? WHERE uuid=?";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setInt(1, rs.getInt("del_coins") + currencies[0]);
+            ps.setInt(2, rs.getInt("del_exp") + currencies[1]);
+            ps.setInt(3, rs.getInt("del_boxes") + currencies[2]);
+            ps.setInt(4, rs.getInt("del_keys") + currencies[3]);
+            ps.setInt(5, rs.getInt("del_dust") + currencies[4]);
+            ps.setString(6, rs.getString("uuid"));
+
+            ps.execute();
+            ChatUtils.sendMsgTag(p, "SpecialDelivery", ChatUtils.success + "Deze speciale bezorging ligt nu op het postkantoor, en kan worden opgehaald!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

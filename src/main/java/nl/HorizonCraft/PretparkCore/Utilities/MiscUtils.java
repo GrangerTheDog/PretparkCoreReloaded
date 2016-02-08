@@ -41,6 +41,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -270,5 +273,9 @@ public class MiscUtils {
             location.setPitch(Float.parseFloat(locationA[4]));
         }
         return location;
+    }
+
+    public static String intFormat(int i, String separator){
+        return new DecimalFormat("#,###,###").format(i).replace(",",separator);
     }
 }
