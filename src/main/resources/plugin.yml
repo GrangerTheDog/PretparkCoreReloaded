@@ -34,12 +34,14 @@ commands:
     revokeachievement:
         description: revokeachievement
     updateleaderboards:
-            description: updateleaderboards
+        description: updateleaderboards
     powerup:
-            description: powerup
+        description: powerup
     openbox:
-            description: openbox
+        description: openbox
     specialdelivery:
-            description: specialdelivery
+        description: specialdelivery
     sd:
-            description: sd
+        description: sd
+    myhorizon:
+        description: myhorizon

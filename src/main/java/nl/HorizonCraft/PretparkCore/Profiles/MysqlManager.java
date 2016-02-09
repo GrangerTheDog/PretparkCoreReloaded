@@ -343,7 +343,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerprefs VALUES(?,?,0,?,?,?,?,?)";
+        String create = "INSERT INTO playerprefs VALUES(?,?,0,?,?,?,?,?,?)";
 
         try {
             c = hikari.getConnection();
@@ -356,6 +356,7 @@ public class MysqlManager {
             ps.setString(5, "NOTHING");
             ps.setString(6, "NOTHING");
             ps.setString(7, "NOTHING");
+            ps.setString(8, StringUtils.repeat("t", 100));
 
             ps.execute();
         } catch (SQLException e) {
@@ -386,6 +387,8 @@ public class MysqlManager {
             } else {
                 cp.setSpeed(false);
             }
+
+            cp.setPrefs(rs.getString("prefs").toCharArray());
 
             if(rs.getString("head").equals("NOTHING")){
                 cp.setHead(null);
@@ -422,7 +425,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerprefs SET name=?,speed=?,head=?,chest=?,legs=?,boots=?,gadget=? WHERE uuid=?";
+        String updateData = "UPDATE playerprefs SET name=?,speed=?,head=?,chest=?,legs=?,boots=?,gadget=?,prefs=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -463,7 +466,9 @@ public class MysqlManager {
                 ps.setString(7, cp.getGadget().toString());
             }
 
-            ps.setString(8, uuid);
+            ps.setString(8, new String(cp.getPrefs()));
+
+            ps.setString(9, uuid);
 
             ps.execute();
         } catch (SQLException e) {

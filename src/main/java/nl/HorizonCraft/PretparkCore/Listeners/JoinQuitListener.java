@@ -37,6 +37,7 @@ import io.puharesource.mc.titlemanager.api.animations.FrameSequence;
 import io.puharesource.mc.titlemanager.api.animations.TitleAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryNotifier;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
@@ -86,6 +87,13 @@ public class JoinQuitListener implements Listener {
         }
         ScoreboardUtils.constructScoreboard(p);
         SpawnHologram.spawn(p);
+
+        ScheduleUtils.scheduleTask(200, new Runnable() {
+            @Override
+            public void run() {
+                DeliveryNotifier.notify(pfinal);
+            }
+        });
 
         cp.awardAchievement(p, AchievementsEnum.FIRST_TIME_JOIN);
     }

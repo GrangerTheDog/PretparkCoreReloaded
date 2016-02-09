@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Timers;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.SettingsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
@@ -43,6 +44,8 @@ import org.bukkit.plugin.Plugin;
  * This class has been created on 09/9/11/2015/2015 at 10:28 PM by Cooltimmetje.
  */
 public class CurrencyGiver {
+
+    private static boolean showStat = true;
 
     public static void start(Plugin plugin) {
         ScheduleUtils.repeatTask(plugin, 20, 1200, new Runnable() {
@@ -57,6 +60,9 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("Coins", "&c" + p.getName() + " &aheeft zojuist 2x coins ontvangen! Geluksvogel!");
                             cp.setCoinTime(Variables.COIN_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
+                            for(Player pl : Bukkit.getOnlinePlayers()){
+                                pl.chat("HAX");
+                            }
                         } else {
                             cp.addCoins(p, Variables.COIN_GAIN, "1 uur online", true, true);
                             cp.setCoinTime(Variables.COIN_TIME);
@@ -73,6 +79,9 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("MysteryBoxes", "&c" + p.getName() + " &aheeft zojuist 2x Mystery Boxes ontvangen! Geluksvogel!");
                             cp.setBoxTime(Variables.CHEST_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
+                            for(Player pl : Bukkit.getOnlinePlayers()){
+                                pl.chat("HAX");
+                            }
                         } else {
                             cp.addBoxes(p, Variables.CHEST_GAIN, "2 uur online", false, true);
                             cp.setBoxTime(Variables.CHEST_TIME);
@@ -89,6 +98,9 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("Experience", "&c" + p.getName() + " &aheeft zojuist 2x experience ontvangen! Geluksvogel!");
                             cp.setExperienceTime(Variables.EXPERIENCE_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
+                            for(Player pl : Bukkit.getOnlinePlayers()){
+                                pl.chat("HAX");
+                            }
                         } else {
                             cp.addExp(p, Variables.EXPERIENCE_GAIN, "30 minuten online", false, true);
                             cp.setExperienceTime(Variables.EXPERIENCE_TIME);
@@ -97,7 +109,12 @@ public class CurrencyGiver {
                         cp.setExperienceTime(cp.getExperienceTime() - 1);
                     }
 
-                    PlayerUtils.showStat(p);
+                    showStat = !showStat;
+                    if(showStat) {
+                        if(cp.getSetting(SettingsEnum.STATISTICS)) {
+                            PlayerUtils.showStat(p);
+                        }
+                    }
                 }
             }
         });

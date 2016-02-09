@@ -77,6 +77,7 @@ public class SpecialDeliveryCommand implements CommandExecutor{
                             cp.setDustDelivery(cp.getDustDelivery() + currencies[4]);
 
                             ChatUtils.sendMsgTag(p, "SpecialDelivery", ChatUtils.success + "Deze speciale bezorging ligt nu op het postkantoor, en kan worden opgehaald!");
+                            DeliveryNotifier.notify(target);
                         }
                     } else {
                         ChatUtils.sendArugmentsError(p, "SpecialDelivery", "/specialdelivery <player> <coins> <exp> <boxes> <keys> <dust>");

@@ -42,10 +42,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -335,9 +332,15 @@ public class BoxAnimation {
                         if(weightf == Weight.EPIC){
                             ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + gadgetf.getName() + " &agevonden!");
                             Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 100, 1);
+                            for(Player pl : Bukkit.getOnlinePlayers()){
+                                pl.chat("HAX");
+                            }
                         } else if (weightf == Weight.LEGENDARY) {
                             ChatUtils.bcMsgTag("MysteryBox", "&c" + p.getName() + " &aheeft een &" + weightf.getColor() + weightf.toString() + " " + gadgetf.getName() + " &agevonden!");
                             Variables.WORLD.playSound(p.getLocation(), Sound.ENDERDRAGON_DEATH, 100, 1);
+                            for(Player pl : Bukkit.getOnlinePlayers()){
+                                pl.chat("HAX");
+                            }
                         }
                         
                         break;

@@ -37,6 +37,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RevokeAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryNotifier;
 import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.SpecialDeliveryCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
@@ -139,6 +140,7 @@ public class Main extends JavaPlugin {
         registerCommand("openbox", new OpenBoxCommand());
         registerCommand("specialdelivery", new SpecialDeliveryCommand());
         registerCommand("sd", new SpecialDeliveryCommand());
+        registerCommand("myhorizon", new MyHorizonMenu());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
@@ -183,6 +185,7 @@ public class Main extends JavaPlugin {
             cp.awardProgressive();
 
             SpawnHologram.spawn(p);
+            DeliveryNotifier.notify(p);
         }
 
         HologramUtils.spawnAudio(this, new Location(Variables.WORLD, -132.5,68,-601.5));

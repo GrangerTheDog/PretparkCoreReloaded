@@ -33,23 +33,17 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import io.puharesource.mc.titlemanager.api.animations.AnimationFrame;
-import io.puharesource.mc.titlemanager.api.animations.FrameSequence;
-import io.puharesource.mc.titlemanager.api.animations.TitleAnimation;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.ProgressiveAchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
+import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.SettingsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
-import nl.HorizonCraft.PretparkCore.Utilities.TitleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -96,8 +90,8 @@ public class CorePlayer {
     private int current_daily_streak;
     private long last_daily_claim;
 
-
     private boolean speed;
+    private char[] prefs;
 
     private Hologram spawnHologram;
 
@@ -476,6 +470,22 @@ public class CorePlayer {
         this.speed = speed;
     }
 
+    public void setPrefs(char[] prefs){
+        this.prefs = prefs;
+    }
+
+    public char[] getPrefs(){
+        return prefs;
+    }
+
+    public boolean getSetting(SettingsEnum setting){
+        return getPrefs()[setting.getId()] == 't';
+    }
+
+    public void toggleSetting(SettingsEnum setting){
+        prefs[setting.getId()] = prefs[setting.getId()] == 'f' ? 't' : 'f';
+    }
+
     /* --END PREFS-- */
 
 
@@ -752,6 +762,14 @@ public class CorePlayer {
 
     public boolean hasDelivery(){
         return coinDelivery != 0 || expDelivery != 0 || boxDelivery != 0 || keyDelivery != 0 || dustDelivery != 0;
+    }
+
+    public boolean hasDaily() {
+        long lastDailyClaim = getLast_daily_claim();
+        long curTime = System.currentTimeMillis();
+        long nextClaim = lastDailyClaim + 86400000;
+
+        return (nextClaim < curTime) || (lastDailyClaim == 0);
     }
 
      /* --END DELIVERY-- */

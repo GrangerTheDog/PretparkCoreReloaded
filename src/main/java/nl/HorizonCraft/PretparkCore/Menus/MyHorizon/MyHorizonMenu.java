@@ -39,6 +39,9 @@ import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,7 +53,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 /**
  * This class has been created on 09/13/2015 at 12:39 PM by Cooltimmetje.
  */
-public class MyHorizonMenu implements Listener{
+public class MyHorizonMenu implements Listener,CommandExecutor{
 
     public static void openMyHorizon(Player p, Player pTarget, boolean admin){
         CorePlayer cp = PlayerUtils.getProfile(pTarget);
@@ -65,7 +68,9 @@ public class MyHorizonMenu implements Listener{
 
         ItemUtils.createDisplay(inv, 14, Material.DIAMOND, 1, 0, "&aAchievements", "&7Klik om te openen.");
 
-        ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen &8\u00BB &cDISABLED", "&7Verander je instellingen.");
+        if(!admin) { //TODO: MAKE COMPATIBLE WITH ADMIN
+            ItemUtils.createDisplay(inv, 15, Material.REDSTONE_COMPARATOR, 1, 0, "&aInstellingen", "&7Verander je instellingen.");
+        }
 
         if(!admin) {
             ItemUtils.createDisplay(inv, 22, Material.GOLD_NUGGET, 1, 0, "&6" + MiscUtils.intFormat(cp.getCoins(), " ") + " coins", "&7Verdien coins door online te zijn, deze", "&7kun je uitgeven aan allerlei spulletjes op de server.");
@@ -95,7 +100,7 @@ public class MyHorizonMenu implements Listener{
             Material m = event.getCurrentItem().getType();
             switch (m){
                 case REDSTONE_COMPARATOR:
-//                    PreferencesMenu.openPrefs(p);
+                    PreferencesMenu.openPrefs(p);
                     break;
                 case DIAMOND:
                     AchievementMenu.open(p, target, AchievementTypes.NORMAL);
@@ -115,4 +120,14 @@ public class MyHorizonMenu implements Listener{
         return "&8[&a" + i + "%&8]";
     }
 
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        if(cmd.getLabel().equalsIgnoreCase("myhorizon")){
+            if(sender instanceof Player){
+                Player p = (Player) sender;
+                openMyHorizon(p,p,false);
+            }
+        }
+        return false;
+    }
 }

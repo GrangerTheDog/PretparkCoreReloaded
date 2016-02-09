@@ -30,53 +30,31 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Menus.MyHorizon;
+package nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan;
 
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 
 /**
- * This class has been created on 09/14/2015 at 7:36 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 2/9/2016 at 4:58 PM.
  */
-public class PreferencesMenu implements Listener{
+public class DeliveryNotifier {
 
-    public static void openPrefs(Player p){
+    public static void notify(Player p){
         CorePlayer cp = PlayerUtils.getProfile(p);
+        int pendingDeliveries = 0;
 
-        Inventory inv = Bukkit.createInventory(null, 36, "Instellingen \u00BB " + p.getName());
+        if(cp.hasDelivery()){
+            pendingDeliveries++;
+        }
+        if(cp.hasDaily()){
+            pendingDeliveries++;
+        }
 
-        ItemUtils.createDisplay(inv, 14, Material.PAPER, 1, 0, "&aStatistics", "Vind je de statistics onder in je scherm irritant?", "Zet ze hier dan uit.");
-        ItemUtils.createToggle(inv, 23, "Statistics", cp.getSetting(SettingsEnum.STATISTICS));
-
-        p.openInventory(inv);
-    }
-
-    @EventHandler
-    public void onClick(InventoryClickEvent event){
-        Inventory inv = event.getInventory();
-        if(ChatColor.stripColor(inv.getName()).contains("Instellingen")){
-            event.setCancelled(true);
-            Player p = (Player) event.getWhoClicked();
-            CorePlayer cp = PlayerUtils.getProfile(p);
-            int slot = event.getSlot() + 1;
-            short data = event.getCurrentItem().getDurability();
-            switch (slot){
-                default:
-                    break;
-                case 23:
-                    cp.toggleSetting(SettingsEnum.STATISTICS);
-                    ItemUtils.createToggle(inv, slot, ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()), data == 8);
-                    break;
-            }
+        if(pendingDeliveries != 0) {
+            ChatUtils.sendMsg(p, "&8[&aNPC&8] &aPieter Post&8: &fHey, " + p.getName() + "! Ik heb nog &3" + pendingDeliveries + " bezorgingen &fvoor je! Kom ze halen op het postkantoor!");
         }
     }
 

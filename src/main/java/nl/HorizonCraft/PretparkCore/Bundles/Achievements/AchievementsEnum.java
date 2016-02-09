@@ -64,7 +64,8 @@ public enum AchievementsEnum {
     DC_RIDE(24, "The dive to the Horizon.", "Maak een ritje op de DiveCoaster", 25, 1, 600, AchievementType.RIDES),
     MAE_SLAP(25, "MAWHEEEE!", "Launch MAETJE!", 10, 1, 200, AchievementType.STAFFPUNCH),
     TIM_SLAP(26, "Tim on top of the world!", "Launch Toptim24!", 10, 1, 200, AchievementType.STAFFPUNCH),
-    TS_RIDE(27, "Swinging around!", "Maak een ritje op The Swinger", 25, 1, 600, AchievementType.RIDES);
+    TS_RIDE(27, "Swinging around!", "Maak een ritje op The Swinger", 25, 1, 600, AchievementType.RIDES),
+    NICK_SLAP(28, "NICKJEEEEDL", "Launch nickjedl!", 10, 1, 200, AchievementType.STAFFPUNCH);
 
 
     private int id;
