@@ -38,6 +38,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Mazes.MazeLeaderboards;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.NavigationPoint;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointState;
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointType;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Main;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
@@ -166,7 +167,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0,0,0,0,0,0,0,0)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0,0,0,0,0,0,0,0,?,0,0)";
 
         try {
             c = hikari.getConnection();
@@ -182,6 +183,7 @@ public class MysqlManager {
             ps.setInt(8, Variables.EXPERIENCE_TIME);
             ps.setString(9, StringUtils.repeat("f", 100));
             ps.setString(10, StringUtils.repeat("f", 100));
+            ps.setString(11, "BEZOEKER");
 
             ps.execute();
         } catch (SQLException e) {
@@ -232,6 +234,9 @@ public class MysqlManager {
             cp.setBoxDelivery(rs.getInt("del_boxes"));
             cp.setKeyDelivery(rs.getInt("del_keys"));
             cp.setDustDelivery(rs.getInt("del_dust"));
+            cp.setRank(RanksEnum.valueOf(rs.getString("rank")));
+            cp.setRankExpire(rs.getLong("rank_expire"));
+            cp.setClaimedSpecialDay(rs.getInt("special_day") == 1);
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -242,7 +247,7 @@ public class MysqlManager {
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
         String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?," +
-                "wardrobe=?,progressive_achievements=?,dust=?,last_daily_claim=?,current_daily_streak=?,del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=? WHERE uuid=?";
+                "wardrobe=?,progressive_achievements=?,dust=?,last_daily_claim=?,current_daily_streak=?,del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=?,rank=?,rank_expire=?,special_day=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -270,7 +275,10 @@ public class MysqlManager {
             ps.setInt(19, cp.getBoxDelivery());
             ps.setInt(20, cp.getKeyDelivery());
             ps.setInt(21, cp.getDustDelivery());
-            ps.setString(22, uuid);
+            ps.setString(22, cp.getRank().toString());
+            ps.setLong(23, cp.getRankExpire());
+            ps.setInt(24, cp.hasClaimedSpecialDay() ? 1 : 0);
+            ps.setString(25, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -1228,6 +1236,83 @@ public class MysqlManager {
 
             ps.execute();
             ChatUtils.sendMsgTag(p, "SpecialDelivery", ChatUtils.success + "Deze speciale bezorging ligt nu op het postkantoor, en kan worden opgehaald!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void updateRank(String name, RanksEnum rank, int hours){
+        if(!rank.doesExpire()){
+            sendRank(name, rank, 0);
+            return;
+        }
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String updateData = "SELECT * FROM playerdata WHERE name=?";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            rs = ps.executeQuery();
+            if(rs.next()){
+                long expire = rs.getLong("rank_expire");
+                if(expire == 0){
+                    expire = System.currentTimeMillis();
+                }
+                expire = expire + (hours*3600*1000);
+                sendRank(name, rank, expire);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void sendRank(String name, RanksEnum rank, long expire){
+        Connection c = null;
+        PreparedStatement ps = null;
+        String updateData = "UPDATE playerdata SET rank_expire=?,rank=? WHERE name=?";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(updateData);
+
+            ps.setLong(1, expire);
+            ps.setString(2, rank.toString());
+            ps.setString(3, name);
+
+            ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

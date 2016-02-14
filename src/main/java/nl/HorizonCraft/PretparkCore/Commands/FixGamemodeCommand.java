@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Commands;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -49,7 +50,7 @@ public class FixGamemodeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(cmd.getLabel().equalsIgnoreCase("fixgm")){
-            if(!(sender instanceof Player) || sender.hasPermission("pc.fixgm")){
+            if(!(sender instanceof Player) || RanksEnum.hasPermission(((Player)sender),RanksEnum.BOUWER)){
                 sender.sendMessage(MiscUtils.color("&9FixGamemodes> &aAlle gamemodes zijn goedgezet!"));
                 for(Player p : Bukkit.getOnlinePlayers()){
                     PlayerUtils.configPlayer(p, false);

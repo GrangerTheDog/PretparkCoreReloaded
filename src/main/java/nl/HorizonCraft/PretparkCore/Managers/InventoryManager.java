@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Managers;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Navigation.PointMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.MyHorizonMenu;
 import nl.HorizonCraft.PretparkCore.Menus.SwagMenu.MainSwag;
@@ -56,7 +57,7 @@ public class InventoryManager implements Listener {
     @EventHandler
     public void onPickup(PlayerPickupItemEvent event){
         Player p = event.getPlayer();
-        if(!p.hasPermission("pc.bypassgm")){
+        if(!RanksEnum.hasPermission(p,RanksEnum.BOUWER)){
            event.setCancelled(true);
         }
     }
@@ -64,7 +65,7 @@ public class InventoryManager implements Listener {
     @EventHandler
     public void onDrop(PlayerDropItemEvent event){
         Player p = event.getPlayer();
-        if(!p.hasPermission("pc.bypassgm")){
+        if(!RanksEnum.hasPermission(p,RanksEnum.BOUWER)){
             event.setCancelled(true);
         }
     }

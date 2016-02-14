@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Commands;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.command.Command;
@@ -48,7 +49,7 @@ public class ResetInventoryCommand implements CommandExecutor {
         if (cmd.getLabel().equalsIgnoreCase("resetinv") || cmd.getLabel().equalsIgnoreCase("rejoin")){
             if (sender instanceof Player){
                 Player p = (Player) sender;
-                if (p.hasPermission("pc.bypassgm")) {
+                if (RanksEnum.hasPermission(p,RanksEnum.BOUWER)) {
                     ChatUtils.sendMsgTag(p, "ResetInv", "Je inventory is gereset.");
                     PlayerUtils.configPlayer(p, true);
                 } else {

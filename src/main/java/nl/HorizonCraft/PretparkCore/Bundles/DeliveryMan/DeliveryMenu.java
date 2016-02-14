@@ -36,18 +36,18 @@ import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -56,8 +56,24 @@ import java.util.Date;
 public class DeliveryMenu implements Listener {
 
     public static void open(Player p){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
         Inventory inv = Bukkit.createInventory(null, 27, "Pieter Post");
         CorePlayer cp = PlayerUtils.getProfile(p);
+
+        if(date.equals("14/02")){
+            if(cp.hasClaimedSpecialDay()){
+                ItemUtils.createDisplay(inv, 23, Material.MINECART, 1, 0,"&cValentijnsdag bezorging", ("Wij wensen je een fijne valentijnsdag!\nForever alone, of gelukkig getrouwd, wij houden van je <3\n \n&cJe hebt dit al geclaimed!").split("\n"));
+            } else {
+                ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&dValentijnsdag bezorging!", ("Wij wensen je een fijne valentijnsdag!\nForever alone, of gelukkig getrouwd, wij houden van je <3\n \n&6500 coins\n&91000 exp\n" +
+                        "&320 Mystery Boxes\n&d10 Mystery Keys\n&b150 Mystery Dust\n \n&c> &aKlik om te claimen").split("\n"));
+                SkullMeta sm = (SkullMeta) is.getItemMeta();
+                sm.setOwner("IM_");
+                is.setItemMeta(sm);
+                ItemUtils.createDisplay(is, inv, 23);
+            }
+        }
 
         ItemUtils.createDisplay(constructDaily(cp), inv, 12);
         ItemUtils.createDisplay(constructSpecial(cp), inv, 14);
@@ -86,11 +102,24 @@ public class DeliveryMenu implements Listener {
                             break;
                     }
                     break;
+                case SKULL_ITEM:
+                    claimSpecialDay(p);
                 default:
                     p.playSound(p.getLocation(), Sound.ANVIL_LAND, 100, 1);
                     break;
             }
         }
+    }
+
+    private void claimSpecialDay(Player p) {
+        CorePlayer cp = PlayerUtils.getProfile(p);
+        cp.addCoins(p, 500, "Valentijnsdag!",false,true);
+        cp.addExp(p, 1000, "Valentijnsdag!",false,true);
+        cp.addBoxes(p, 20, "Valentijnsdag!",false,true);
+        cp.addKeys(p, 10, "Valentijnsdag!",false,true);
+        cp.addDust(p, 150, "Valentijnsdag!",false,true);
+        cp.setClaimedSpecialDay(true);
+        open(p);
     }
 
     private void claimDaily(Player p) {
@@ -217,7 +246,9 @@ public class DeliveryMenu implements Listener {
             lore.append(" \n");
             if(!streakLost) {
                 lore.append("&bMomentele claim streak: &a").append(currentStreak).append("\n");
-                lore.append("&bLangste claim streak: &a").append(longestStreak).append("\n");
+                if(currentStreak != longestStreak) {
+                    lore.append("&bLangste claim streak: &a").append(longestStreak).append("\n");
+                }
             } else {
                 lore.append("&c&lCLAIM STREAK VERLOREN\n");
                 lore.append("&bOude streak: &a").append(lostStreak).append("\n");
@@ -230,7 +261,10 @@ public class DeliveryMenu implements Listener {
             String friendlyDate = sdf.format(date);
 
             lore.append("&bMomentele claim streak: &a").append(currentStreak).append("\n");
-            lore.append("&bLangste claim streak: &a").append(longestStreak).append("\n \n");
+            if(currentStreak != longestStreak) {
+                lore.append("&bLangste claim streak: &a").append(longestStreak).append("\n");
+            }
+            lore.append(" \n");
 
             lore.append("&cJe kunt dit nog niet claimen!\nVolgende claim:\n&b").append(friendlyDate);
         }

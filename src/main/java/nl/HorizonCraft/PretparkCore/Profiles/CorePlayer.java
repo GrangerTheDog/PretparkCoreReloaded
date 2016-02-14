@@ -33,14 +33,17 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import mkremins.fanciful.FancyMessage;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.ProgressiveAchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.SettingsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -89,11 +92,15 @@ public class CorePlayer {
     private int dustDelivery;
     private int current_daily_streak;
     private long last_daily_claim;
+    private boolean claimedSpecialDay;
 
     private boolean speed;
     private char[] prefs;
 
     private Hologram spawnHologram;
+
+    private RanksEnum rank;
+    private long rankExpire;
 
     public CorePlayer(Player p){
         this.uuid = p.getUniqueId();
@@ -128,7 +135,7 @@ public class CorePlayer {
     }
 
     public void addCoins(Player p, int add, String reason, boolean allowMultiplier, boolean playSound) {
-        if (p.hasPermission("pc.coinmultiplier.2") && allowMultiplier) {
+        if (RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier) {
             add = add * 2;
         }
 
@@ -192,7 +199,7 @@ public class CorePlayer {
     }
 
     public void addKeys(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
-        if(p.hasPermission("pc.keymulitplier.2") && allowMultiplier){
+        if(RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier){
             add = add * 2;
         }
 
@@ -216,7 +223,7 @@ public class CorePlayer {
     }
 
     public void addBoxes(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
-        if(p.hasPermission("pc.boxmultiplier.2") && allowMultiplier) {
+        if(RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier) {
             add = add * 2;
         }
 
@@ -248,7 +255,7 @@ public class CorePlayer {
     }
 
     public void addDust(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
-        if(p.hasPermission("pc.dustmultiplier.2") && allowMultiplier) {
+        if(RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier) {
             add = add * 2;
         }
 
@@ -383,6 +390,14 @@ public class CorePlayer {
         }
     }
 
+    public boolean hasAchievementUnlocked(AchievementsEnum achievement){
+        return getAchievements()[achievement.getId()] == 't';
+    }
+
+    public boolean hasAchievementUnlocked(ProgressiveAchievementsEnum achievement, int level){
+        return getProgressiveAchievements()[achievement.getId()[level-1]] == 't';
+    }
+
     /* --END ACHIEVEMENTS-- */
 
 
@@ -508,6 +523,9 @@ public class CorePlayer {
     }
 
     public void addExp(Player p, int add, String reason, boolean allowMultiplier, boolean playSound) {
+        if(RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier){
+            add = add * 2;
+        }
         setExperience(getExperience() + add);
 
         ChatUtils.sendMsg(p, "&9+" + add + " experience! (" + reason + ")");
@@ -772,6 +790,55 @@ public class CorePlayer {
         return (nextClaim < curTime) || (lastDailyClaim == 0);
     }
 
+    public boolean hasClaimedSpecialDay() {
+        return claimedSpecialDay;
+    }
+
+    public void setClaimedSpecialDay(boolean claimedSpecialDay) {
+        this.claimedSpecialDay = claimedSpecialDay;
+    }
+
      /* --END DELIVERY-- */
+
+
+    /* --START RANKS-- */
+
+    public RanksEnum getRank() {
+        return rank;
+    }
+
+    public void setRank(RanksEnum rank) {
+        this.rank = rank;
+    }
+
+    public long getRankExpire() {
+        return rankExpire;
+    }
+
+    public void setRankExpire(long rankExpire) {
+        this.rankExpire = rankExpire;
+    }
+
+    public void updateRank(Player p){
+        if(!getRank().doesExpire()){
+            setRankExpire(0);
+        }
+        if((getRankExpire() < System.currentTimeMillis()) && (getRankExpire() != 0) && getRank().doesExpire()){
+            FancyMessage msg = new FancyMessage("Rang> ").color(ChatColor.BLUE);
+            msg.then("Je ").color(ChatColor.GREEN).then(getRank().getFriendlyName()).color(getRank().getChatColor()).then(" is verlopen! Wil je langer genieten van je voordelen? Ga dan naar de shop: ").color(ChatColor.GREEN);
+            msg.then("[").color(ChatColor.DARK_GRAY).then("Klik hier om naar de webstore te gaan").color(ChatColor.DARK_AQUA).link("http://store.horizoncraft.nl/").then("]").color(ChatColor.DARK_GRAY);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " " + msg.toJSONString());
+
+            setRank(RanksEnum.BEZOEKER);
+            setRankExpire(0);
+        }
+
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuadd " + p.getName() + " " + getRank().getGmName());
+
+    }
+
+
+
+    /* --END RANKS-- */
 
 }

@@ -32,12 +32,10 @@
 
 package nl.HorizonCraft.PretparkCore;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementCommand;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementMenu;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RevokeAchievementCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Achievements.*;
 import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryNotifier;
+import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.PieterPostCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.SpecialDeliveryCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetTriggers;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
@@ -56,12 +54,13 @@ import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetShop;
 import nl.HorizonCraft.PretparkCore.Bundles.Ping.ServerPingListener;
 import nl.HorizonCraft.PretparkCore.Bundles.Powerups.Commands.PowerupCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Powerups.PowerupViewMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.ActivateVipCommand;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.SetRankCommand;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.ShopTrigger;
 import nl.HorizonCraft.PretparkCore.Bundles.Shops.Test;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
-import nl.HorizonCraft.PretparkCore.Bundles.Achievements.RideAchievementCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UpdateLeaderboardsCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
@@ -141,6 +140,12 @@ public class Main extends JavaPlugin {
         registerCommand("specialdelivery", new SpecialDeliveryCommand());
         registerCommand("sd", new SpecialDeliveryCommand());
         registerCommand("myhorizon", new MyHorizonMenu());
+        registerCommand("swagmenu", new MainSwag());
+        registerCommand("warpmenu", new PointMenu());
+        registerCommand("adminmenu", new MainAdmin());
+        registerCommand("pieterpost", new PieterPostCommand());
+        registerCommand("setrank", new SetRankCommand());
+        registerCommand("activatevip", new ActivateVipCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);

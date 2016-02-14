@@ -38,7 +38,10 @@ import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.SkullType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -50,6 +53,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * This class has been created on 09/13/2015 at 12:39 PM by Cooltimmetje.
  */
@@ -59,8 +65,16 @@ public class MyHorizonMenu implements Listener,CommandExecutor{
         CorePlayer cp = PlayerUtils.getProfile(pTarget);
 
         Inventory inv = Bukkit.createInventory(null, 45, MiscUtils.color("MyHorizon &8\u00BB " + pTarget.getName()));
+        ItemStack is;
 
-        ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName());
+        if(cp.getRankExpire() == 0) {
+            is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName(), "Rank: &" + cp.getRank().getColor() + cp.getRank().getFriendlyName());
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date(cp.getRankExpire());
+            String friendlyDate = sdf.format(date);
+            is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon &8\u00BB " + pTarget.getDisplayName(), "Rank: &" + cp.getRank().getColor() + cp.getRank().getFriendlyName(), "Verloopt op: &b" + friendlyDate);
+        }
         SkullMeta im = (SkullMeta) is.getItemMeta();
         im.setOwner(pTarget.getName());
         is.setItemMeta(im);

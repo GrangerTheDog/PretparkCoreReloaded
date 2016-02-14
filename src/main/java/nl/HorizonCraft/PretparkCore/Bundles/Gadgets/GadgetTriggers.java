@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Bundles.Gadgets;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
@@ -149,57 +150,53 @@ public class GadgetTriggers implements Listener {
                         Player p = event.getPlayer();
                         if (event.getRightClicked() instanceof Player) {
                             Player target = (Player) event.getRightClicked();
-                            if (target.hasPermission("pretparkcore.staffbepunch") || target.isOp()) {
+                            if (RanksEnum.hasPermission(target,RanksEnum.MEDEWERKER)) {
                                 if (!cdPunch.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdPunch.get(p.getName()), cdPunchSec)) {
                                     if (!cdPunchStaff.containsKey(target.getName()) || MiscUtils.cooldownCheck(cdPunchStaff.get(target.getName()), cdPunchSec)) {
-                                        if(p.getName().equals("78wesley") && target.getName().equals("Cooltimmetje")){
-                                            p.kickPlayer("PAYBACK BITCH");
-                                            ChatUtils.bcMsgTag("Rekt", "Wesley tried, but failed. gg");
-                                        } else {
-                                            ParticleEffect.EXPLOSION_LARGE.display(5, 5, 5, 1, 47, target.getLocation(), 16);
-                                            Bukkit.getWorld(target.getWorld().getName()).playSound(target.getLocation(), Sound.EXPLODE, 20, 1);
-                                            target.setFlying(false);
-                                            target.setVelocity(new Vector(0, 3, 0));
-                                            cdPunch.put(p.getName(), System.currentTimeMillis());
-                                            cdPunchStaff.put(target.getName(), System.currentTimeMillis());
 
-                                            switch (target.getName()) {
-                                                case "xBrandy":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
-                                                    break;
-                                                case "78wesley":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
-                                                    break;
-                                                case "BekertjeZuivel":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
-                                                    break;
-                                                case "Cooltimmetje":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
-                                                    break;
-                                                case "SvenTijger":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
-                                                    break;
-                                                case "Destiny_VG":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.DESTINY_SLAP);
-                                                    break;
-                                                case "Jordy010NL":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY_SLAP);
-                                                    break;
-                                                case "jordyvz01":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY2_SLAP);
-                                                    break;
-                                                case "MAETJE":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MAE_SLAP);
-                                                    break;
-                                                case "Toptim24":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.TIM_SLAP);
-                                                    break;
-                                                case "nickjedl":
-                                                    PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.NICK_SLAP);
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
+                                        ParticleEffect.EXPLOSION_LARGE.display(5, 5, 5, 1, 47, target.getLocation(), 16);
+                                        Bukkit.getWorld(target.getWorld().getName()).playSound(target.getLocation(), Sound.EXPLODE, 20, 1);
+                                        target.setFlying(false);
+                                        target.setVelocity(new Vector(0, 3, 0));
+                                        cdPunch.put(p.getName(), System.currentTimeMillis());
+                                        cdPunchStaff.put(target.getName(), System.currentTimeMillis());
+
+                                        switch (target.getName()) {
+                                            case "xBrandy":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.KOALA_SLAP);
+                                                break;
+                                            case "78wesley":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.PEDOBEAR_SLAP);
+                                                break;
+                                            case "BekertjeZuivel":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MELK_SLAP);
+                                                break;
+                                            case "Cooltimmetje":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.COOL_SLAP);
+                                                break;
+                                            case "SvenTijger":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.SVEN_SLAP);
+                                                break;
+                                            case "Destiny_VG":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.DESTINY_SLAP);
+                                                break;
+                                            case "Jordy010NL":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY_SLAP);
+                                                break;
+                                            case "jordyvz01":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.JORDY2_SLAP);
+                                                break;
+                                            case "MAETJE":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.MAE_SLAP);
+                                                break;
+                                            case "Toptim24":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.TIM_SLAP);
+                                                break;
+                                            case "nickjedl":
+                                                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.NICK_SLAP);
+                                                break;
+                                            default:
+                                                break;
                                         }
 
                                     } else {
@@ -208,7 +205,7 @@ public class GadgetTriggers implements Listener {
                                     }
                                 } else {
                                     ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunch.get(p.getName()), cdPunchSec)) +
-                                               " &awachten voordat je dit weer mag gebruiken.");
+                                            " &awachten voordat je dit weer mag gebruiken.");
                                 }
                             } else {
                                 ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");

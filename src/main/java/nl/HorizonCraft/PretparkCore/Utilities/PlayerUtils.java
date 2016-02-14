@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.SuitType;
 import nl.HorizonCraft.PretparkCore.Enums.StatTypes;
@@ -46,8 +47,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -69,14 +68,16 @@ public class PlayerUtils {
 
     public static void configPlayer(Player p, boolean forceInv) {
         CorePlayer cp = getProfile(p);
+        final CorePlayer cpFinal = cp;
+        final Player pFinal = p;
 
-        if(p.hasPermission("pc.bypassgm")){
+        if(RanksEnum.hasPermission(p,RanksEnum.BOUWER)){
             p.setGameMode(GameMode.CREATIVE);
         } else {
             p.setGameMode(GameMode.SURVIVAL);
         }
 
-        if(!p.hasPermission("pc.bypassgm") || forceInv){
+        if(!RanksEnum.hasPermission(p,RanksEnum.BOUWER) || forceInv){
             p.getInventory().clear();
 
             ItemStack is = ItemUtils.createItemstack(Material.SKULL_ITEM, 1, SkullType.PLAYER.ordinal(), "&e&lMy&3&lHorizon " + Variables.RIGHT_CLICK, "&7Open je profiel hier, hier kun ",
@@ -89,7 +90,7 @@ public class PlayerUtils {
             ItemUtils.createDisplay(p, 2, Material.MINECART, 1, 0, "&aWarps " + Variables.RIGHT_CLICK, "&7Bekijk alle warps en hun status.");
             ItemUtils.createDisplay(p, 9, Material.CHEST, 1, 0, "&aSwag Menu " + Variables.RIGHT_CLICK, "&7Wil je wat swag? Kijk hier!");
 
-            if(p.isOp()) {
+            if(RanksEnum.hasPermission(p,RanksEnum.MANAGER)) {
                 ItemUtils.createDisplay(p, 7, Material.FLINT, 1, 0, "&aAdmin Menu " + Variables.RIGHT_CLICK, "&7Beheer de server, aleen voor OP's!");
             }
             setGadget(cp.getGadget(),p);
@@ -147,6 +148,13 @@ public class PlayerUtils {
             default:
                 break;
         }
+
+        ScheduleUtils.scheduleTask(30, new Runnable() {
+            @Override
+            public void run() {
+                cpFinal.updateRank(pFinal);
+            }
+        });
     }
 
     public static void setPiece(PiecesEnum piece, Player p){

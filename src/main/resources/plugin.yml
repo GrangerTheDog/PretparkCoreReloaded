@@ -45,3 +45,15 @@ commands:
         description: sd
     myhorizon:
         description: myhorizon
+    pieterpost:
+        description: pieterpost
+    setrank:
+        description: setrank
+    activatevip:
+        description: activatevip
+    warpmenu:
+        description: warpmenu
+    adminmenu:
+        description: adminmenu
+    swagmenu:
+        description: swagmenu

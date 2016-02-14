@@ -34,6 +34,7 @@ package nl.HorizonCraft.PretparkCore.Bundles.Powerups.Commands;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Powerups.PowerupSpawner;
 import nl.HorizonCraft.PretparkCore.Bundles.Powerups.PowerupViewMenu;
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
@@ -58,7 +59,7 @@ public class PowerupCommand implements CommandExecutor {
         if(cmd.getLabel().equalsIgnoreCase("powerup")){
             if(sender instanceof Player){
                 Player p = (Player) sender;
-                if(p.hasPermission("pretparkcore.powerup.admin")){
+                if(RanksEnum.hasPermission(p,RanksEnum.BOUWER)){
                     if(args.length >= 1){
                         switch (args[0]){
                             case "-add":

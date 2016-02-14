@@ -40,6 +40,9 @@ import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,7 +52,7 @@ import org.bukkit.inventory.Inventory;
 /**
  * Created by Cooltimmetje on 12/29/2015 at 12:02 PM.
  */
-public class PointMenu implements Listener {
+public class PointMenu implements Listener,CommandExecutor {
 
     public static void open(Player p){
         Inventory inv = Bukkit.createInventory(null, 54, "Warp Menu");
@@ -186,6 +189,17 @@ public class PointMenu implements Listener {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        if(cmd.getLabel().equalsIgnoreCase("warpmenu")){
+            if(sender instanceof Player){
+                Player p = (Player) sender;
+                open(p);
+            }
+        }
+        return false;
     }
 
 }

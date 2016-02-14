@@ -60,9 +60,6 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("Coins", "&c" + p.getName() + " &aheeft zojuist 2x coins ontvangen! Geluksvogel!");
                             cp.setCoinTime(Variables.COIN_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
-                            for(Player pl : Bukkit.getOnlinePlayers()){
-                                pl.chat("HAX");
-                            }
                         } else {
                             cp.addCoins(p, Variables.COIN_GAIN, "1 uur online", true, true);
                             cp.setCoinTime(Variables.COIN_TIME);
@@ -79,9 +76,6 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("MysteryBoxes", "&c" + p.getName() + " &aheeft zojuist 2x Mystery Boxes ontvangen! Geluksvogel!");
                             cp.setBoxTime(Variables.CHEST_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
-                            for(Player pl : Bukkit.getOnlinePlayers()){
-                                pl.chat("HAX");
-                            }
                         } else {
                             cp.addBoxes(p, Variables.CHEST_GAIN, "2 uur online", false, true);
                             cp.setBoxTime(Variables.CHEST_TIME);
@@ -98,9 +92,6 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("Experience", "&c" + p.getName() + " &aheeft zojuist 2x experience ontvangen! Geluksvogel!");
                             cp.setExperienceTime(Variables.EXPERIENCE_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
-                            for(Player pl : Bukkit.getOnlinePlayers()){
-                                pl.chat("HAX");
-                            }
                         } else {
                             cp.addExp(p, Variables.EXPERIENCE_GAIN, "30 minuten online", false, true);
                             cp.setExperienceTime(Variables.EXPERIENCE_TIME);

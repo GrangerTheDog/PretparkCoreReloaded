@@ -58,7 +58,6 @@ public class ServerPingListener implements Listener {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
-        cal.add(Calendar.HOUR, 1);
 
         switch(date) {
             case "21/10":
@@ -90,6 +89,9 @@ public class ServerPingListener implements Listener {
                 break;
             case "15/08":
                 saying = "Gefeliciteerd xBrandy!";
+                break;
+            case "14/02":
+                saying = "Fijne valentijnsdag!";
                 break;
             case "28/12":
             case "29/12":

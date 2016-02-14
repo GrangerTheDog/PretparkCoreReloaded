@@ -32,7 +32,6 @@
 
 package nl.HorizonCraft.PretparkCore.Enums;
 
-import net.minecraft.server.v1_8_R3.ScoreboardStatisticCriteria;
 import org.bukkit.Statistic;
 
 import java.util.Arrays;
@@ -46,9 +45,9 @@ import java.util.Random;
 public enum Stats {
 
     JOINED(Statistic.LEAVE_GAME, "Je bent de server %n keer gejoined!", StatTypes.NORMAL),
-    PLAYED(Statistic.PLAY_ONE_TICK, "Je hebt in totaal %n op deze sever gespeeld!", StatTypes.TIME),
+    PLAYED(Statistic.PLAY_ONE_TICK, "Je hebt in totaal %n op deze server gespeeld!", StatTypes.TIME),
     WALKED(Statistic.WALK_ONE_CM, "%n te voet.", StatTypes.DISTANCE),
-    CROUCHED(Statistic.CROUCH_ONE_CM, "%n slupend.", StatTypes.DISTANCE),
+    CROUCHED(Statistic.CROUCH_ONE_CM, "%n sluipend.", StatTypes.DISTANCE),
     SPRINTED(Statistic.SPRINT_ONE_CM, "%n sprintend.", StatTypes.DISTANCE),
     SWUM(Statistic.SWIM_ONE_CM, "%n zwemmend.", StatTypes.DISTANCE),
     FALLEN(Statistic.CLIMB_ONE_CM, "%n klimmend.", StatTypes.DISTANCE),

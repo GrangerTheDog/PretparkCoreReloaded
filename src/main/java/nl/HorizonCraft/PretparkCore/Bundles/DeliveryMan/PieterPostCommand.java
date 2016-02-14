@@ -30,66 +30,27 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Menus.AdminMenu;
+package nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan;
 
-import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
-import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.SkullType;
+import nl.HorizonCraft.PretparkCore.Utilities.Variables;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 
 /**
- * This class has been created on 09/12/2015 at 5:37 PM by Cooltimmetje.
+ * Created by Cooltimmetje on 2/10/2016 at 5:08 PM.
  */
-public class MainAdmin implements Listener,CommandExecutor {
-
-    public static void openAdminMain(Player p){
-        Inventory inv = Bukkit.createInventory(null, 27, "Admin Menu");
-
-        ItemUtils.createDisplay(inv, 13, Material.WATCH, 1, 0, "&aVerander Tijd", "&7Verander de tijd van de server.");
-        ItemUtils.createDisplay(inv, 15, Material.SKULL_ITEM, 1,SkullType.PLAYER.ordinal(), "&aPlayer Informatie", "&7Bekijk informatie over de spelers die online zijn.");
-
-        p.openInventory(inv);
-    }
-
-    @EventHandler
-    public static void onInventoryClick(InventoryClickEvent event){
-        if(event.getInventory().getName().equals("Admin Menu")){
-            event.setCancelled(true);
-            Player p = (Player) event.getWhoClicked();
-            Material m = event.getCurrentItem().getType();
-            switch (m){
-                default:
-                    break;
-                case WATCH:
-                    TimeAdmin.openTime(p);
-                    break;
-                case SKULL_ITEM:
-                    PlayerAdmin.openPlayer(p);
-                    break;
-            }
-        }
-    }
+public class PieterPostCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-        if(cmd.getLabel().equalsIgnoreCase("adminmenu")){
+        if(cmd.getLabel().equalsIgnoreCase("pieterpost")){
             if(sender instanceof Player){
-                if(RanksEnum.hasPermission(((Player)sender),RanksEnum.MANAGER)){
-                    Player p = (Player) sender;
-                    openAdminMain(p);
-                }
+                ((Player)sender).teleport(new Location(Variables.WORLD,69,66.6,-345,-90,0));
             }
         }
         return false;
     }
-
 }

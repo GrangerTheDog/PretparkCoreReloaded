@@ -32,6 +32,7 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.Navigation;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.Variables;
@@ -50,7 +51,7 @@ public class CreatePointCommand implements CommandExecutor {
         if(sender instanceof Player) {
             Player p = (Player) sender;
             if (cmd.getLabel().equalsIgnoreCase("createwarp")) {
-                if(p.hasPermission("pc.createwarp")){
+                if(RanksEnum.hasPermission(p,RanksEnum.BOUWER)){
                     if (args.length >= 2) {
 
                         if(PointType.valueOf(args[0].toUpperCase()) != null){

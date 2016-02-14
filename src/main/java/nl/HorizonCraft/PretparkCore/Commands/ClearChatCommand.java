@@ -32,8 +32,8 @@
 
 package nl.HorizonCraft.PretparkCore.Commands;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -45,79 +45,14 @@ import org.bukkit.entity.Player;
 
 public class ClearChatCommand implements CommandExecutor {
 
+    private RanksEnum permLevel = RanksEnum.MANAGER;
+
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-       if (cmd.getLabel().equalsIgnoreCase("cc"))  {
-            if(!(sender instanceof Player)){
-                return false;
-            }
-            Player p = (Player) sender;
-
-           if(args.length == 0){
-               if(p.hasPermission("pc.cc")){
-                    clearChatAll(p);
-                   return true;
-               } else {
-                    clearChat(p);
-                   return true;
-               }
-           }
-
-           if(args.length >= 1){
-               if(args[0].equalsIgnoreCase("-help")){
-                   if(p.hasPermission("pc.cc")){
-                       ChatUtils.sendMsgTag(p, "ClearChat", "Command gebruik: &o/cc [-help | -own | player]");
-                       return true;
-                   } else {
-                       ChatUtils.sendMsgTag(p, "ClearChat", "Command gebruik: &o/cc [-help]");
-                       return true;
-                   }
-               } else if(p.hasPermission("pc.cc")){
-                   if(args[0].equalsIgnoreCase("-own")){
-                       clearChat(p);
-                       return true;
-                   } else {
-                       Player target = Bukkit.getPlayer(args[0]);
-                       if(target != null){
-                           clearChat(p, target);
-                           return true;
-                       } else {
-                           ChatUtils.sendMsgTag(p, "ClearChat", ChatUtils.error + "Deze speler bestaat niet.");
-                           return false;
-                       }
-                   }
-               } else {
-                   clearChat(p);
-                   return true;
-               }
-           }
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) { //TODO: Fix this.
+       if (cmd.getLabel().equalsIgnoreCase("cc")) {
+           ChatUtils.sendMsgTag(((Player)sender), "ClearChat", "&cDeprecated, need to fix");
        }
         return false;
     }
 
-    //Clears own chat
-    private void clearChat(Player p){
-        ChatUtils.clearChat(p);
-        ChatUtils.sendMsgTag(p, "ClearChat", "Je hebt je eigen chat gecleard.");
-    }
-
-    //Clears target chat
-    private void clearChat(Player p, Player target){
-        ChatUtils.sendMsgTag(p, "ClearChat", "Je hebt de chat van " + target.getDisplayName() + " &agecleard");
-        ChatUtils.clearChat(target);
-        ChatUtils.bcMsgTag("ClearChat", "Jouw chat werd gecleard door: " + p.getDisplayName() + "&a!");
-    }
-
-    //Clears all chat, except those with permission
-    private void clearChatAll(Player p){
-        for(Player pl : Bukkit.getOnlinePlayers()){
-            if(!pl.hasPermission("pc.cc")){
-                ChatUtils.clearChat(pl);
-            } else {
-                ChatUtils.sendMsgTag(p, "ClearChat", "Jouw chat word niet gecleard omdat je hiertoe permissie hebt, wil je alsnog je chat clearen? &o/cc -own");
-            }
-        }
-
-        ChatUtils.bcMsgTag("ClearChat", "Alle chats werden gecleard door: " + p.getDisplayName() + "&a!");
-    }
 }

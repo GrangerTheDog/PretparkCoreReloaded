@@ -112,7 +112,7 @@ public class BoxMenu implements Listener {
                             ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Je hebt niet genoeg keys!");
                         }
                     } else {
-                        ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Maar een persoon kan de MysteryVault teglijk gebruiken!");
+                        ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Maar een persoon kan de Mystery Vault tegelijk gebruiken!");
                     }
                     break;
                 case WORKBENCH:

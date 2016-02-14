@@ -35,12 +35,13 @@ package nl.HorizonCraft.PretparkCore.Menus.SwagMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetMenu;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeMenu;
-import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
-import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,7 +51,7 @@ import org.bukkit.inventory.Inventory;
 /**
  * This class has been created on 09/18/2015 at 5:48 PM by Cooltimmetje.
  */
-public class MainSwag implements Listener {
+public class MainSwag implements Listener, CommandExecutor {
 
     public static void open(Player p){
         Inventory inv = Bukkit.createInventory(null, 27, "Swag Menu");
@@ -68,7 +69,6 @@ public class MainSwag implements Listener {
         if(ChatColor.stripColor(inv.getName()).contains("Swag Menu")){
             event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
-            CorePlayer cp = PlayerUtils.getProfile(p);
             Material m = event.getCurrentItem().getType();
             switch (m){
                 default:
@@ -84,6 +84,17 @@ public class MainSwag implements Listener {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        if(cmd.getLabel().equalsIgnoreCase("swagmenu")){
+            if(sender instanceof Player){
+                Player p = (Player) sender;
+                open(p);
+            }
+        }
+        return false;
     }
 
 }

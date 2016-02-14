@@ -32,7 +32,10 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.MiscUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -44,14 +47,14 @@ public class ChatListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event){
-
-        if(event.getPlayer().isOp()){
+        CorePlayer cp = PlayerUtils.getProfile(event.getPlayer());
+        if(RanksEnum.hasPermission(cp, RanksEnum.MANAGER)){
             event.setFormat(MiscUtils.color("%s&8: &b%s"));
         } else {
             event.setFormat(MiscUtils.color("%s&8: &f%s"));
         }
 
-        if (event.getPlayer().hasPermission("pc.colorchat")) {
+        if (RanksEnum.hasPermission(cp, RanksEnum.VIP)) {
             event.setMessage(MiscUtils.color(event.getMessage()));
         }
 
