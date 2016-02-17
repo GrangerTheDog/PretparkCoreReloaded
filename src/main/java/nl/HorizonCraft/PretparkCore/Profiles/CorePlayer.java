@@ -40,6 +40,8 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
+import nl.HorizonCraft.PretparkCore.Discord.ConnectionManager;
+import nl.HorizonCraft.PretparkCore.Discord.DiscordUtils;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.SettingsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
@@ -68,6 +70,7 @@ public class CorePlayer {
     private int experienceTime;
     private int level;
     private int dust;
+    private int karma;
 
     private char[] achievements;
     private char[] progressiveAchievements;
@@ -90,6 +93,7 @@ public class CorePlayer {
     private int boxDelivery;
     private int keyDelivery;
     private int dustDelivery;
+    private int karmaDelivery;
     private int current_daily_streak;
     private long last_daily_claim;
     private boolean claimedSpecialDay;
@@ -101,6 +105,9 @@ public class CorePlayer {
 
     private RanksEnum rank;
     private long rankExpire;
+
+    private String discordID;
+    private String discordVerifyCode;
 
     public CorePlayer(Player p){
         this.uuid = p.getUniqueId();
@@ -115,6 +122,9 @@ public class CorePlayer {
         this.id = id;
     }
 
+    public Player getPlayer(){
+        return Bukkit.getPlayer(name);
+    }
 
     /* --START COINS-- */
 
@@ -778,8 +788,16 @@ public class CorePlayer {
         this.dustDelivery = dustDelivery;
     }
 
+    public int getKarmaDelivery(){
+        return this.karmaDelivery;
+    }
+
+    public void setKarmaDelivery(int karmaDelivery){
+        this.karmaDelivery = karmaDelivery;
+    }
+
     public boolean hasDelivery(){
-        return coinDelivery != 0 || expDelivery != 0 || boxDelivery != 0 || keyDelivery != 0 || dustDelivery != 0;
+        return coinDelivery != 0 || expDelivery != 0 || boxDelivery != 0 || keyDelivery != 0 || dustDelivery != 0 || karmaDelivery != 0;
     }
 
     public boolean hasDaily() {
@@ -834,11 +852,69 @@ public class CorePlayer {
         }
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuadd " + p.getName() + " " + getRank().getGmName());
-
+        DiscordUtils.updateRoles(this, ConnectionManager.discordClient.getUserByID(getDiscordID()));
     }
 
-
-
     /* --END RANKS-- */
+
+
+    /* --START KARMA-- */
+
+    public void addKarma(Player p, int add, String reason, boolean allowMultiplier, boolean playSound) {
+        if(RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier){
+            add = add * 2;
+        }
+        reason = "???";
+        setKarma(getKarma() + add);
+
+//        ChatUtils.sendMsg(p, "&2+" + add + " karma! (" + reason + ")");
+        TitleUtils.sendAction(p, "&2+" + add + " ???! (" + reason + ")",3);
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+//        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public void removeKarma(Player p, int remove, String reason, boolean playSound) {
+        setKarma(getKarma() - remove);
+        reason = "???";
+
+//        ChatUtils.sendMsg(p, "&2-" + remove + " karma! (" + reason + ")");
+        TitleUtils.sendAction(p, "&2-" + remove + " ???! (" + reason + ")",3);
+        if (playSound) {
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        }
+//        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
+    public int getKarma() {
+        return karma;
+    }
+
+    public void setKarma(int karma) {
+        this.karma = karma;
+    }
+
+    /* --END KARMA-- */
+
+    /* --START DISCORD-- */
+
+    public String getDiscordID() {
+        return discordID;
+    }
+
+    public void setDiscordID(String discordID) {
+        this.discordID = discordID;
+    }
+
+    public String getDiscordVerifyCode() {
+        return discordVerifyCode;
+    }
+
+    public void setDiscordVerifyCode(String discordVerifyCode) {
+        this.discordVerifyCode = discordVerifyCode;
+    }
+
+    /* --END DISCORD-- */
 
 }

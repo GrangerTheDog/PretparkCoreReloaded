@@ -56,54 +56,60 @@ public class SetRankCommand implements CommandExecutor{
                 Player p = (Player) sender;
                 CorePlayer cp = PlayerUtils.getProfile(p);
                 if(RanksEnum.hasPermission(cp, RanksEnum.MANAGER)){
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(target != null){
-                        CorePlayer cpTarget = PlayerUtils.getProfile(target);
-                        if((cpTarget.getRank().getPower() < cp.getRank().getPower()) || (cp.getRank() == RanksEnum.DIRECTEUR || cp.getRank() == RanksEnum.DEVELOPER)){
-                            RanksEnum rank;
-                            try {
-                                rank = RanksEnum.valueOf(args[1].toUpperCase());
-                            } catch (IllegalArgumentException e){
-                                ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Deze rang bestaat niet: " + args[1]);
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " " + getRanksRaw(target.getName()));
-                                return false;
-                            }
-                            if(rank != null){
-                                if(!rank.doesExpire()){
-                                    if(rank.getPower() < cp.getRank().getPower() || (cp.getRank() == RanksEnum.DIRECTEUR || cp.getRank() == RanksEnum.DEVELOPER)){
-                                        RanksEnum rankOld = cpTarget.getRank();
-                                        cpTarget.setRank(rank);
-                                        for(Player pl : Bukkit.getOnlinePlayers()){
-                                            if(pl != p && pl != target){
-                                                CorePlayer cpl = PlayerUtils.getProfile(pl);
-                                                if(RanksEnum.hasPermission(cpl, RanksEnum.MANAGER)){
-                                                    ChatUtils.sendMsgTag(pl, "Rank", "&c" + p.getName() + " &aheeft de rang van &c" + target.getName() + " &averanderd van &" + rankOld.getColor() + rankOld.getFriendlyName() +
-                                                            " &anaar &" + rank.getColor() + rank.getFriendlyName() + "&a.");
+                    if(args.length >= 2){
+                        Player target = Bukkit.getPlayer(args[0]);
+                        if(target != null){
+                            CorePlayer cpTarget = PlayerUtils.getProfile(target);
+                            if((cpTarget.getRank().getPower() < cp.getRank().getPower()) || (cp.getRank() == RanksEnum.DIRECTEUR || cp.getRank() == RanksEnum.DEVELOPER)){
+                                RanksEnum rank;
+                                try {
+                                    rank = RanksEnum.valueOf(args[1].toUpperCase());
+                                } catch (IllegalArgumentException e){
+                                    ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Deze rang bestaat niet: " + args[1]);
+                                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " " + getRanksRaw(target.getName()));
+                                    return false;
+                                }
+                                if(rank != null){
+                                    if(!rank.doesExpire()){
+                                        if(rank.getPower() < cp.getRank().getPower() || (cp.getRank() == RanksEnum.DIRECTEUR || cp.getRank() == RanksEnum.DEVELOPER)){
+                                            RanksEnum rankOld = cpTarget.getRank();
+                                            cpTarget.setRank(rank);
+                                            for(Player pl : Bukkit.getOnlinePlayers()){
+                                                if(pl != p && pl != target){
+                                                    CorePlayer cpl = PlayerUtils.getProfile(pl);
+                                                    if(RanksEnum.hasPermission(cpl, RanksEnum.MANAGER)){
+                                                        ChatUtils.sendMsgTag(pl, "Rank", "&c" + p.getName() + " &aheeft de rang van &c" + target.getName() + " &averanderd van &" + rankOld.getColor() + rankOld.getFriendlyName() +
+                                                                " &anaar &" + rank.getColor() + rank.getFriendlyName() + "&a.");
+                                                    }
                                                 }
                                             }
+
+                                            ChatUtils.sendMsgTag(target, "Rank", "Je rang is veranderd van &" + rankOld.getColor() + rankOld.getFriendlyName() + " &a naar &" + rank.getColor() + rank.getFriendlyName() +
+                                                    " &adoor &c" + p.getName() +"&a.");
+                                            ChatUtils.sendMsgTag(p, "SetRank", "Je hebt de rang van &c" + target.getName() + " &averanderd van &" + rankOld.getColor() + rankOld.getFriendlyName() + " &anaar &" +
+                                                    rank.getColor() + rank.getFriendlyName() + "&a.");
+
+                                            cpTarget.updateRank(target);
+                                        } else {
+                                            ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Je kunt alleen rangen toewijzen die lager zijn dan je eigen rank.");
                                         }
-
-                                        ChatUtils.sendMsgTag(target, "Rank", "Je rang is veranderd van &" + rankOld.getColor() + rankOld.getFriendlyName() + " &a naar &" + rank.getColor() + rank.getFriendlyName() +
-                                                " &adoor &c" + p.getName() +"&a.");
-                                        ChatUtils.sendMsgTag(p, "SetRank", "Je hebt de rang van &c" + target.getName() + " &averanderd van &" + rankOld.getColor() + rankOld.getFriendlyName() + " &anaar &" +
-                                                rank.getColor() + rank.getFriendlyName() + "&a.");
-
-                                        cpTarget.updateRank(target);
                                     } else {
-                                        ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Je kunt alleen rangen toewijzen die lager zijn dan je eigen rank.");
+                                        ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Deze rang mag je niet toewijzen.");
                                     }
                                 } else {
-                                    ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Deze rang mag je niet toewijzen.");
+                                    ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Deze rang bestaat niet: " + args[1]);
+                                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " " + getRanksRaw(target.getName()));
                                 }
                             } else {
-                                ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Deze rang bestaat niet: " + args[1]);
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " " + getRanksRaw(target.getName()));
+                                ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Je kan alleen de rang van spelers, die een lagere rang dan jij hebben, veranderen.");
                             }
                         } else {
-                            ChatUtils.sendMsgTag(p, "SetRank", ChatUtils.error + "Je kan alleen de rang van spelers, die een lagere rang dan jij hebben, veranderen.");
+                            ChatUtils.sendFaslePlayer(p, "SetRank", args[0]);
                         }
+                    } else if(args.length == 1) {
+                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " " + getRanksRaw(args[0]));
                     } else {
-                        ChatUtils.sendFaslePlayer(p, "SetRank", args[0]);
+                        ChatUtils.sendArugmentsError(p, "SetRank", "/setrank <naam> <rang>");
                     }
                 } else {
                     ChatUtils.sendNoPremTag(p, "SetRank");

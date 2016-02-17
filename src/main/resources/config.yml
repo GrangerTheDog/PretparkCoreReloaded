@@ -3,3 +3,5 @@ port: 3306
 databaseName: database
 user: root
 password: SwaggyPasswordOfDoom
+discord_email: thatswaggeremail@ihaslotsofswag.com
+discord_password: Swaggerpassword

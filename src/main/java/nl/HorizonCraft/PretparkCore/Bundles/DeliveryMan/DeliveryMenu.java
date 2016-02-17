@@ -188,6 +188,9 @@ public class DeliveryMenu implements Listener {
             cp.addDust(p, cp.getDustDelivery(), "Speciale bezorging", false, true);
             cp.setDustDelivery(0);
         }
+        if(cp.getKarmaDelivery() != 0){
+            cp.addKarma(p, cp.getKarmaDelivery(), "Speciale bezorging", true, false);
+        }
 
         open(p);
     }
@@ -297,6 +300,9 @@ public class DeliveryMenu implements Listener {
             }
             if(cp.getDustDelivery() != 0){
                 lore.append("&b").append(cp.getDustDelivery()).append(" Mystery Dust").append("\n");
+            }
+            if(cp.getKarmaDelivery() != 0){
+//                lore.append("&2").append(cp.getKarmaDelivery()).append( "Karma").append("\n");
             }
             lore.append("\n ").append("&c> &eKlik om te claimen.");
         } else {

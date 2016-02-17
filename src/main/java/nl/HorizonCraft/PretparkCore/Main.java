@@ -67,8 +67,11 @@ import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
 import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
 import nl.HorizonCraft.PretparkCore.Commands.RedeemVoucherCommand;
 import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
+import nl.HorizonCraft.PretparkCore.Discord.AccountVertification.VerifyCommand;
+import nl.HorizonCraft.PretparkCore.Discord.ConnectionManager;
 import nl.HorizonCraft.PretparkCore.Listeners.*;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
+import nl.HorizonCraft.PretparkCore.Managers.KarmaManager;
 import nl.HorizonCraft.PretparkCore.Managers.SpawnManager;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.MainAdmin;
 import nl.HorizonCraft.PretparkCore.Menus.AdminMenu.PlayerAdmin;
@@ -102,6 +105,7 @@ public class Main extends JavaPlugin {
     public void onEnable(){
         startTime = System.currentTimeMillis(); //Registers the plugin startTime to measure loading time afterwards...
         getLogger().info("Enabling plugin... Please wait.");
+        getLogger().info("Running java Version: " + System.getProperty("java.version"));
         sendDebug("&3Pretpark&6Core&9> &aStarting plugin load... &oPlease wait...");
 
         plugin = this; //Registering the plugin variable to allow other classes to access it.
@@ -112,7 +116,7 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
-                , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin()
+                , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin(), new KarmaManager()
                 , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new BoxCrafting(), new DeliveryMenu()
                 , new BoxMenu(), new ServerPingListener(), new ChatListener(), new PointMenu(), new PowerupViewMenu()
@@ -146,6 +150,7 @@ public class Main extends JavaPlugin {
         registerCommand("pieterpost", new PieterPostCommand());
         registerCommand("setrank", new SetRankCommand());
         registerCommand("activatevip", new ActivateVipCommand());
+        registerCommand("discord", new VerifyCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
@@ -169,6 +174,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Opening API hooks..."); //Checking if the API's that we need are running.
         hookApi("HolographicDisplays");
         hookApi("TitleManager");
+        hookApi("Discord4J");
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
@@ -209,6 +215,8 @@ public class Main extends JavaPlugin {
         MiscUtils.updateVouchers();
         PointUtils.saveAll();
         HologramUtils.removeAll();
+        ConnectionManager.closeConnection();
+
 
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);
@@ -229,19 +237,22 @@ public class Main extends JavaPlugin {
     private void registerListeners(Plugin plugin, Listener... listeners){
         for(Listener listener : listeners){
             Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
-            getLogger().info("Registered listener: " + listener.toString());
+            getLogger().info("Registered listener: " + listener.toString().replace("nl.HorizonCraft.PretparkCore."," ").trim());
         }
     }
 
     //Used to resister commands.
     private void registerCommand(String cmd, CommandExecutor executor){
         getCommand(cmd).setExecutor(executor);
-        getLogger().info("Registerd command \"" + cmd + "\" with executor\"" + executor.toString() + "\"");
+        getLogger().info("Registerd command \"" + cmd + "\" with executor \"" + executor.toString().replace("nl.HorizonCraft.PretparkCore."," ").trim() + "\"");
     }
 
     //Used to hook API's
     private void hookApi(String api){
-        if (getServer().getPluginManager().getPlugin(api) != null && getServer().getPluginManager().getPlugin(api).isEnabled()) {
+        if(api.equals("Discord4J")){
+            sendDebug(MiscUtils.color("&9HookAPI> &8[&a" + api + "&8] \u00BB &e&lVerbinden met Discord..."));
+            ConnectionManager.openConnection(this.getConfig().getString("discord_email"), this.getConfig().getString("discord_password"));
+        } else if (getServer().getPluginManager().getPlugin(api) != null && getServer().getPluginManager().getPlugin(api).isEnabled()) {
             getLogger().info("Successfully hooked into " + api + "!");
             sendDebug(MiscUtils.color("&9HookAPI> &8[&a" + api + "&8] \u00BB &2&lHooking success!"));
         } else {

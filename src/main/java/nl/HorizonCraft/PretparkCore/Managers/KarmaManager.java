@@ -30,45 +30,51 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.Wardrobe;
+package nl.HorizonCraft.PretparkCore.Managers;
+
+import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
+import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import java.util.ArrayList;
 
 /**
- * This class has been created on 10/27/2015 at 10:30 by Cooltimmetje.
+ * Created by Cooltimmetje on 2/15/2016 at 9:02 PM.
  */
-public enum SuitsEnum {
+public class KarmaManager implements Listener {
 
-    NINJA("Ninja", "Overal en nergens teglijk", "Gooi werpsterren"),
-    OLAF("Olaf", "Do you wanna build a snowman?", "Spawn Snowmans"),
-    LOVE("Love", "It's so lovely!", "Spread the love!"),
-    VAMPIRE("Vampier", "Niet bijten!", "Blood Bite"),
-    SKELETON("Skeleton", "Beetje mager, of niet dan?", "Explosive arrows"),
-    COWBOY("Cowboy", "Yeeeaaahaaa!!!", "Binnenkort..."),
-    COOK("Kok", "Nom nom nom...", "Gooi eten"),
-    PIRATE("Piraat","ARRRRRR...","Gooi schatte"),
-    CLOWN("Clown","Nee deze is niet eng!", "Spuit water"),
-    BUNNY("Konijn", "Mag ik een wortel?", "Gooi wortels"),
-    CHICKEN("Kip", "Tok tok tok.", "Leg eiren");
+    private static boolean karmaActive = false;
+    private static ArrayList<String> gotKarma = new ArrayList<>();
+    private static long karmaStarted = 0;
 
-    //COWBOY KOK PIRAAT CLOWN KONIJN KIP PAPEGAAI
-    private String name;
-    private String lore;
-    private String ability;
-
-    SuitsEnum(String s, String s1, String s2) {
-        this.name = s;
-        this.lore = s1;
-        this.ability = s2;
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event){
+        if(karmaActive){
+            if(((System.currentTimeMillis() - karmaStarted)/1000) < 15){
+                Player p = event.getPlayer();
+                if(!gotKarma.contains(p.getName())){
+                    CorePlayer cp = PlayerUtils.getProfile(p);
+                    if(event.getMessage().toLowerCase().contains("gg")){
+                        cp.addKarma(p, 5, "GG!", true, false);
+                    }
+                    if(event.getMessage().toLowerCase().contains("hax")) {
+                        cp.removeKarma(p, 5, "HAX!", false);
+                    }
+                    gotKarma.add(p.getName());
+                }
+            } else {
+                karmaActive = false;
+            }
+        }
     }
 
-    public String getName() {
-        return name;
+    public static void startKarma(){
+        karmaActive = true;
+        gotKarma.clear();
+        karmaStarted = System.currentTimeMillis();
     }
 
-    public String getLore() {
-        return lore;
-    }
-
-    public String getAbility() {
-        return ability;
-    }
 }

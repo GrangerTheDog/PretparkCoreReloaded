@@ -72,6 +72,10 @@ public class ChatUtils {
         p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Ongeldige speler: &c" + falsePlayer));
     }
 
+    public static void sendRaw(Player p, String json){
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + p.getName() + " " + json);
+    }
+
     public static void clearChat(Player p){
         for(int i = 0; i < 100; i++){
             p.sendMessage(" ");

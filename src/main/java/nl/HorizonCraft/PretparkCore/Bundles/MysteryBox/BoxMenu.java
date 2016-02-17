@@ -32,10 +32,12 @@
 
 package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
 
+import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
+import nl.HorizonCraft.PretparkCore.Utilities.ScheduleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -91,6 +93,13 @@ public class BoxMenu implements Listener {
                     "&3Of craft een normale box.",
                     " ",
                     "&3&bMystery Dust: &a" + PlayerUtils.getProfile(p).getDust());
+
+            if(boxes > 4){
+                if(RanksEnum.hasPermission(cp, RanksEnum.BOUWER)){
+                    ItemUtils.createDisplay(inv, 53, Material.ENDER_CHEST, 5, 0, "&a5 Mystery Boxes", "&7Klik om te openen!", "&aDit kost: &d5 Mystery Keys");
+                    ItemUtils.createDisplay(inv, 54, Material.ENDER_CHEST, 11, 0, "&a11 Mystery Boxes", "&7Klik om te openen!", "&aDit kost: &d11 Mystery Keys");
+                }
+            }
         }
 
         p.openInventory(inv);
@@ -100,12 +109,42 @@ public class BoxMenu implements Listener {
     public void onClick(InventoryClickEvent event){
         if(ChatColor.stripColor(event.getInventory().getName()).contains("Mystery Vault")){
             event.setCancelled(true);
-            Player p = (Player) event.getWhoClicked();
+            final Player p = (Player) event.getWhoClicked();
             Material m = event.getCurrentItem().getType();
             switch (m){
                 case ENDER_CHEST:
                     if(!inUse){
-                        if(PlayerUtils.getProfile((Player)event.getWhoClicked()).getKeys() > 0){
+                        if(event.getCurrentItem().getAmount() == 5){
+                            if(PlayerUtils.getProfile((Player)event.getWhoClicked()).getKeys() > 4){
+                                for(int x=96;x<101;x++) {
+                                    final int xf = x;
+                                    ScheduleUtils.scheduleTask(5 * (x - 95), new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            BoxAnimation.openBox(xf, p, null);
+                                        }
+                                    });
+                                }
+                                p.closeInventory();
+                            } else {
+                                ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Je hebt niet genoeg keys!");
+                            }
+                        } else if (event.getCurrentItem().getAmount() == 11){
+                            if(PlayerUtils.getProfile((Player)event.getWhoClicked()).getKeys() > 10){
+                                for(int x=93;x<104;x++) {
+                                    final int xf = x;
+                                    ScheduleUtils.scheduleTask(5 * (x - 95), new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            BoxAnimation.openBox(xf, p, null);
+                                        }
+                                    });
+                                }
+                                p.closeInventory();
+                            } else {
+                                ChatUtils.sendMsgTag((Player)event.getWhoClicked(), "MysteryVault", ChatUtils.error + "Je hebt niet genoeg keys!");
+                            }
+                        } else if(PlayerUtils.getProfile((Player)event.getWhoClicked()).getKeys() > 0){
                             p.closeInventory();
                             BoxAnimation.openBox((Player)event.getWhoClicked(), null);
                         } else {

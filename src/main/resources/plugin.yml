@@ -57,3 +57,5 @@ commands:
         description: adminmenu
     swagmenu:
         description: swagmenu
+    discord:
+        description: discord

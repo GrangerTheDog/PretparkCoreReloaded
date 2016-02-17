@@ -36,10 +36,10 @@ import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
-import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.SuitType;
 import nl.HorizonCraft.PretparkCore.Enums.StatTypes;
 import nl.HorizonCraft.PretparkCore.Enums.Stats;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -164,7 +164,7 @@ public class PlayerUtils {
             ItemStack is = new ItemStack(piece.getMaterial(), 1, (byte)0);
 
 
-            if(piece.getSuitType() == SuitType.HELMET){
+            if(piece.getMaterial() == Material.SKULL_ITEM){
                 SkullMeta sm = (SkullMeta) is.getItemMeta();
                 sm.setOwner(piece.getSkullUUID());
                 String[] loreA = getLore(piece);
@@ -273,6 +273,26 @@ public class PlayerUtils {
         } else {
             TitleUtils.sendAction(p, MiscUtils.color("&e&l" + stat.getLine().replace("%n", "&c&l" + p.getStatistic(stat.getStatistic()) + "&e&l")), 5);
         }
+    }
+
+    public static Player getPlayerByCode(String code){
+        for(String s : Variables.profile.keySet()){
+            CorePlayer cp = getProfile(Bukkit.getPlayer(s));
+            if(cp.getDiscordVerifyCode().equalsIgnoreCase(code.toUpperCase())){
+                return Bukkit.getPlayer(s);
+            }
+        }
+        return null;
+    }
+
+    public static CorePlayer getByDiscordID(String discordID){
+        for(String s : Variables.profile.keySet()){
+            CorePlayer cp = Variables.profile.get(s);
+            if(cp.getDiscordID().equals(discordID)){
+                return cp;
+            }
+        }
+        return null;
     }
 
 

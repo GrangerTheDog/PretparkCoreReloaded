@@ -43,8 +43,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-
 /**
  * Created by Cooltimmetje on 2/8/2016 at 4:49 PM.
  */
@@ -55,8 +53,8 @@ public class SpecialDeliveryCommand implements CommandExecutor{
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 if (p.getName().equals("Jordy010NL") || p.getName().equals("Cooltimmetje")) {
-                    if(args.length >= 6){
-                        int[] currencies = {0,0,0,0,0};
+                    if(args.length >= 7){
+                        int[] currencies = {0,0,0,0,0,0};
                         for(int i=1;i < 6;i++){
                             if(MiscUtils.isInt(args[i])){
                                 currencies[i-1] = Integer.parseInt(args[i]);
@@ -75,12 +73,13 @@ public class SpecialDeliveryCommand implements CommandExecutor{
                             cp.setBoxDelivery(cp.getBoxDelivery() + currencies[2]);
                             cp.setKeyDelivery(cp.getKeyDelivery() + currencies[3]);
                             cp.setDustDelivery(cp.getDustDelivery() + currencies[4]);
+                            cp.setKarmaDelivery(cp.getKarmaDelivery() + currencies[5]);
 
                             ChatUtils.sendMsgTag(p, "SpecialDelivery", ChatUtils.success + "Deze speciale bezorging ligt nu op het postkantoor, en kan worden opgehaald!");
                             DeliveryNotifier.notify(target);
                         }
                     } else {
-                        ChatUtils.sendArugmentsError(p, "SpecialDelivery", "/specialdelivery <player> <coins> <exp> <boxes> <keys> <dust>");
+                        ChatUtils.sendArugmentsError(p, "SpecialDelivery", "/specialdelivery <player> <coins> <exp> <boxes> <keys> <dust> <karma>");
                     }
                 } else {
                     ChatUtils.sendNoPremTag(p,"SpecialDelivery");

@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Timers;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
+import nl.HorizonCraft.PretparkCore.Managers.KarmaManager;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.SettingsEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
@@ -60,6 +61,7 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("Coins", "&c" + p.getName() + " &aheeft zojuist 2x coins ontvangen! Geluksvogel!");
                             cp.setCoinTime(Variables.COIN_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
+                            KarmaManager.startKarma();
                         } else {
                             cp.addCoins(p, Variables.COIN_GAIN, "1 uur online", true, true);
                             cp.setCoinTime(Variables.COIN_TIME);
@@ -76,6 +78,7 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("MysteryBoxes", "&c" + p.getName() + " &aheeft zojuist 2x Mystery Boxes ontvangen! Geluksvogel!");
                             cp.setBoxTime(Variables.CHEST_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
+                            KarmaManager.startKarma();
                         } else {
                             cp.addBoxes(p, Variables.CHEST_GAIN, "2 uur online", false, true);
                             cp.setBoxTime(Variables.CHEST_TIME);
@@ -92,6 +95,7 @@ public class CurrencyGiver {
                             ChatUtils.bcMsgTag("Experience", "&c" + p.getName() + " &aheeft zojuist 2x experience ontvangen! Geluksvogel!");
                             cp.setExperienceTime(Variables.EXPERIENCE_TIME);
                             cp.awardAchievement(p, AchievementsEnum.DOUBLE);
+                            KarmaManager.startKarma();
                         } else {
                             cp.addExp(p, Variables.EXPERIENCE_GAIN, "30 minuten online", false, true);
                             cp.setExperienceTime(Variables.EXPERIENCE_TIME);

@@ -97,7 +97,7 @@ public class WardrobeMenu implements Listener{
 
 
             } else {
-                if(piece.getSuitType() == SuitType.HELMET){
+                if(piece.getMaterial() == Material.SKULL_ITEM){
                     SkullMeta sm = (SkullMeta) is.getItemMeta();
                     sm.setOwner(piece.getSkullUUID());
                     String[] loreA = getLore(piece, unlocked);

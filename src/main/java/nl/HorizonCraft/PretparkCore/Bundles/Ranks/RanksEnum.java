@@ -42,17 +42,17 @@ import org.bukkit.entity.Player;
  */
 public enum RanksEnum {
 
-    BEZOEKER    (0, false, "bezoeker",   "Bezoeker",            '7', ChatColor.GRAY         ),
-    VIP         (1, true,  "vip",        "VIP",                 'a', ChatColor.GREEN        ),
-    VIP_LIFE    (1, false, "vip",        "VIP",                 'a', ChatColor.GREEN        ),
-    MEDIA       (2, false, "media",      "Media",               'd', ChatColor.LIGHT_PURPLE ), //CUSTOM PREFIXES
-    MEDEWERKER  (3, false, "medewerker", "Medewerker",          '3', ChatColor.DARK_AQUA    ),
-    BOUWER      (4, false, "bouwer",     "Bouwer",              '2', ChatColor.DARK_GREEN   ),
-    TD          (5, false, "td",         "Technische Dienst",   'b', ChatColor.AQUA         ),
-    JR_DEV      (6, false, "jrdev",      "Junior Developer",    '6', ChatColor.GOLD         ),
-    MANAGER     (7, false, "manager",    "Manager",             'e', ChatColor.YELLOW       ), //CUSTOM PREFIXES
-    DEVELOPER   (8, false, "developer",  "Developer",           '6', ChatColor.GOLD         ),
-    DIRECTEUR   (8, false, "directeur",  "Directeur",           'c', ChatColor.RED          );
+    BEZOEKER    (0, false, "bezoeker",   "Bezoeker",            '7', ChatColor.GRAY        , "Bezoeker"                 ),
+    VIP         (1, true,  "vip",        "VIP",                 'a', ChatColor.GREEN       , "VIP"                      ),
+    VIP_LIFE    (1, false, "vip",        "VIP",                 'a', ChatColor.GREEN       , "VIP"                      ),
+    MEDIA       (2, false, "media",      "Media",               'd', ChatColor.LIGHT_PURPLE, "Media"                    ), //CUSTOM PREFIXES
+    MEDEWERKER  (3, false, "medewerker", "Medewerker",          '3', ChatColor.DARK_AQUA   , "Medewerker-Staff"         ),
+    BOUWER      (4, false, "bouwer",     "Bouwer",              '2', ChatColor.DARK_GREEN  , "Bouwer-Staff"             ),
+    TD          (5, false, "td",         "Technische Dienst",   'b', ChatColor.AQUA        , "Technische Dienst-Staff"  ),
+    JR_DEV      (6, false, "jrdev",      "Junior Developer",    '6', ChatColor.GOLD        , "Junior Developer-Staff"   ),
+    MANAGER     (7, false, "manager",    "Manager",             'e', ChatColor.YELLOW      , "Hoofd Staff"              ), //CUSTOM PREFIXES
+    DEVELOPER   (8, false, "developer",  "Developer",           '6', ChatColor.GOLD        , "Developer-Hoofd Staff"    ),
+    DIRECTEUR   (8, false, "directeur",  "Directeur",           'c', ChatColor.RED         , "Directeur-Hoofd Staff"    );
 
     private int power;
     private boolean canExpire;
@@ -60,14 +60,16 @@ public enum RanksEnum {
     private String friendlyName;
     private char color;
     private ChatColor chatColor;
+    private String discordRoles;
 
-    RanksEnum(int i, boolean b, String s, String s1, char c, ChatColor cc){
+    RanksEnum(int i, boolean b, String s, String s1, char c, ChatColor cc, String s2){
         this.power = i;
         this.canExpire = b;
         this.gmName = s;
         this.friendlyName = s1;
         this.color = c;
         this.chatColor = cc;
+        this.discordRoles = s2;
     }
 
     public int getPower(){
@@ -101,5 +103,9 @@ public enum RanksEnum {
     public static boolean hasPermission(Player p, RanksEnum requiredRank){
         CorePlayer cp = PlayerUtils.getProfile(p);
         return (cp.getRank() == DIRECTEUR || cp.getRank() == DEVELOPER) || cp.getRank().getPower() >= requiredRank.getPower();
+    }
+
+    public String getDiscordRoles() {
+        return discordRoles;
     }
 }

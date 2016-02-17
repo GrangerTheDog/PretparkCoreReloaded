@@ -167,7 +167,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0,0,0,0,0,0,0,0,?,0,0)";
+        String create = "INSERT INTO playerdata VALUES(null,?,?,0,?,?,0,?,0,?,?,0,?,?,?,0,0,0,0,0,0,0,0,?,0,0,0,0)";
 
         try {
             c = hikari.getConnection();
@@ -237,6 +237,8 @@ public class MysqlManager {
             cp.setRank(RanksEnum.valueOf(rs.getString("rank")));
             cp.setRankExpire(rs.getLong("rank_expire"));
             cp.setClaimedSpecialDay(rs.getInt("special_day") == 1);
+            cp.setKarma(rs.getInt("karma"));
+            cp.setKarmaDelivery(rs.getInt("del_karma"));
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -247,7 +249,8 @@ public class MysqlManager {
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
         String updateData = "UPDATE playerdata SET name=?,coins=?,coin_time=?,achievements=?,mkeys=?,gadgets=?,boxes=?,box_time=?,pets=?,exp=?,exp_time=?," +
-                "wardrobe=?,progressive_achievements=?,dust=?,last_daily_claim=?,current_daily_streak=?,del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=?,rank=?,rank_expire=?,special_day=? WHERE uuid=?";
+                "wardrobe=?,progressive_achievements=?,dust=?,last_daily_claim=?,current_daily_streak=?,del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=?,rank=?,rank_expire=?,special_day=?" +
+                ",karma=?,del_karma=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -278,7 +281,9 @@ public class MysqlManager {
             ps.setString(22, cp.getRank().toString());
             ps.setLong(23, cp.getRankExpire());
             ps.setInt(24, cp.hasClaimedSpecialDay() ? 1 : 0);
-            ps.setString(25, uuid);
+            ps.setInt(25,cp.getKarma());
+            ps.setInt(26,cp.getKarmaDelivery());
+            ps.setString(27, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -351,7 +356,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String create = "INSERT INTO playerprefs VALUES(?,?,0,?,?,?,?,?,?)";
+        String create = "INSERT INTO playerprefs VALUES(?,?,0,?,?,?,?,?,?,?)";
 
         try {
             c = hikari.getConnection();
@@ -365,6 +370,7 @@ public class MysqlManager {
             ps.setString(6, "NOTHING");
             ps.setString(7, "NOTHING");
             ps.setString(8, StringUtils.repeat("t", 100));
+            ps.setString(9, "0");
 
             ps.execute();
         } catch (SQLException e) {
@@ -397,6 +403,7 @@ public class MysqlManager {
             }
 
             cp.setPrefs(rs.getString("prefs").toCharArray());
+            cp.setDiscordID(rs.getString("discord_id"));
 
             if(rs.getString("head").equals("NOTHING")){
                 cp.setHead(null);
@@ -433,7 +440,7 @@ public class MysqlManager {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = p.getUniqueId().toString();
-        String updateData = "UPDATE playerprefs SET name=?,speed=?,head=?,chest=?,legs=?,boots=?,gadget=?,prefs=? WHERE uuid=?";
+        String updateData = "UPDATE playerprefs SET name=?,speed=?,head=?,chest=?,legs=?,boots=?,gadget=?,prefs=?,discord_id=? WHERE uuid=?";
         CorePlayer cp = PlayerUtils.getProfile(p);
 
         try {
@@ -475,8 +482,9 @@ public class MysqlManager {
             }
 
             ps.setString(8, new String(cp.getPrefs()));
+            ps.setString(9, cp.getDiscordID());
 
-            ps.setString(9, uuid);
+            ps.setString(10, uuid);
 
             ps.execute();
         } catch (SQLException e) {
@@ -1221,7 +1229,7 @@ public class MysqlManager {
     private static void uploadDelivery(Player p, ResultSet rs, int[] currencies) {
         Connection c = null;
         PreparedStatement ps = null;
-        String updateData = "UPDATE playerdata SET del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=? WHERE uuid=?";
+        String updateData = "UPDATE playerdata SET del_coins=?,del_exp=?,del_boxes=?,del_keys=?,del_dust=?,del_karma=? WHERE uuid=?";
 
         try {
             c = hikari.getConnection();
@@ -1232,7 +1240,8 @@ public class MysqlManager {
             ps.setInt(3, rs.getInt("del_boxes") + currencies[2]);
             ps.setInt(4, rs.getInt("del_keys") + currencies[3]);
             ps.setInt(5, rs.getInt("del_dust") + currencies[4]);
-            ps.setString(6, rs.getString("uuid"));
+            ps.setInt(6, rs.getInt("del_karma") + currencies[5]);
+            ps.setString(7, rs.getString("uuid"));
 
             ps.execute();
             ChatUtils.sendMsgTag(p, "SpecialDelivery", ChatUtils.success + "Deze speciale bezorging ligt nu op het postkantoor, en kan worden opgehaald!");

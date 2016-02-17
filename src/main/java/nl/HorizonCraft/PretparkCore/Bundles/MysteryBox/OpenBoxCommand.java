@@ -39,8 +39,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import javax.swing.*;
-
 /**
  * Created by Cooltimmetje on 1/31/2016 at 8:37 PM.
  */
@@ -62,6 +60,40 @@ public class OpenBoxCommand implements CommandExecutor {
                             ChatUtils.sendMsgTag(p, "OpenBox", "Ongeldige weight.");
                         }
                         if(args.length >= 2){
+                            if(args[1].equals("-all")){
+                                if(args.length >= 3){
+                                    Player target = Bukkit.getPlayer(args[2]);
+                                    if(target != null){
+                                        BoxAnimation.openBox(93,target,weight);
+                                        BoxAnimation.openBox(94,target,weight);
+                                        BoxAnimation.openBox(95,target,weight);
+                                        BoxAnimation.openBox(96,target,weight);
+                                        BoxAnimation.openBox(97,target,weight);
+                                        BoxAnimation.openBox(98,target,weight);
+                                        BoxAnimation.openBox(99,target,weight);
+                                        BoxAnimation.openBox(100,target,weight);
+                                        BoxAnimation.openBox(101,target,weight);
+                                        BoxAnimation.openBox(102,target,weight);
+                                        BoxAnimation.openBox(103,target,weight);
+                                        return true;
+                                    } else {
+                                        ChatUtils.sendFaslePlayer(p, "OpenBox", args[2]);
+                                        return true;
+                                    }
+                                }
+                                BoxAnimation.openBox(93,p,weight);
+                                BoxAnimation.openBox(94,p,weight);
+                                BoxAnimation.openBox(95,p,weight);
+                                BoxAnimation.openBox(96,p,weight);
+                                BoxAnimation.openBox(97,p,weight);
+                                BoxAnimation.openBox(98,p,weight);
+                                BoxAnimation.openBox(99,p,weight);
+                                BoxAnimation.openBox(100,p,weight);
+                                BoxAnimation.openBox(101,p,weight);
+                                BoxAnimation.openBox(102,p,weight);
+                                BoxAnimation.openBox(103,p,weight);
+                                return true;
+                            }
                             Player target = Bukkit.getPlayer(args[1]);
                             if(target != null){
                                 BoxAnimation.openBox(target, weight);

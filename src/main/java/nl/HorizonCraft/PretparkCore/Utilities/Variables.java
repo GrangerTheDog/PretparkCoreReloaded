@@ -88,4 +88,6 @@ public class Variables {
     public static ArrayList<Hologram> powerups = new ArrayList<>();
 
     public static int uniquePlayers = 0;
+
+    public static String discordServerID = "91580382159314944";
 }
