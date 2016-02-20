@@ -1,20 +1,19 @@
 #HorizonCraft Leaderboards
 
 ##General Leaderboard
-|  # |      Naam      |   Points  |   Bonus Points  |  Verschil Vorige Week |  Verschil Plek  |               Opmerkingen              |
-|:--:|:--------------:|:---------:|:---------------:|:---------------------:|:---------------:|:--------------------------------------:|
-|  1 |  Cooltimmetje  | 35 points | +6 bonus points |  :arrow_up: 5 points  | :arrow_right: 0 |     :star: Vierde week op nummer 1!    |
-|  2 |    jordyvz01   | 24 points | +5 bonus points |  :arrow_up: 5 points  |   :arrow_up: 1  |                                        |
-|  3 |    78wesley    | 21 points |  +1 bonus point | :arrow_down: 5 points |  :arrow_down: 1 |                                        |
-|  4 | BekertjeZuivel | 14 points |                 |  :arrow_up: 4 points  |   :arrow_up: 1  |                                        |
-|  5 |    nickjedl    | 13 points |                 |        *n.v.t.*       |     *n.v.t.*    |    :exclamation: Nieuwe Binnenkomer    |
-|  6 |   Jordy010NL   |  9 points | +4 bonus points |  :arrow_up: 4 points  |  :arrow_down: 2 |                                        |
-|  7 |      R0BIN     |  8 points |                 |  :arrow_up: 3 points  | :arrow_right: 0 |                                        |
-|  8 |     xBrandy    |  6 points |                 |  :arrow_down: 1 point |  :arrow_down: 2 | :x: Tweede opeenvolgende week gedaald! |
-|  9 |    BromSnor    |  2 points |                 |        *n.v.t.*       |     *n.v.t.*    |    :exclamation: Nieuwe Binnenkomer    |
-| 10 |   SvenTijger   |  1 point  |                 | :arrow_down: 2 points |  :arrow_down: 2 | :x: Tweede opeenvolgende week gedaald! |
-| 10 |    Lesseh98    |  1 point  |                 |  :arrow_down: 1 point |  :arrow_down: 1 |                                        |
-| 10 |   Destiny_VG   |  1 point  |                 |        *n.v.t.*       |     *n.v.t.*    |    :exclamation: Nieuwe Binnenkomer    |
+| # |      Naam      |   Points  |   Bonus Points  |  Verschil Vorige Week  |  Verschil Plek  |                 Opmerkingen                |
+|:-:|:--------------:|:---------:|:---------------:|:----------------------:|:---------------:|:------------------------------------------:|
+| 1 |  Cooltimmetje  | 25 points |                 | :arrow_down: 10 points | :arrow_right: 0 |       :star: Vijfde week op nummer 1!      |
+| 2 |    jordyvz01   | 19 points | +5 bonus points |  :arrow_down: 5 points | :arrow_right: 0 |                                            |
+| 3 |    78wesley    | 14 points |                 |  :arrow_down: 6 points | :arrow_right: 0 |                                            |
+| 3 |    Toptim24    | 14 points |                 |        *n.v.t.*        |     *n.v.t.*    |      :exclamation: Nieuwe Binnenkomer      |
+| 3 |    nickjedl    | 14 points | +2 bonus points |   :arrow_up: 1 point   |   :arrow_up: 2  | :star: Tweede week achter elkaar gestegen! |
+| 4 |   SvenTijger   | 13 points |                 |  :arrow_up: 12 points  |   :arrow_up: 6  |                                            |
+| 5 |     xBrandy    | 11 points |                 |   :arrow_up: 5 points  |   :arrow_up: 3  |                                            |
+| 6 |   Jordy010NL   | 10 points | +5 bonus points |   :arrow_up: 1 point   | :arrow_right: 0 |                                            |
+| 7 | BekertjeZuivel |  4 points |                 | :arrow_down: 10 points |  :arrow_down: 3 |                                            |
+| 8 |      R0BIN     |  3 points |                 |  :arrow_down: 5 points |  :arrow_down: 1 |                                            |
+| 9 |    BromSnor    |  1 point  |                 |  :arrow_down: 1 point  | :arrow_right: 0 |                                            |
 
 > Dit is gebaseerd op de per currency leaderboards. 
 > Plek 1 krijgt 5 punten en plek 5 1 punt, en wat daar tussen inzit kun je zelf wel invullen.
