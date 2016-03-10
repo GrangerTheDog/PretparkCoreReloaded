@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,9 @@ public enum AchievementsEnum {
     TIM_SLAP(26, "Tim on top of the world!", "Launch Toptim24!", 10, 1, 200, AchievementType.STAFFPUNCH, false),
     TS_RIDE(27, "Swinging around!", "Maak een ritje op The Swinger", 25, 1, 600, AchievementType.RIDES, false),
     NICK_SLAP(28, "NICKJEEEEDL", "Launch nickjedl!", 10, 1, 200, AchievementType.STAFFPUNCH, false),
-    DISCORD(29, "Kun je me nu horen?", "Link je Minecraft aan je Discord account!", 250, 1000, 3, AchievementType.GENERAL, false);
+//    DISCORD(29, "Kun je me nu horen?", "Link je Minecraft aan je Discord account!", 250, 1000, 3, AchievementType.GENERAL, false),
+    CR_RIDE(30, "Crush gevonden?!", "Maak een ritje op The Crush", 25, 1, 600, AchievementType.RIDES, false),
+    RICK_SLAP(31, "Bult op je Kop!", "Launch RickBult", 10, 1, 200, AchievementType.STAFFPUNCH, false);
 
 
     private int id;

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -332,7 +332,7 @@ public class BoxAnimation {
                 switch (rewardType) {
                     case GAGDET:
                         if(PlayerUtils.getProfile(p).getGadgets()[gadgetf.getId()] == 't'){
-                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true); //TODO: PLACEHOLDER
+                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true, true); //TODO: PLACEHOLDER
                         } else {
                             PlayerUtils.getProfile(p).unlockGadget(gadgetf,p,true,true,true);
                         }
@@ -348,7 +348,7 @@ public class BoxAnimation {
                         break;
                     case CLOTHING:
                         if(PlayerUtils.getProfile(p).getPieces()[piecef.getId()] == 't'){
-                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true); //TODO: PLACEHOLDER
+                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true, true); //TODO: PLACEHOLDER
                         } else {
                             PlayerUtils.getProfile(p).unlockClothing(piecef,p,true,true,true);
                         }
@@ -364,7 +364,7 @@ public class BoxAnimation {
                         break;
                     case PET:
                         if (petf != null && PlayerUtils.getProfile(p).getPets()[petf.getId()] == 't') {
-                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true); //TODO: PLACEHOLDER
+                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true, true); //TODO: PLACEHOLDER
                         } else {
                             PlayerUtils.getProfile(p).unlockPet(petf,p,true,true,true);
                         }
@@ -428,19 +428,19 @@ public class BoxAnimation {
         final CorePlayer cp = PlayerUtils.getProfile(p);
 
         if(forcedWeight == null) {
-            PlayerUtils.getProfile(p).removeBoxes(p, 1, "MysteryBox geopend", true);
-            PlayerUtils.getProfile(p).removeKeys(p, 1, "MysteryBox geopend", true);
+
             cp.awardAchievement(p, AchievementsEnum.MYSTERYBOX_OPEN);
         }
 
-        Variables.WORLD.getBlockAt(x, 61, -315).setType(Material.BARRIER);
-        Variables.WORLD.getBlockAt(x, 61, -313).setType(Material.BARRIER);
-        Variables.WORLD.getBlockAt(x, 61, -311).setType(Material.BARRIER);
-        Variables.WORLD.getBlockAt(x, 59, -315).setType(Material.BARRIER);
-        Variables.WORLD.getBlockAt(x, 59, -313).setType(Material.BARRIER);
-        Variables.WORLD.getBlockAt(x, 59, -311).setType(Material.BARRIER);
+//        Variables.WORLD.getBlockAt(x, 61, -315).setType(Material.BARRIER);
+//        Variables.WORLD.getBlockAt(x, 61, -313).setType(Material.BARRIER);
+//        Variables.WORLD.getBlockAt(x, 61, -311).setType(Material.BARRIER);
+//        Variables.WORLD.getBlockAt(x, 59, -315).setType(Material.BARRIER);
+//        Variables.WORLD.getBlockAt(x, 59, -313).setType(Material.BARRIER);
+//        Variables.WORLD.getBlockAt(x, 59, -311).setType(Material.BARRIER);
 
         final Hologram itemHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, x+.5, 61, -312.5));
+        final Hologram dustHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, x+.5, 63, -312.5));
         final Hologram weightHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, x+.5, 61, -310.5));
         final Hologram typeHolo = HologramsAPI.createHologram(Main.getPlugin(), new Location(Variables.WORLD, x+.5, 61, -314.5));
 
@@ -616,7 +616,10 @@ public class BoxAnimation {
                 switch (rewardType) {
                     case GAGDET:
                         if(PlayerUtils.getProfile(p).getGadgets()[gadgetf.getId()] == 't'){
-                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true); //TODO: PLACEHOLDER
+                            int dust = MiscUtils.randomInt(weightf.getMin(), weightf.getMax());
+                            dustHolo.appendTextLine(MiscUtils.color("&b&lITEM ALREADY OWNED"));
+                            dustHolo.appendTextLine(MiscUtils.color("&b+" + dust + " Mystery Dust"));
+                            PlayerUtils.getProfile(p).addDust(p,dust," ",false,false,false);
                         } else {
                             PlayerUtils.getProfile(p).unlockGadget(gadgetf,p,true,true,true);
                         }
@@ -632,7 +635,10 @@ public class BoxAnimation {
                         break;
                     case CLOTHING:
                         if(PlayerUtils.getProfile(p).getPieces()[piecef.getId()] == 't'){
-                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true); //TODO: PLACEHOLDER
+                            int dust = MiscUtils.randomInt(weightf.getMin(), weightf.getMax());
+                            dustHolo.appendTextLine(MiscUtils.color("&b&lITEM ALREADY OWNED"));
+                            dustHolo.appendTextLine(MiscUtils.color("&b+" + dust + " Mystery Dust"));
+                            PlayerUtils.getProfile(p).addDust(p,dust," ",false,false,false);
                         } else {
                             PlayerUtils.getProfile(p).unlockClothing(piecef,p,true,true,true);
                         }
@@ -648,7 +654,10 @@ public class BoxAnimation {
                         break;
                     case PET:
                         if (petf != null && PlayerUtils.getProfile(p).getPets()[petf.getId()] == 't') {
-                            PlayerUtils.getProfile(p).addDust(p, MiscUtils.randomInt(weightf.getMin(), weightf.getMax()),  "Item already owned [PLACEHOLDER]", false, true); //TODO: PLACEHOLDER
+                            int dust = MiscUtils.randomInt(weightf.getMin(), weightf.getMax());
+                            dustHolo.appendTextLine(MiscUtils.color("&b&lITEM ALREADY OWNED"));
+                            dustHolo.appendTextLine(MiscUtils.color("&b+" + dust + " Mystery Dust"));
+                            PlayerUtils.getProfile(p).addDust(p,dust," ",false,false,false);
                         } else {
                             PlayerUtils.getProfile(p).unlockPet(petf,p,true,true,true);
                         }
@@ -680,6 +689,7 @@ public class BoxAnimation {
                 itemHolo.delete();
                 weightHolo.delete();
                 typeHolo.delete();
+                dustHolo.delete();
 
                 Variables.WORLD.getBlockAt(x, 61, -315).setType(Material.AIR);
                 Variables.WORLD.getBlockAt(x, 61, -313).setType(Material.AIR);

@@ -30,62 +30,52 @@
  * unless you are on our server using this plugin.
  */
 
-package nl.HorizonCraft.PretparkCore.Bundles.MysteryBox;
+package nl.HorizonCraft.PretparkCore.Listeners;
 
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.ChatUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.ItemUtils;
 import nl.HorizonCraft.PretparkCore.Utilities.PlayerUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
- * Created by Cooltimmetje on 1/30/2016 at 5:14 PM.
+ * Created by Cooltimmetje on 3/3/2016 at 8:05 PM.
  */
-public class BoxCrafting implements Listener {
-
-    public static void open(Player p){
-        Inventory inv = Bukkit.createInventory(null, 27, "Mystery Crafting");
-
-        ItemUtils.createDisplay(inv, 13, Material.ENDER_CHEST, 1, 0, "&aCraft:", "&31 Mystery Box", " ", "&aDit kost: &b50 Mystery Dust", "&c> &aKlik om te craften.");
-        ItemUtils.createDisplay(inv, 15, Material.TRIPWIRE_HOOK, 1, 0, "&aCraft:", "&d1 Mystery Key", " ", "&aDit kost: &b150 Mystery Dust", "&c> &aKlik om te craften.");
-
-        p.openInventory(inv);
-    }
+public class FeedDuckListener implements Listener {
 
     @EventHandler
-    public void onClick(InventoryClickEvent event){
-        if(ChatColor.stripColor(event.getInventory().getName()).contains("Mystery Crafting")){
-            event.setCancelled(true);
-            Player p = (Player) event.getWhoClicked();
-            CorePlayer cp = PlayerUtils.getProfile(p);
-            Material m = event.getCurrentItem().getType();
-            switch (m){
-                case TRIPWIRE_HOOK:
-                    if(cp.getDust() >= 150){
-                        cp.addKeys(p, 1, "key gecraft", false, true);
-                        cp.removeDust(p, 150, "key gecraft",false);
-                    } else {
-                        ChatUtils.sendMsgTag(p, "MysteryCrafting", ChatUtils.error + "Je heb niet genoeg Mystery Dust!");
+    @SuppressWarnings("all")
+    public void onRightClick(PlayerInteractEntityEvent event) {
+        if (!(event.getRightClicked() instanceof Minecart)) {
+            if (event.getPlayer().getItemInHand() != null) {
+                if (event.getPlayer().getItemInHand().getType() == Material.SEEDS) {
+                    if (event.getPlayer().getItemInHand().hasItemMeta()) {
+                        event.setCancelled(true);
+                        Player p = event.getPlayer();
+                        if(event.getRightClicked().getName().equals("Gerrit de Eend") && event.getRightClicked().getType() == EntityType.CHICKEN && event.getPlayer().getInventory().getHeldItemSlot() == 4){
+                            CorePlayer cp = PlayerUtils.getProfile(p);
+                            if(cp.getGerritFood() > 0){
+                                cp.addKarma(p,1,"Gerrit de eend gevoerd!",true,true);
+                                cp.setGerritFood(cp.getGerritFood() - 1);
+                                if(cp.getGerritFood() > 0) {
+                                    ItemUtils.createDisplay(p, 5, Material.SEEDS, cp.getGerritFood(), 0, "&bEenden Voer", "&bGeef dit aan Gerrit de Eend.");
+                                } else {
+                                    ItemUtils.createDisplay(p, new ItemStack(Material.AIR), 5);
+                                }
+                            } else {
+                                ChatUtils.sendMsgTag(p, "Gerrit", "WTF JIJ MIJ DEZE ROMMEL GEVEN?");
+                            }
+                        }
                     }
-                break;
-                case ENDER_CHEST:
-                    if(cp.getDust() >= 50){
-                        cp.addBoxes(p, 1, "box gecraft", false, true);
-                        cp.removeDust(p, 50, "box gecraft",false);
-                    } else {
-                        ChatUtils.sendMsgTag(p, "MysteryCrafting", ChatUtils.error + "Je heb niet genoeg Mystery Dust!");
-                    }
-                default:
-                    break;
+                }
             }
         }
     }
-
 }

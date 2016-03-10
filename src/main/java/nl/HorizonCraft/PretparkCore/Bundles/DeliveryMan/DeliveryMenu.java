@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -117,7 +117,7 @@ public class DeliveryMenu implements Listener {
         cp.addExp(p, 1000, "Valentijnsdag!",false,true);
         cp.addBoxes(p, 20, "Valentijnsdag!",false,true);
         cp.addKeys(p, 10, "Valentijnsdag!",false,true);
-        cp.addDust(p, 150, "Valentijnsdag!",false,true);
+        cp.addDust(p, 150, "Valentijnsdag!",false,true, true);
         cp.setClaimedSpecialDay(true);
         open(p);
     }
@@ -185,7 +185,7 @@ public class DeliveryMenu implements Listener {
             cp.setKeyDelivery(0);
         }
         if(cp.getDustDelivery() != 0){
-            cp.addDust(p, cp.getDustDelivery(), "Speciale bezorging", false, true);
+            cp.addDust(p, cp.getDustDelivery(), "Speciale bezorging", false, true, true);
             cp.setDustDelivery(0);
         }
         if(cp.getKarmaDelivery() != 0){
@@ -302,7 +302,7 @@ public class DeliveryMenu implements Listener {
                 lore.append("&b").append(cp.getDustDelivery()).append(" Mystery Dust").append("\n");
             }
             if(cp.getKarmaDelivery() != 0){
-//                lore.append("&2").append(cp.getKarmaDelivery()).append( "Karma").append("\n");
+                lore.append("&2").append(cp.getKarmaDelivery()).append( "Karma").append("\n");
             }
             lore.append("\n ").append("&c> &eKlik om te claimen.");
         } else {

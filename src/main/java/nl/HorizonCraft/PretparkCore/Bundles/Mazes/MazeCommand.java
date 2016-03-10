@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -82,23 +82,23 @@ public class MazeCommand implements CommandExecutor {
                                             }
 
                                             break;
-                                        case "2":
-                                            cp.awardAchievement(p, AchievementsEnum.MAZE_COMPLETE_2);
-                                            cp.addCoins(p, MiscUtils.randomInt(5, 10), "Haunted Mansion opgelost!", true, true);
-                                            cp.addExp(p, MiscUtils.randomInt(10, 30), "Haunted Mansion opgelost!", true, true);
-                                            Location loc2 = new Location(p.getWorld(), -279, 80, -270);
-                                            loc2.setYaw(-90);
-                                            p.teleport(loc2);
-
-                                            if(cp.getMaze_2_record() == 0 || cp.getMaze_2_record() > getPlainTime(p)){
-                                                cp.setMaze_2_record(getPlainTime(p));
-                                                ChatUtils.sendMsgTag(p, "Doolhof", "&lNIEUW RECORD! &aJe tijd is: &c" + getTime(p) + "&a!");
-                                                MiscUtils.shootFirework(p.getLocation(), Variables.WORLD_NAME, true);
-                                            } else {
-                                                ChatUtils.sendMsgTag(p, "Doolhof", "Goed gedaan! Je tijd is: &c" + getTime(p) + "&a! &oJe snelste tijd is: &c&o" + MiscUtils.formatTime(cp.getMaze_2_record()));
-                                            }
-
-                                            break;
+//                                        case "2":
+//                                            cp.awardAchievement(p, AchievementsEnum.MAZE_COMPLETE_2);
+//                                            cp.addCoins(p, MiscUtils.randomInt(5, 10), "Haunted Mansion opgelost!", true, true);
+//                                            cp.addExp(p, MiscUtils.randomInt(10, 30), "Haunted Mansion opgelost!", true, true);
+//                                            Location loc2 = new Location(p.getWorld(), -279, 80, -270);
+//                                            loc2.setYaw(-90);
+//                                            p.teleport(loc2);
+//
+//                                            if(cp.getMaze_2_record() == 0 || cp.getMaze_2_record() > getPlainTime(p)){
+//                                                cp.setMaze_2_record(getPlainTime(p));
+//                                                ChatUtils.sendMsgTag(p, "Doolhof", "&lNIEUW RECORD! &aJe tijd is: &c" + getTime(p) + "&a!");
+//                                                MiscUtils.shootFirework(p.getLocation(), Variables.WORLD_NAME, true);
+//                                            } else {
+//                                                ChatUtils.sendMsgTag(p, "Doolhof", "Goed gedaan! Je tijd is: &c" + getTime(p) + "&a! &oJe snelste tijd is: &c&o" + MiscUtils.formatTime(cp.getMaze_2_record()));
+//                                            }
+//
+//                                            break;
                                     }
 
                                     mazeTime.remove(p.getName());
@@ -115,11 +115,11 @@ public class MazeCommand implements CommandExecutor {
                                             loc.setYaw(180);
                                             p.teleport(loc);
                                             break;
-                                        case "2":
-                                            loc = new Location(p.getWorld(), -283, 80, -280).add(0.5, 0, 0.5);
-                                            loc.setYaw(90);
-                                            p.teleport(loc);
-                                            break;
+//                                        case "2":
+//                                            loc = new Location(p.getWorld(), -283, 80, -280).add(0.5, 0, 0.5);
+//                                            loc.setYaw(90);
+//                                            p.teleport(loc);
+//                                            break;
                                     }
 
                                 mazeTime.put(p.getName(), System.currentTimeMillis());
@@ -132,10 +132,10 @@ public class MazeCommand implements CommandExecutor {
                                     case "1":
                                         p.teleport(new Location(p.getWorld(), -76, 66, -378).add(0.5, 0, 0.5));
                                         break;
-                                    case "2":
-                                        Location loc2 = new Location(p.getWorld(), -279, 80, -273);
-                                        loc2.setYaw(-90);
-                                        p.teleport(loc2);
+//                                    case "2":
+//                                        Location loc2 = new Location(p.getWorld(), -279, 80, -273);
+//                                        loc2.setYaw(-90);
+//                                        p.teleport(loc2);
                                 }
 
                                 ChatUtils.sendMsgTag(p, "Doolhof", "Challenge gestopt!");

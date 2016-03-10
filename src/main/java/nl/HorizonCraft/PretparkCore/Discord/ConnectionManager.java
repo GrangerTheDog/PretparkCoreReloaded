@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ public class ConnectionManager {
     public static IDiscordClient discordClient;
     private static ArrayList<Object> listeners = new ArrayList<>();
     private static HashMap<String,String> roles = new HashMap<>();
-    private static boolean setupComplete;
+    public static boolean setupComplete;
     public static IGuild server;
 
     public static void openConnection(String email, String password){

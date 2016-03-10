@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,11 +63,7 @@ import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.WardrobeShop;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.CreateVoucherCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UnlockAllCommand;
 import nl.HorizonCraft.PretparkCore.Commands.Admin.UpdateLeaderboardsCommand;
-import nl.HorizonCraft.PretparkCore.Commands.ClearChatCommand;
-import nl.HorizonCraft.PretparkCore.Commands.FixGamemodeCommand;
-import nl.HorizonCraft.PretparkCore.Commands.RedeemVoucherCommand;
-import nl.HorizonCraft.PretparkCore.Commands.ResetInventoryCommand;
-import nl.HorizonCraft.PretparkCore.Discord.AccountVertification.VerifyCommand;
+import nl.HorizonCraft.PretparkCore.Commands.*;
 import nl.HorizonCraft.PretparkCore.Discord.ConnectionManager;
 import nl.HorizonCraft.PretparkCore.Listeners.*;
 import nl.HorizonCraft.PretparkCore.Managers.InventoryManager;
@@ -111,13 +107,20 @@ public class Main extends JavaPlugin {
         plugin = this; //Registering the plugin variable to allow other classes to access it.
         this.saveDefaultConfig(); //Saves the config to be used.
 
+        if(Bukkit.getIp().startsWith("192.168.178")){
+            getLogger().info("Enabling Developer Mode...");
+
+            Variables.SERVER_NAME = MiscUtils.color("&3&lHorizon&4&lDev");
+            Variables.SERVER_NAME_SHORT = MiscUtils.color("&3&lH&4&lD");
+        }
+
         getLogger().info("Starting pre-setup...."); //For everything that will cause issues if it gets done after registering stuff
         MysqlManager.setupHikari();
 
         getLogger().info("Registering Listeners..."); //Well, this registers the listeners.
         registerListeners(this
                 , new WeatherChangeListener(), new JoinQuitListener(), new InventoryManager(), new MainAdmin(), new KarmaManager()
-                , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag()
+                , new PlayerAdmin(), new TimeAdmin(), new MyHorizonMenu(), new PreferencesMenu(), new MainSwag(), new FeedDuckListener()
                 , new GadgetsMenu(), new GadgetTriggers(), new AchievementMenu(), new BoxCrafting(), new DeliveryMenu()
                 , new BoxMenu(), new ServerPingListener(), new ChatListener(), new PointMenu(), new PowerupViewMenu()
                 , new HealthHungerListener(), new PetMenu(), new GamemodeListener(), new Test(), new ShopTrigger()
@@ -150,7 +153,9 @@ public class Main extends JavaPlugin {
         registerCommand("pieterpost", new PieterPostCommand());
         registerCommand("setrank", new SetRankCommand());
         registerCommand("activatevip", new ActivateVipCommand());
-        registerCommand("discord", new VerifyCommand());
+        registerCommand("box", new BoxMenu());
+        registerCommand("hcbuy", new HCBuy());
+//        registerCommand("discord", new VerifyCommand());
 //        registerCommand("coins", new CoinsCommand());
 //        registerCommand("exp", new ExperienceCommand());
         //format: registerCommand("cmd", new ExecutorClass);
@@ -174,7 +179,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Opening API hooks..."); //Checking if the API's that we need are running.
         hookApi("HolographicDisplays");
         hookApi("TitleManager");
-        hookApi("Discord4J");
+//        hookApi("Discord4J");
 
         getLogger().info("Starting Timers..."); //Well, starts timers. Duh...
         DataSaver.start(this);
@@ -215,7 +220,7 @@ public class Main extends JavaPlugin {
         MiscUtils.updateVouchers();
         PointUtils.saveAll();
         HologramUtils.removeAll();
-        ConnectionManager.closeConnection();
+//        ConnectionManager.closeConnection();
 
 
         for(Player p : Bukkit.getOnlinePlayers()){

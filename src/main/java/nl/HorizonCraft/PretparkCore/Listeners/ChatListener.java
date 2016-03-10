@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,7 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event){
         CorePlayer cp = PlayerUtils.getProfile(event.getPlayer());
+
         if(RanksEnum.hasPermission(cp, RanksEnum.MANAGER)){
             event.setFormat(MiscUtils.color("%s&8: &b%s"));
         } else {
@@ -58,6 +59,9 @@ public class ChatListener implements Listener {
             event.setMessage(MiscUtils.color(event.getMessage()));
         }
 
+        if(!RanksEnum.hasPermission(cp, RanksEnum.TD)) {
+            event.setMessage(event.getMessage().replaceAll("(?i)skype", "Discord"));
+        }
     }
 
 }

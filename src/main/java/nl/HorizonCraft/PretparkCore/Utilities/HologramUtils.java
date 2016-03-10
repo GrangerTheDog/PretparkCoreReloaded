@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,6 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import nl.HorizonCraft.PretparkCore.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -59,7 +58,7 @@ public class HologramUtils {
         hologram.appendTextLine(MiscUtils.color("&c&lLET OP!"));
         hologram.appendTextLine(MiscUtils.color("&eDeze attractie gebruikt"));
         hologram.appendTextLine(MiscUtils.color("&ede Audio Server!"));
-        hologram.appendTextLine(MiscUtils.color("&bTyp /audio"));
+        hologram.appendTextLine(MiscUtils.color("&bTyp /jukebox"));
         hologram.appendItemLine(new ItemStack(Material.NOTE_BLOCK));
 
         Variables.holograms.add(hologram);

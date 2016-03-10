@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,22 +68,22 @@ public class MazeLeaderboards{
         three1.setLine(2, MiscUtils.color("&4&l" + MiscUtils.formatTime(maze1Time[2])));
         three1.update();
 
-        MysqlManager.loadLeadMaze2();
+//        MysqlManager.loadLeadMaze2();
 
-        Sign one2 = MazeLeaderboardsEnum.MAZE_2_1.getSign();
-        one2.setLine(1, MiscUtils.color("&l" + maze2Name[0]));
-        one2.setLine(2, MiscUtils.color("&4&l" + MiscUtils.formatTime(maze2Time[0])));
-        one2.update();
-
-        Sign two2 = MazeLeaderboardsEnum.MAZE_2_2.getSign();
-        two2.setLine(1, MiscUtils.color("&l" + maze2Name[1]));
-        two2.setLine(2, MiscUtils.color("&4&l" + MiscUtils.formatTime(maze2Time[1])));
-        two2.update();
-
-        Sign three2 = MazeLeaderboardsEnum.MAZE_2_3.getSign();
-        three2.setLine(1, MiscUtils.color("&l" + maze2Name[2]));
-        three2.setLine(2, MiscUtils.color("&4&l" + MiscUtils.formatTime(maze2Time[2])));
-        three2.update();
+//        Sign one2 = MazeLeaderboardsEnum.MAZE_2_1.getSign();
+//        one2.setLine(1, MiscUtils.color("&l" + maze2Name[0]));
+//        one2.setLine(2, MiscUtils.color("&4&l" + MiscUtils.formatTime(maze2Time[0])));
+//        one2.update();
+//
+//        Sign two2 = MazeLeaderboardsEnum.MAZE_2_2.getSign();
+//        two2.setLine(1, MiscUtils.color("&l" + maze2Name[1]));
+//        two2.setLine(2, MiscUtils.color("&4&l" + MiscUtils.formatTime(maze2Time[1])));
+//        two2.update();
+//
+//        Sign three2 = MazeLeaderboardsEnum.MAZE_2_3.getSign();
+//        three2.setLine(1, MiscUtils.color("&l" + maze2Name[2]));
+//        three2.setLine(2, MiscUtils.color("&4&l" + MiscUtils.formatTime(maze2Time[2])));
+//        three2.update();
 
         if(!force) {
             DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -91,11 +91,11 @@ public class MazeLeaderboards{
             cal.add(Calendar.MINUTE, 30);
 
             Sign time1 = MazeLeaderboardsEnum.MAZE_1_TIME.getSign();
-            Sign time2 = MazeLeaderboardsEnum.MAZE_2_TIME.getSign();
+//            Sign time2 = MazeLeaderboardsEnum.MAZE_2_TIME.getSign();
             time1.setLine(3, MiscUtils.color("&4&l" + dateFormat.format(cal.getTime())));
-            time2.setLine(3, MiscUtils.color("&4&l" + dateFormat.format(cal.getTime())));
+//            time2.setLine(3, MiscUtils.color("&4&l" + dateFormat.format(cal.getTime())));
             time1.update();
-            time2.update();
+//            time2.update();
         }
     }
 

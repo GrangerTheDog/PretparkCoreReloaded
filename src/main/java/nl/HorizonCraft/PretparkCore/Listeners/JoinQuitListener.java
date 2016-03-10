@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,26 +32,18 @@
 
 package nl.HorizonCraft.PretparkCore.Listeners;
 
-import io.puharesource.mc.titlemanager.api.animations.AnimationFrame;
-import io.puharesource.mc.titlemanager.api.animations.FrameSequence;
-import io.puharesource.mc.titlemanager.api.animations.TitleAnimation;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.DeliveryMan.DeliveryNotifier;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Profiles.MysqlManager;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import nl.HorizonCraft.PretparkCore.Utilities.Packets.SpawnHologram;
-import nl.HorizonCraft.PretparkCore.Utilities.TitleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class has been created on 09/9/11/2015/2015 at 7:18 PM by Cooltimmetje.

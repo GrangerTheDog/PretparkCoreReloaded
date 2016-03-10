@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@
 package nl.HorizonCraft.PretparkCore.Profiles;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.nametagedit.plugin.NametagEdit;
 import mkremins.fanciful.FancyMessage;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.AchievementsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Achievements.ProgressiveAchievementsEnum;
@@ -40,8 +41,6 @@ import nl.HorizonCraft.PretparkCore.Bundles.Gadgets.GadgetsEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Pets.PetType;
 import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Bundles.Wardrobe.PiecesEnum;
-import nl.HorizonCraft.PretparkCore.Discord.ConnectionManager;
-import nl.HorizonCraft.PretparkCore.Discord.DiscordUtils;
 import nl.HorizonCraft.PretparkCore.Menus.MyHorizon.SettingsEnum;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
@@ -108,6 +107,8 @@ public class CorePlayer {
 
     private String discordID;
     private String discordVerifyCode;
+
+    private int gerritFood;
 
     public CorePlayer(Player p){
         this.uuid = p.getUniqueId();
@@ -264,14 +265,16 @@ public class CorePlayer {
         this.dust = dust;
     }
 
-    public void addDust(Player p, int add, String reason, boolean allowMultiplier, boolean playSound){
+    public void addDust(Player p, int add, String reason, boolean allowMultiplier, boolean playSound, boolean playChat){
         if(RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier) {
             add = add * 2;
         }
 
         setDust(getDust() + add);
 
-        ChatUtils.sendMsg(p, "&b+" + add + " MysteryDust! (" + reason + ")");
+        if(playChat) {
+            ChatUtils.sendMsg(p, "&b+" + add + " MysteryDust! (" + reason + ")");
+        }
         if(playSound){
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         }
@@ -852,7 +855,22 @@ public class CorePlayer {
         }
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuadd " + p.getName() + " " + getRank().getGmName());
-        DiscordUtils.updateRoles(this, ConnectionManager.discordClient.getUserByID(getDiscordID()));
+        p.setPlayerListName(p.getDisplayName());
+//        if(getRank() != RanksEnum.MANAGER) {
+            NametagEdit.getApi().setPrefix(p, MiscUtils.color("&" + getRank().getColor()));
+//        } else {
+//            if(p.getDisplayName().contains("Bouwer")){
+//                NametagEdit.getApi().setPrefix(p, MiscUtils.color("&e[Hoofd Bouwer] "));
+//            } else if (p.getDisplayName().contains("TD")) {
+//                NametagEdit.getApi().setPrefix(p, MiscUtils.color("&e[Hoofd TD] "));
+//            } else {
+//                NametagEdit.getApi().setPrefix(p, MiscUtils.color(getRank().getNametag()));
+//            }
+//        }
+
+//        if(!getDiscordID().equals("0")) {
+//            DiscordUtils.updateRoles(this, ConnectionManager.discordClient.getUserByID(getDiscordID()));
+//        }
     }
 
     /* --END RANKS-- */
@@ -864,11 +882,10 @@ public class CorePlayer {
         if(RanksEnum.hasPermission(this,RanksEnum.VIP) && allowMultiplier){
             add = add * 2;
         }
-        reason = "???";
         setKarma(getKarma() + add);
 
 //        ChatUtils.sendMsg(p, "&2+" + add + " karma! (" + reason + ")");
-        TitleUtils.sendAction(p, "&2+" + add + " ???! (" + reason + ")",3);
+        TitleUtils.sendAction(p, "&2+" + add + " karma! (" + reason + ")",3);
         if (playSound) {
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         }
@@ -877,10 +894,9 @@ public class CorePlayer {
 
     public void removeKarma(Player p, int remove, String reason, boolean playSound) {
         setKarma(getKarma() - remove);
-        reason = "???";
 
 //        ChatUtils.sendMsg(p, "&2-" + remove + " karma! (" + reason + ")");
-        TitleUtils.sendAction(p, "&2-" + remove + " ???! (" + reason + ")",3);
+        TitleUtils.sendAction(p, "&2-" + remove + " karma! (" + reason + ")",3);
         if (playSound) {
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         }
@@ -916,5 +932,17 @@ public class CorePlayer {
     }
 
     /* --END DISCORD-- */
+
+    /* --START GERRIT-- */
+
+    public int getGerritFood() {
+        return gerritFood;
+    }
+
+    public void setGerritFood(int gerritFood) {
+        this.gerritFood = gerritFood;
+    }
+
+    /* --END GERRIT-- */
 
 }

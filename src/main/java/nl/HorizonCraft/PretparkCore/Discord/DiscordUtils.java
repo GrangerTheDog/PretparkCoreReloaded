@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,6 @@ package nl.HorizonCraft.PretparkCore.Discord;
 
 import nl.HorizonCraft.PretparkCore.Bundles.Ranks.RanksEnum;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import nl.HorizonCraft.PretparkCore.Utilities.Variables;
 import sx.blah.discord.api.DiscordException;
 import sx.blah.discord.api.MissingPermissionsException;
 import sx.blah.discord.handle.obj.IChannel;
@@ -72,25 +71,27 @@ public class DiscordUtils {
     }
 
     public static void updateRoles(CorePlayer cp, IUser user){
-        if (!cp.getDiscordID().equals("0")) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(ConnectionManager.getRole("Geverifieerd")).append("-");
-            String[] roles = cp.getRank().getDiscordRoles().split("-");
-            for(int i=0; i < roles.length; i++){
-                sb.append(ConnectionManager.getRole(roles[i])).append("-");
-            }
-            if(cp.getRank() == RanksEnum.MANAGER){
-                if(cp.getPlayer().getDisplayName().contains("TD")){
-                    sb.append(ConnectionManager.getRole("Technische Diesnt"));
-                } else if (cp.getPlayer().getDisplayName().contains("Bouwer")){
-                    sb.append(ConnectionManager.getRole("Bouwer"));
+        if(ConnectionManager.setupComplete){
+            if (!cp.getDiscordID().equals("0")) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(ConnectionManager.getRole("Geverifieerd")).append("-");
+                String[] roles = cp.getRank().getDiscordRoles().split("-");
+                for(int i=0; i < roles.length; i++){
+                    sb.append(ConnectionManager.getRole(roles[i])).append("-");
                 }
-            }
+                if(cp.getRank() == RanksEnum.MANAGER){
+                    if(cp.getPlayer().getDisplayName().contains("TD")){
+                        sb.append(ConnectionManager.getRole("Technische Diesnt"));
+                    } else if (cp.getPlayer().getDisplayName().contains("Bouwer")){
+                        sb.append(ConnectionManager.getRole("Bouwer"));
+                    }
+                }
 
-            try {
-                ConnectionManager.discordClient.getGuildByID(Variables.discordServerID).editUserRoles(user.getID(), sb.toString().split("-"));
-            } catch (MissingPermissionsException | HTTP429Exception | DiscordException e) {
-                e.printStackTrace();
+                try {
+                    ConnectionManager.server.editUserRoles(user.getID(), sb.toString().split("-"));
+                } catch (MissingPermissionsException | HTTP429Exception | DiscordException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

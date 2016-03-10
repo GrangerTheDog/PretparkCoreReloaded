@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,22 +42,31 @@ import java.util.Random;
  */
 public enum SayingsEnum {
 
-    FAT_FREE("Vet vrij!"),
-    YES_FRIEND("JAAAA VRIEEEEEEND!"),
-    FAABAAH("Faaabaaahhh Faabaaaah"),
-    NO_FRIEND("NEEEE VRIEEEEENDDD!"),
-    STICKER("Nu met een gratis sticker!"),
-    RED_BUTTON("Druk niet op de rode knop!"),
-    DISCORD("Discord is Bae <3"),
-    COOKIE("KOEKJES!"),
-    NOU_NEE("Nooouuu.... Nee."),
-    HEALTHY("Nu 101% gezonder."),
-    TREKKER("Tim en Bram hebben een trekker."),
-    BUGS("Bevat bugs."),
-    BUTTON("What does this button do?"),
-    BMW("Dikke BMW jongens, DIKKE BMW."),
-    FRIETJES("Gratis frietjes!"),
-    MOTTO("Plezier tot aan de horizon en terug.");
+    FAT_FREE        ("Vet vrij!"),
+    YES_FRIEND      ("JAAAA VRIEEEEEEND!"),
+    FAABAAH         ("Faaabaaahhh Faabaaaah"),
+    NO_FRIEND       ("NEEEE VRIEEEEENDDD!"),
+    STICKER         ("Nu met een gratis sticker!"),
+    RED_BUTTON      ("Druk niet op de rode knop!"),
+    DISCORD         ("Discord is Bae <3"),
+    COOKIE          ("KOEKJES!"),
+    NOU_NEE         ("Nooouuu.... Nee."),
+    HEALTHY         ("Nu 101% gezonder."),
+    TREKKER         ("Tim en Bram hebben een trekker."),
+    BUGS            ("Bevat bugs."),
+    BUTTON          ("What does this button do?"),
+    BMW             ("Dikke BMW jongens, DIKKE BMW."),
+    FRIETJES        ("Gratis frietjes!"),
+    MOTTO           ("Plezier tot aan de horizon en terug."),
+    SOKKEN          ("Niet okken of ik steel je sokken."),
+    TEAMAF          ("#TeamAfzuigkap"),
+    AFBAE           ("Remember kids: \"Afzuigkap is BAE! <3\""),
+    MOOI            ("ik vind het illemal moi"),
+    TIM_BAE         ("Tim is Bae <3"),
+    KOALA_MARRY     ("Koala's trouwen niet."),
+    MAND            ("MAND!"),
+    KIPPEN          ("Wij zijn niet verantwoordelijk voor dode kippen!"),
+    BANAAN          ("Ontmoet nu de dansende banaan!");
 
     private String saying;
 

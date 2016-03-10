@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -239,6 +239,7 @@ public class MysqlManager {
             cp.setClaimedSpecialDay(rs.getInt("special_day") == 1);
             cp.setKarma(rs.getInt("karma"));
             cp.setKarmaDelivery(rs.getInt("del_karma"));
+            cp.setGerritFood(0);
         } catch (SQLException e){
             e.printStackTrace();
         }

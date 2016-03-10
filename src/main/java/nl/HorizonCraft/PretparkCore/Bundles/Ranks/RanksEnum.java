@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,17 +42,17 @@ import org.bukkit.entity.Player;
  */
 public enum RanksEnum {
 
-    BEZOEKER    (0, false, "bezoeker",   "Bezoeker",            '7', ChatColor.GRAY        , "Bezoeker"                 ),
-    VIP         (1, true,  "vip",        "VIP",                 'a', ChatColor.GREEN       , "VIP"                      ),
-    VIP_LIFE    (1, false, "vip",        "VIP",                 'a', ChatColor.GREEN       , "VIP"                      ),
-    MEDIA       (2, false, "media",      "Media",               'd', ChatColor.LIGHT_PURPLE, "Media"                    ), //CUSTOM PREFIXES
-    MEDEWERKER  (3, false, "medewerker", "Medewerker",          '3', ChatColor.DARK_AQUA   , "Medewerker-Staff"         ),
-    BOUWER      (4, false, "bouwer",     "Bouwer",              '2', ChatColor.DARK_GREEN  , "Bouwer-Staff"             ),
-    TD          (5, false, "td",         "Technische Dienst",   'b', ChatColor.AQUA        , "Technische Dienst-Staff"  ),
-    JR_DEV      (6, false, "jrdev",      "Junior Developer",    '6', ChatColor.GOLD        , "Junior Developer-Staff"   ),
-    MANAGER     (7, false, "manager",    "Manager",             'e', ChatColor.YELLOW      , "Hoofd Staff"              ), //CUSTOM PREFIXES
-    DEVELOPER   (8, false, "developer",  "Developer",           '6', ChatColor.GOLD        , "Developer-Hoofd Staff"    ),
-    DIRECTEUR   (8, false, "directeur",  "Directeur",           'c', ChatColor.RED         , "Directeur-Hoofd Staff"    );
+    BEZOEKER    (0, false, "bezoeker",   "Bezoeker",            '7', ChatColor.GRAY        , "Bezoeker",                    "&7"                ),
+    VIP         (1, true,  "vip",        "VIP",                 'a', ChatColor.GREEN       , "VIP",                         "&a[VIP] "          ),
+    VIP_LIFE    (1, false, "vip",        "VIP",                 'a', ChatColor.GREEN       , "VIP",                         "&a[VIP] "          ),
+    MEDIA       (2, false, "media",      "Media",               'd', ChatColor.LIGHT_PURPLE, "Media",                       "&d[Media] "        ), //CUSTOM PREFIXES
+    MEDEWERKER  (3, false, "medewerker", "Medewerker",          '3', ChatColor.DARK_AQUA   , "Medewerker-Staff",            "&3[Medewerker] "   ),
+    BOUWER      (4, false, "bouwer",     "Bouwer",              '2', ChatColor.DARK_GREEN  , "Bouwer-Staff",                "&2[Bouwer] "       ),
+    TD          (5, false, "td",         "Technische Dienst",   'b', ChatColor.AQUA        , "Technische Dienst-Staff",     "&b[TD] "           ),
+    JR_DEV      (6, false, "jrdev",      "Junior Developer",    '6', ChatColor.GOLD        , "Junior Developer-Staff",      "&6[Jr. Dev] "      ),
+    MANAGER     (7, false, "manager",    "Manager",             'e', ChatColor.YELLOW      , "Hoofd Staff",                 "&e[Manager] "      ), //CUSTOM PREFIXES
+    DEVELOPER   (8, false, "developer",  "Developer",           '6', ChatColor.GOLD        , "Developer-Hoofd Staff",       "&6[Developer] "    ),
+    DIRECTEUR   (8, false, "directeur",  "Directeur",           'c', ChatColor.RED         , "Directeur-Hoofd Staff",       "&c[Directeur] "    );
 
     private int power;
     private boolean canExpire;
@@ -61,8 +61,9 @@ public enum RanksEnum {
     private char color;
     private ChatColor chatColor;
     private String discordRoles;
+    private String nametag;
 
-    RanksEnum(int i, boolean b, String s, String s1, char c, ChatColor cc, String s2){
+    RanksEnum(int i, boolean b, String s, String s1, char c, ChatColor cc, String s2, String s3){
         this.power = i;
         this.canExpire = b;
         this.gmName = s;
@@ -70,6 +71,7 @@ public enum RanksEnum {
         this.color = c;
         this.chatColor = cc;
         this.discordRoles = s2;
+        this.nametag = s3;
     }
 
     public int getPower(){
@@ -107,5 +109,13 @@ public enum RanksEnum {
 
     public String getDiscordRoles() {
         return discordRoles;
+    }
+
+    public String getNametag() {
+        return nametag;
+    }
+
+    public void setNametag(String nametag) {
+        this.nametag = nametag;
     }
 }

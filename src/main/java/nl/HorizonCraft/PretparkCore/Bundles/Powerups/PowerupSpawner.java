@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.handler.PickupHandler;
 import com.gmail.filoghost.holographicdisplays.api.line.ItemLine;
 import nl.HorizonCraft.PretparkCore.Main;
+import nl.HorizonCraft.PretparkCore.Managers.KarmaManager;
 import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
 import nl.HorizonCraft.PretparkCore.Utilities.*;
 import org.bukkit.*;
@@ -96,9 +97,11 @@ public class PowerupSpawner {
                                 cp.addKeys(p, MiscUtils.randomInt(powerupType.getMin(), powerupType.getMax()), "PowerUp gevonden!", false, false);
                                 break;
                             case DUST:
-                                cp.addDust(p, MiscUtils.randomInt(powerupType.getMin(), powerupType.getMax()), "PowerUp gevonden!", false, false);
+                                cp.addDust(p, MiscUtils.randomInt(powerupType.getMin(), powerupType.getMax()), "PowerUp gevonden!", false, false, true);
                                 break;
                         }
+
+                        KarmaManager.startKarma();
                     }
                 });
             }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -144,6 +144,9 @@ public class PlayerUtils {
                 break;
             case "nickjedl":
                 PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.NICK_SLAP);
+                break;
+            case "RickBult":
+                PlayerUtils.getProfile(p).awardAchievement(p, AchievementsEnum.RICK_SLAP);
                 break;
             default:
                 break;

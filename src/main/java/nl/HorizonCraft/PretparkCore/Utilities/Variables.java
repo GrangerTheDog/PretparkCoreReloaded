@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ import java.util.HashMap;
  */
 public class Variables {
 
-    public static String SERVER_NAME = MiscUtils.color("&3&lHorizon&6&lCraft &c&lALPHA");
+    public static String SERVER_NAME = MiscUtils.color("&3&lHorzion&6&lCraft &c&lALPHA");
     public static String SERVER_NAME_SHORT = MiscUtils.color("&3&lH&6&lC");
     public static String SERVER_PING_MESSAGE = MiscUtils.color("In aanbouw.");
     public static String RIGHT_CLICK = MiscUtils.color("&3(Rechter Klik)");

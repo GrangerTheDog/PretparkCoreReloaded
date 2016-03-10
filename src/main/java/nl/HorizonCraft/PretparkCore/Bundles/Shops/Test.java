@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,6 @@
 package nl.HorizonCraft.PretparkCore.Bundles.Shops;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,15 +45,13 @@ public class Test implements Listener {
 
     @EventHandler
     public void onClick(PlayerInteractEntityEvent event){
-        if(event.getRightClicked().getType() == EntityType.PLAYER){
-            if(event.getPlayer().isOp()){
-                if(event.getPlayer().isSneaking()){
-                    Player p = event.getPlayer();
-                    Entity e = event.getRightClicked();
+        if(event.getPlayer().getName().equals("Cooltimmetje")){
+            if(event.getPlayer().isSneaking()){
+                Player p = event.getPlayer();
+                Entity e = event.getRightClicked();
 
-                    p.sendMessage(e.getUniqueId().toString());
-                    p.sendMessage(e.getName());
-                }
+                p.sendMessage(e.getUniqueId().toString());
+                p.sendMessage(e.getName());
             }
         }
     }

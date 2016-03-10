@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * This class has been created on 09/12/2015 at 10:20 AM by Cooltimmetje.
@@ -79,23 +78,31 @@ public class InventoryManager implements Listener {
                     if(event.getItem().getType() == Material.SKULL_ITEM && !ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()).contains("MyHorizon")){
                         return;
                     }
-                    event.setCancelled(true);
+
                     Material m = event.getMaterial();
-                    ItemStack is = event.getItem();
                     switch (m){
                         case SKULL_ITEM:
                             MyHorizonMenu.openMyHorizon(p, p, false);
+//                            try {
+//                                HeadMenu.search();
+//                            } catch (SQLException e) {
+//                                e.printStackTrace();
+//                            }
+                            event.setCancelled(true);
                             break;
                         case MINECART:
                             PointMenu.open(p);
+                            event.setCancelled(true);
                             break;
                         case FLINT:
                             if (!p.isSneaking()) {
                                 MainAdmin.openAdminMain(p);
+                                event.setCancelled(true);
                             }
                             break;
                         case CHEST:
                             MainSwag.open(p);
+                            event.setCancelled(true);
                             break;
                         default:
                             break;

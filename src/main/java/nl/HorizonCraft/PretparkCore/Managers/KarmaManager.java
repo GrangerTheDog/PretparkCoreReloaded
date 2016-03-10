@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,10 +58,10 @@ public class KarmaManager implements Listener {
                 if(!gotKarma.contains(p.getName())){
                     CorePlayer cp = PlayerUtils.getProfile(p);
                     if(event.getMessage().toLowerCase().contains("gg")){
-                        cp.addKarma(p, 5, "GG!", true, false);
+                        cp.addKarma(p, 5, "GG!", true, true);
                     }
                     if(event.getMessage().toLowerCase().contains("hax")) {
-                        cp.removeKarma(p, 5, "HAX!", false);
+                        cp.removeKarma(p, 5, "HAX!", true);
                     }
                     gotKarma.add(p.getName());
                 }

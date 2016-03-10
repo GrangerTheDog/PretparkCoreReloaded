@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,11 +35,8 @@ package nl.HorizonCraft.PretparkCore.Utilities;
 import io.puharesource.mc.titlemanager.api.ActionbarTitleObject;
 import io.puharesource.mc.titlemanager.api.TabTitleObject;
 import io.puharesource.mc.titlemanager.api.TitleObject;
-
 import io.puharesource.mc.titlemanager.api.animations.FrameSequence;
 import io.puharesource.mc.titlemanager.api.animations.TitleAnimation;
-import nl.HorizonCraft.PretparkCore.Profiles.CorePlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**

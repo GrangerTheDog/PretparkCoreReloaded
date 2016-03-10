@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,10 +44,10 @@ public enum SuitsEnum {
     SKELETON("Skeleton", "Beetje mager, of niet dan?", "Explosive arrows"),
     COWBOY("Cowboy", "Yeeeaaahaaa!!!", "Binnenkort..."),
     COOK("Kok", "Nom nom nom...", "Gooi eten"),
-    PIRATE("Piraat","ARRRRRR...","Gooi schatte"),
+    PIRATE("Piraat","ARRRRRR...","Gooi schatten"),
     CLOWN("Clown","Nee deze is niet eng!", "Spuit water"),
     BUNNY("Konijn", "Mag ik een wortel?", "Gooi wortels"),
-    CHICKEN("Kip", "Tok tok tok.", "Leg eiren");
+    CHICKEN("Kip", "Tok tok tok.", "Leg eieren");
 
     //COWBOY KOK PIRAAT CLOWN KONIJN KIP PAPEGAAI
     private String name;

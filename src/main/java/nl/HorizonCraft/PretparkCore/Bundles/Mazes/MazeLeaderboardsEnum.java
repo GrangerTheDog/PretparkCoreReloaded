@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,11 +43,11 @@ public enum MazeLeaderboardsEnum {
     MAZE_1_1(new int[]{-75,68,-371}),
     MAZE_1_2(new int[]{-75,67,-371}),
     MAZE_1_3(new int[]{-75,66,-371}),
-    MAZE_1_TIME(new int[]{-75,66,-370}),
-    MAZE_2_1(new int[]{-283,82,-273}),
-    MAZE_2_2(new int[]{-283,81,-273}),
-    MAZE_2_3(new int[]{-283,80,-273}),
-    MAZE_2_TIME(new int[]{-281,80,-273});
+    MAZE_1_TIME(new int[]{-75,66,-370});
+//    MAZE_2_1(new int[]{-283,82,-273}),
+//    MAZE_2_2(new int[]{-283,81,-273}),
+//    MAZE_2_3(new int[]{-283,80,-273}),
+//    MAZE_2_TIME(new int[]{-281,80,-273});
 
     private int[] xyz;
 

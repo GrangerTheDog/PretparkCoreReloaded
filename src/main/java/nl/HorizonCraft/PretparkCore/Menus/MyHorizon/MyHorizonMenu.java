@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2015-2016 HorizonCraft
+ * Copyright (c) 2015-2016 Tim Medema
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -95,11 +95,16 @@ public class MyHorizonMenu implements Listener,CommandExecutor{
         ItemUtils.createDisplay(inv, 23, Material.ENDER_CHEST, 1, 0, "&3Mystery Boxes: &c" + cp.getBoxes());
         ItemUtils.createDisplay(inv, 24, Material.TRIPWIRE_HOOK, 1, 0, "&dMystery Keys: &c" + cp.getKeys());
 
+        if(admin){
+            ItemUtils.createDisplay(inv, 26, Material.BARRIER, 1, 0, "&cKick");
+        }
+
         String[] expInfo = cp.calculateExpString(p).split(",");
         int needed = Integer.parseInt(expInfo[0]);
         int exp = Integer.parseInt(expInfo[1]);
 
         ItemUtils.createDisplay(inv, 31, Material.EXP_BOTTLE, 1, 0, "&9Experience:", "&3Level: &a" + cp.getLevel(), "&3Totaal EXP: &a" + MiscUtils.intFormat(cp.getExperience(), " "), "&3Nodig tot volgend level: &a" + MiscUtils.intFormat((needed - exp), " "), "&3Progress: " + progress(exp, needed));
+        ItemUtils.createDisplay(inv, 32, Material.EMERALD, 1, 0, "&2Karma: " + cp.getKarma());
         ItemUtils.createDisplay(inv, 33, Material.SUGAR, 1, 0, "&bMystery Dust: &c" + cp.getDust());
 
         p.openInventory(inv);
@@ -118,6 +123,10 @@ public class MyHorizonMenu implements Listener,CommandExecutor{
                     break;
                 case DIAMOND:
                     AchievementMenu.open(p, target, AchievementTypes.NORMAL);
+                    break;
+                case BARRIER:
+                    p.kickPlayer("Rekt");
+                    target.closeInventory();
                     break;
                 default:
                     break;
